@@ -28,16 +28,13 @@ public class LoadingView extends JPanel {
     public JPanel loadingPanel;
     private Image backgroundImage;
     
+    private final String imageFilePath = "./resources/images/bg.png";
     private final String gameTitle = "FOREVER HOME";
     public final String loadingText = "LOADING...";
     private int loadingTextIndex;
     
     public LoadingView(){
-              try{
-            backgroundImage = ImageIO.read(getClass().getResource("./resources/images/bg.png"));
-        } catch(IOException e){
-            e.printStackTrace();
-        }
+        
         loadingPanel = new JPanel(){
             protected void paintComponent(Graphics g){
                 super.paintComponent(g);
@@ -62,7 +59,7 @@ public class LoadingView extends JPanel {
     
     private void setBackgroundImage(Graphics g){
         try{
-            BufferedImage buffImage = ImageIO.read(new File("/resources/images/bg.png"));
+            BufferedImage buffImage = ImageIO.read(new File(imageFilePath));
             g.drawImage(buffImage, 0, 0, null);
         } catch(IOException e){
             e.printStackTrace();
