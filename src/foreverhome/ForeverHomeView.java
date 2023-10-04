@@ -5,6 +5,7 @@
 package foreverhome;
 
 import java.awt.CardLayout;
+import java.awt.Font;
 import javax.swing.JFrame;
 
 /**
@@ -13,7 +14,7 @@ import javax.swing.JFrame;
  */
 public class ForeverHomeView {
     
-    private JFrame frame;
+    public static JFrame frame;
     private LoadingView loadingView;
     
     private final int WIDTH = 800;
@@ -23,6 +24,7 @@ public class ForeverHomeView {
         frame = new JFrame("Forever Home Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setLayout(new CardLayout());
         
@@ -34,5 +36,7 @@ public class ForeverHomeView {
     
     public void display(){
         frame.setVisible(true);
+        loadingView.showLoadingTextAnimation();
     }
+
 }
