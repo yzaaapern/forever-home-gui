@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Oct 05 21:29:22 NZDT 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-018a-fef4-ab2f-00000f780530 
+on database directory C:\Users\annga\OneDrive - AUT University\Documents\ENSE600 Software Construction\ForeverHomeGUI\forever-home-gui\ForeverHomeDatabase with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5c29bfd 
+Loaded from file:/C:/Users/annga/OneDrive%20-%20AUT%20University/Documents/ENSE600%20Software%20Construction/ForeverHomeGUI/forever-home-gui/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=11.0.19+9-LTS-224
+user.dir=C:\Users\annga\OneDrive - AUT University\Documents\ENSE600 Software Construction\ForeverHomeGUI\forever-home-gui
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
