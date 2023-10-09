@@ -4,9 +4,10 @@ RICHIE|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:
 iuxta|Food for All:4,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:3,Water:100
 Anny|Food for All:4,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:100,Water:97
 Marty|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:0,Water:100
+fruity|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:1,Water:100
 y|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:0,Water:100
 z|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:0,Water:100
 Bobby|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:3,Water:100
 yza|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:0,Water:100
 deiah|Food for All:4,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:3,Water:100
-fruity|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:1,Water:100
+|Food for All:5,Kibble:0,Canned Food:0,Veggie Mix:0,Seeds:0,Rainbow Treat:0,Water:100
