@@ -19,13 +19,16 @@ public class ForeverHomeController {
     
     public void start(){
         view.display();
-        simulateLoading();
+//        view.showLoadingPanel();
+//        simulateLoading();
+        view.showStartGamePanel();
+//        view.showLoginPanel();
         
     }
     
     private void simulateLoading(){
         try{
-            Thread.sleep(16000);
+            Thread.sleep(22000);
         } catch(InterruptedException e){
             e.printStackTrace();
         }

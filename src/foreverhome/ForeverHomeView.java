@@ -5,7 +5,6 @@
 package foreverhome;
 
 import java.awt.CardLayout;
-import java.awt.Font;
 import javax.swing.JFrame;
 
 /**
@@ -13,30 +12,50 @@ import javax.swing.JFrame;
  * @author yzape
  */
 public class ForeverHomeView {
-    
+
     public static JFrame frame;
-    private LoadingView loadingView;
-    
+    private final LoadingView loadingView;
+    private final StartGameView startGameView;
+    private final LoginView loginView;
+
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
-    
-    public ForeverHomeView(){
+
+    public ForeverHomeView() {
         frame = new JFrame("Forever Home Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setLayout(new CardLayout());
-        
+
         loadingView = new LoadingView();
-        frame.add(loadingView.loadingPanel, loadingView.loadingText);
+        loginView = new LoginView();
+        startGameView = new StartGameView();
+        
+        frame.add(loadingView.loadingPanel, "loading");
+        frame.add(startGameView.startGamePanel, "start");
+        frame.add(loginView.loginPanel, "login");
+        
         frame.setVisible(true);
     }
-    
-    
-    public void display(){
+
+    public void display() {
         frame.setVisible(true);
+    }
+
+    public void showLoadingPanel() {
         loadingView.showLoadingTextAnimation();
+    }
+    
+    public void showStartGamePanel(){
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), "start");
+    }
+
+    public void showLoginPanel() {
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), "login");
     }
 
 }
