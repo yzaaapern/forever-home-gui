@@ -85,6 +85,14 @@ public class UserData
     
     // METHODS
     
+    // Method to connect a pet with a user, and the food inventory with a user
+    public void connectUserWithPetAndFoodInventory(UserData user, PetData pet, FoodInventoryData foodInventory) 
+    {
+        // Associate the user, pet, and food inventory.
+        foodInventory.setUserName(user.getUserName());
+        pet.setUserName(user.getUserName());
+    }
+    
     // Checks if a given password matches the user's password
     public boolean authenticateUser(String inputPassword)
     {
