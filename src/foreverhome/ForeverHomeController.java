@@ -19,5 +19,15 @@ public class ForeverHomeController {
     
     public void start(){
         view.display();
+        simulateLoading();
+        
+    }
+    
+    private void simulateLoading(){
+        try{
+            Thread.sleep(16000);
+        } catch(InterruptedException e){
+            e.printStackTrace();
+        }
     }
 }
