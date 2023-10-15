@@ -10,14 +10,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -26,12 +21,11 @@ import javax.swing.Timer;
  *
  * @author yzape
  */
-public class LoadingView extends JPanel {
+public class LoadingView {
 
     private final JLabel titleLabel;
     private final JLabel loadingTextLabel;
     public JPanel loadingPanel;
-    private Image backgroundImage;
 
     private final String imageFilePath = "./resources/images/bg.png";
     private final String gameTitle = "FOREVER HOME";
@@ -43,13 +37,14 @@ public class LoadingView extends JPanel {
         loadingPanel = new JPanel(new GridBagLayout()) {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                setBackgroundImage(g);
+                GameImage bgImage = new GameImage(imageFilePath);
+                g.drawImage(bgImage.getImage(), 0, 0, null);
             }
         };
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0, 0, 40, 0);
 
-        Font titleFont = CustomFont.getPixelBoldFont(50);
+        Font titleFont = GameFont.getPixelFont(50, 1);
         titleLabel = new JLabel(gameTitle);
         titleLabel.setFont(titleFont);
         titleLabel.setForeground(Color.white);
@@ -57,7 +52,7 @@ public class LoadingView extends JPanel {
         gbc.gridy = 0;
         loadingPanel.add(titleLabel, gbc);
 
-        Font loadingTextFont = CustomFont.getPixelFont(25);
+        Font loadingTextFont = GameFont.getPixelFont(25, 0);
         loadingTextLabel = new JLabel("");
         loadingTextLabel.setFont(loadingTextFont);
         loadingTextLabel.setForeground(Color.white);
@@ -65,33 +60,23 @@ public class LoadingView extends JPanel {
         loadingPanel.add(loadingTextLabel, gbc);
     }
 
-    private void setBackgroundImage(Graphics g) {
-        try {
-            BufferedImage buffImage = ImageIO.read(new File(imageFilePath));
-            g.drawImage(buffImage, 0, 0, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void showLoadingTextAnimation(){
+    public void showLoadingTextAnimation() {
         loadingTextLabel.setText("");
         loadingTextIndex = 1;
         CardLayout cardLayout = (CardLayout) ForeverHomeView.frame.getContentPane().getLayout();
-        cardLayout.show(ForeverHomeView.frame.getContentPane(), loadingText);
-        
-        Timer timer =  new Timer(2000, new ActionListener() {
+        cardLayout.show(ForeverHomeView.frame.getContentPane(), "loading");
+
+        Timer timer = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(loadingTextIndex <= loadingText.length()){
+                if (loadingTextIndex <= loadingText.length()) {
                     loadingTextLabel.setText(loadingText.substring(0, loadingTextIndex));
                     loadingTextIndex++;
-                }
-                else{
+                } else {
                     ((Timer) e.getSource()).stop();
                 }
             }
-            
+
         });
         timer.start();
     }
