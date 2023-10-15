@@ -5,6 +5,7 @@
 package foreverhome;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  *
@@ -18,10 +19,19 @@ public class FoodInventoryData
     private String userName; // FK
     
     // CONSTRUCTORS
+    
     // 1-Parameter Constructor
     public FoodInventoryData(String foodInventoryID)
     {
         this.foodInventoryID = foodInventoryID;
+    }
+    
+    // 2-Parameter Constructor
+    public FoodInventoryData(String foodInventory, String userName)
+    {
+        this.foodInventoryID = this.generateRandomFoodInventoryID();
+        this.setFoodInventory(foodInventory);
+        this.setUserName(userName);
     }
     
     // 3-Parameter Constructor
@@ -70,21 +80,25 @@ public class FoodInventoryData
     
     // METHODS
     
+    // Generate a random foodInventoryID using UUID
+    private String generateRandomFoodInventoryID()
+    {
+        return UUID.randomUUID().toString();
+    }
+    
     // Override equals method
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         FoodInventoryData other = (FoodInventoryData) obj;
-        return Objects.equals(getFoodInventoryID(), other.getFoodInventoryID()) &&
-               Objects.equals(getFoodInventory(), other.getFoodInventory()) &&
-               Objects.equals(getUserName(), other.getUserName());
+        return Objects.equals(getFoodInventoryID(), other.getFoodInventoryID());
     }
     
     // Override hashCode method
     @Override
     public int hashCode() {
-        return Objects.hash(getFoodInventoryID(), getFoodInventory(), getUserName());
+        return Objects.hash(getFoodInventoryID());
     }
     
     // toString method

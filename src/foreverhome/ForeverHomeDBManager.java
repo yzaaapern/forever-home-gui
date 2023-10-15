@@ -39,7 +39,7 @@ public class ForeverHomeDBManager {
     // Establish a foreverHomeDBManager connection
     private void establishConnection() 
     {
-        if(this.connection == null)
+        if(this.getConnection() == null)
         {
             try {
             connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -49,26 +49,10 @@ public class ForeverHomeDBManager {
                 Logger.getLogger(ForeverHomeDBManager.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-    }
-
-
-    // myQuery method
-    public ResultSet myQuery(String sql)
-    {
-        Connection connection = this.connection;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        
-        try
+        else
         {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-        }   catch(Exception e)
-        {
-            e.printStackTrace();
+            System.out.println("There is a pre-existing connection. ");
         }
-        
-        return resultSet;
     }
     
     //myUpdate method
@@ -94,13 +78,17 @@ public class ForeverHomeDBManager {
         {
             try 
             {
-            connection.close();
-            System.out.println("Database connection closed.");
+                connection.close();
+                System.out.println("Database connection closed.");
             }
             catch (SQLException e) 
             {
-            Logger.getLogger(ForeverHomeDBManager.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(ForeverHomeDBManager.class.getName()).log(Level.SEVERE, null, e);
             }
+        }
+        else
+        {
+            System.out.println("There is no connection");
         }
     }
 

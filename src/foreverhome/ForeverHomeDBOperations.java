@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -19,6 +20,11 @@ import java.util.List;
  */
 public class ForeverHomeDBOperations 
 {
+    // Constants
+    private static final String USER_DATA_TABLE = "user_data";
+    private static final String PET_TABLE = "pet";
+    private static final String FOOD_INVENTORY_TABLE = "food_inventory";
+    
     // Instance variables
     public ForeverHomeDBManager dbManager;
     
@@ -35,28 +41,15 @@ public class ForeverHomeDBOperations
     {
         ForeverHomeDBOperations dbOperations = new ForeverHomeDBOperations();
         
-        // Delete tables
-        
-        dbOperations.dropTable("pet");
-        dbOperations.dropTable("food_inventory");
-        dbOperations.dropTable("user_data");
+        // Drop tables
+//        dbOperations.dropTable(PET_TABLE);
+//        dbOperations.dropTable(FOOD_INVENTORY_TABLE);
+//        dbOperations.dropTable(USER_DATA_TABLE);
         
         // Create tables
-        dbOperations.createTable("user_data");
-        dbOperations.createTable("pet");
-        dbOperations.createTable("food_inventory");
-        
-        // Getting queries
-        dbOperations.getQuery("user_data");
-        dbOperations.getQuery("pet");
-        dbOperations.getQuery("food_inventory");
-        
-        // Queries
-        System.out.println(dbOperations.getAll("user_data"));
-        System.out.println(dbOperations.getAll("pet"));
-        System.out.println(dbOperations.getAll("food_inventory"));
-        System.out.println(dbOperations.getUserByUserName("anny"));
-        System.out.println(dbOperations.getPetByPetNameAndUserName("anny", "Pookie"));
+        dbOperations.createTable(USER_DATA_TABLE);
+        dbOperations.createTable(PET_TABLE);
+        dbOperations.createTable(FOOD_INVENTORY_TABLE);
         
         // Closing connection
         dbOperations.dbManager.closeConnection();
@@ -68,462 +61,269 @@ public class ForeverHomeDBOperations
     Return: None
     Description: creates table with the tableName as its name
     */
-    public void createTable(String tableName)
+    public void createTable(String tableName) 
     {
-        String sqlCreateTable = "";
-        
-        // 'user_data' Table
-        if(tableName == "user_data")
+        String sqlCreateTable = generateCreateTableSQL(tableName);
+
+        try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlCreateTable)) 
         {
-            // SQL syntax for create table
-            sqlCreateTable = "CREATE TABLE user_data (" +
+            if (!tableExists(dbManager.getConnection(), tableName)) 
+            {
+                preparedStatement.executeUpdate();
+                System.out.println("Table '" + tableName + "' created successfully.");
+                insertSampleData(tableName);
+            } 
+            else 
+            {
+                System.out.println("Table '" + tableName + "' already exists.");
+            }
+        } catch (SQLException e) {
+            this.handleSQLException(e);
+        }
+    }
+    
+    private String generateCreateTableSQL(String tableName) 
+    {
+        // Generate SQL for creating the specified table
+        if (USER_DATA_TABLE.equals(tableName)) {
+            return "CREATE TABLE user_data (" +
                 "userName VARCHAR(20) PRIMARY KEY," +
                 "userPassword VARCHAR(25)," +
                 "userDabloons INT," +
                 "userHasPet BOOLEAN" +
                 ")";
-        }
-        // 'pet' Table
-        else if(tableName == "pet")
-        {
-            sqlCreateTable = "CREATE TABLE pet (" +
-                "petID VARCHAR(20) PRIMARY KEY," +
+        } else if (PET_TABLE.equals(tableName)) {
+            return "CREATE TABLE pet (" +
+                "petID VARCHAR(36) PRIMARY KEY," +
                 "petName VARCHAR(25)," +
-                "petInstance VARCHAR(10)," + // Assuming petInstance is a string representation of an animal type
+                "petInstance VARCHAR(10)," +
                 "petLevel INT," +
                 "petLevelXP INT," +
                 "petHunger INT," +
                 "petHygiene INT," +
                 "petHappiness INT," +
                 "userName VARCHAR(20)," +
-                "FOREIGN KEY (userName) REFERENCES user_data(userName)" + // Define a foreign key relationship to the u table
+                "FOREIGN KEY (userName) REFERENCES user_data(userName)" +
                 ")";
-        }
-        // 'food_inventory' Table
-        else if(tableName == "food_inventory")
-        {
-            sqlCreateTable = "CREATE TABLE food_inventory (" +
-                "foodInventoryID VARCHAR(20) PRIMARY KEY," +
+        } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+            return "CREATE TABLE food_inventory (" +
+                "foodInventoryID VARCHAR(36) PRIMARY KEY," +
                 "foodInventory VARCHAR(255)," +
                 "userName VARCHAR(20)," +
-                "FOREIGN KEY (userName) REFERENCES user_data(userName)" + // Define a foreign key relationship to the u table
+                "FOREIGN KEY (userName) REFERENCES user_data(userName)" +
                 ")";
         }
-        
-        try
-        {
-            Statement statement = dbManager.getConnection().createStatement();
-            
-            // If the table doesn't exist, create the table
-            if (!this.tableExists(dbManager.getConnection(), tableName)) 
-            {
-                // Table doesn't exist, so create it
-                statement.executeUpdate(sqlCreateTable);
-                System.out.println("Table '" + tableName + "' created successfully.");
-                
-                // Insert sample data
-                
-                // 'user_data' sample data
-                if(tableName == "user_data")
-                {
-                    String sqlInsertData1 = "INSERT INTO user_data (userName, userPassword, userDabloons, userHasPet) VALUES ('anny', '123', 100, true)";
-                    String sqlInsertData2 = "INSERT INTO user_data (userName, userPassword, userDabloons, userHasPet) VALUES ('fruit cake', '321', 20, false)";
-                    String sqlInsertData3 = "INSERT INTO user_data (userName, userPassword, userDabloons, userHasPet) VALUES ('desmond', '000', 50, true)";
-
-                    statement.executeUpdate(sqlInsertData1);
-                    statement.executeUpdate(sqlInsertData2);
-                    statement.executeUpdate(sqlInsertData3);
-                    
-                    System.out.println("Sample data for '"+ tableName +"' inserted successfully.");
-                }           
-                // 'pet' sample data
-                else if(tableName == "pet")
-                {
-                    String sqlInsertData1 = "INSERT INTO pet (petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName) " +
-                            "VALUES ('pet1', 'Pookie', 'Dog', 5, 1, 75, 70, 80, 'anny')";
-                    String sqlInsertData2 = "INSERT INTO pet (petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName) " +
-                            "VALUES ('pet2', 'Whiskers', 'Cat', 10, 0, 20, 60, 70, 'desmond')";
-    
-                    statement.executeUpdate(sqlInsertData1);
-                    statement.executeUpdate(sqlInsertData2);
-                    
-                    System.out.println("Sample data for '"+ tableName +"' inserted successfully.");
-                }
-                
-            } 
-            // if the table already exists, do not create it.
-            else 
-            {
-                System.out.println("Table '"+ tableName+"' already exists."); // prompt sent to user
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
-        }
-        
+        return "";
     }
 
-    // QUERY METHODS
+    // INSERT DATA METHODS
     
-    /* getQuery method
-    
-    Parameters: String tableName
-    Return: None
-    Description: 
-    */
-    public void getQuery(String tableName)
+    // INSERTING
+    public void insertData(String tableName, Object data) 
     {
-        ResultSet rs = null;
-        String sqlQuery = "SELECT * FROM "+ tableName;
-        
-        try
-        {
-            if(this.tableExists(this.dbManager.getConnection(), tableName))
+        String sqlInsert = generateInsertDataSQL(tableName);
+
+        try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlInsert)) {
+            if (tableExists(dbManager.getConnection(), tableName)) 
             {
-                System.out.println(" getting '" + tableName + "' query...");
-                Statement statement = dbManager.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                
-                rs = statement.executeQuery(sqlQuery);
-                rs.beforeFirst();
-
-                while(rs.next())
-                {
-                    if(tableName == "user_data")
-                    {
-                        String userName = rs.getString("userName");
-                        String userPassword = rs.getString("userPassword");
-                        int userDabloons = rs.getInt("userDabloons");
-                        boolean userHasPet = rs.getBoolean("userHasPet");
-                    }
-                    else if(tableName == "pet")
-                    {
-                        String petID = rs.getString("petID");
-                        String petName = rs.getString("petName");
-                        String petInstance = rs.getString("petInstance"); // Check the data type
-                        int petLevel = rs.getInt("petLevel");
-                        int petLevelXP = rs.getInt("petLevelXP");
-                        int petHunger = rs.getInt("petHunger");
-                        int petHygiene = rs.getInt("petHygiene");
-                        int petHappiness = rs.getInt("petHappiness");
-                        String userName = rs.getString("userName");
-                    }
-                    else if(tableName == "food_inventory")
-                    {
-                        String foodInventoryID = rs.getString("foodInventoryID");
-                        String foodInventory = rs.getString("foodInventory");
-                        String userName = rs.getString("userName");
-                    }
-
-                }
+                setInsertDataParameters(preparedStatement, tableName, data);
+                preparedStatement.executeUpdate();
+                System.out.println("Data inserted into table '" + tableName + "' successfully.");
+            } else {
+                System.out.println("Table '" + tableName + "' does not exist.");
             }
-            else
-            {
+        } catch (SQLException e) {
+            handleSQLException(e);
+        }
+    }
+    
+    // SAMPLE DATA
+    private void insertSampleData(String tableName) 
+    {
+        String sqlInsert = generateInsertDataSQL(tableName);
+
+        try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlInsert)) 
+        {
+            if (tableExists(dbManager.getConnection(), tableName)) {
+                // Set the sample data parameters based on the table name
+                if (USER_DATA_TABLE.equals(tableName)) {
+                    // Example sample data for user_data table
+                    preparedStatement.setString(1, "anny");
+                    preparedStatement.setString(2, "123");
+                    preparedStatement.setInt(3, 100);
+                    preparedStatement.setBoolean(4, true);
+                } else if (PET_TABLE.equals(tableName)) {
+                    // Example sample data for pet table
+                    preparedStatement.setString(1, "1234");
+                    preparedStatement.setString(2, "pookie");
+                    preparedStatement.setString(3, "dog");
+                    preparedStatement.setInt(4, 1);
+                    preparedStatement.setInt(5, 0);
+                    preparedStatement.setInt(6, 100);
+                    preparedStatement.setInt(7, 100);
+                    preparedStatement.setInt(8, 100);
+                    preparedStatement.setString(9, "anny");
+                } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+                    // Example sample data for food_inventory table
+                    preparedStatement.setString(1, "5323");
+                    preparedStatement.setString(2, "SampleFood1");
+                    preparedStatement.setString(3, "anny");
+                }
+
+                // Execute the update
+                preparedStatement.executeUpdate();
+                System.out.println("Sample data for '" + tableName + "' inserted successfully.");
+            } else {
                 System.out.println("Table '"+ tableName +"' does not exist.");
             }
-            
         } catch (SQLException e) {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
+            this.handleSQLException(e);
         }
-    } 
+    }
     
-    /* getAll method
+    private String generateInsertDataSQL(String tableName) {
+        if (USER_DATA_TABLE.equals(tableName)) {
+            return "INSERT INTO user_data (userName, userPassword, userDabloons, userHasPet) VALUES (?, ?, ?, ?)";
+        } else if (PET_TABLE.equals(tableName)) {
+            return "INSERT INTO pet (petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+            return "INSERT INTO food_inventory (foodInventoryID, foodInventory, userName) VALUES (?, ?, ?)";
+        }
+        return "";
+    }    
     
-    Parameters: String tableName
-    Return: List<Object>
-    Description: The specified table's entity instances are all returned.
-    */
-    public List<Object> getAll(String tableName)
+    private void setInsertDataParameters(PreparedStatement preparedStatement, String tableName, Object data) throws SQLException 
     {
-        List<Object> list = new ArrayList<>();
-        ResultSet rs = dbManager.myQuery("SELECT * FROM " + tableName);
-        
-        try
-        {
-            while(rs.next())
-            {
-                if(tableName == "user_data")
-                {
-                    String userName = rs.getString("userName");
-                    String userPassword = rs.getString("userPassword");
-                    int userDabloons = rs.getInt("userDabloons");
-                    boolean userHasPet = rs.getBoolean("userHasPet");
+        if (USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
+            UserData userData = (UserData) data;
+            preparedStatement.setString(1, userData.getUserName());
+            preparedStatement.setString(2, userData.getUserPassword());
+            preparedStatement.setInt(3, userData.getUserDabloons());
+            preparedStatement.setBoolean(4, userData.isUserHasPet());
+        } else if (PET_TABLE.equals(tableName) && data instanceof PetData) {
+            PetData petData = (PetData) data;
+            preparedStatement.setString(1, petData.getPetID());
+            preparedStatement.setString(2, petData.getPetName());
+            preparedStatement.setString(3, petData.getPetInstance());
+            preparedStatement.setInt(4, petData.getPetLevel());
+            preparedStatement.setInt(5, petData.getPetLevelXP());
+            preparedStatement.setInt(6, petData.getPetHunger());
+            preparedStatement.setInt(7, petData.getPetHygiene());
+            preparedStatement.setInt(8, petData.getPetHappiness());
+            preparedStatement.setString(9, petData.getUserName());
+        } else if (FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
+            FoodInventoryData foodInventoryData = (FoodInventoryData) data;
+            preparedStatement.setString(1, foodInventoryData.getFoodInventoryID());
+            preparedStatement.setString(2, foodInventoryData.getFoodInventory());
+            preparedStatement.setString(3, foodInventoryData.getUserName());
+        }
+    }
+    
+    // REMOVE DATA METHODS
+    
+    /**
+    * removeData method
+    *
+    * Parameters: String tableName, String primaryKey
+    * Return: None
+    * Description: Removes a record from the specified table using the primary key.
+    */
+   public void removeData(String tableName, String primaryKey) {
+       if (!tableExists(dbManager.getConnection(), tableName)) {
+           System.out.println("Table '" + tableName + "' does not exist.");
+           return;
+       }
 
-                    UserData u = new UserData(userName, userPassword, userDabloons, userHasPet);
-                    list.add(u);
+       if (!primaryKeyExists(tableName, primaryKey)) {
+           System.out.println("Record with the specified primary key does not exist in table '" + tableName + "'.");
+           return;
+       }
+
+       String sqlRemove = generateRemoveDataSQL(tableName);
+
+       try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlRemove)) {
+           setRemoveDataParameters(preparedStatement, tableName, primaryKey);
+           int rowCount = preparedStatement.executeUpdate();
+           if (rowCount > 0) {
+               System.out.println("Record with primary key '" + primaryKey + "' removed from table '" + tableName + "'.");
+           } else {
+               System.out.println("Record removal failed.");
+           }
+       } catch (SQLException e) {
+           handleSQLException(e);
+       }
+   }
+
+   private String generateRemoveDataSQL(String tableName) {
+       return "DELETE FROM " + tableName + " WHERE primaryKey = ?";
+   }
+
+   private void setRemoveDataParameters(PreparedStatement preparedStatement, String tableName, String primaryKey) throws SQLException {
+       preparedStatement.setString(1, primaryKey);
+   }
+   
+   // UPDATE DATA METHODS
+   
+   public void updateData(String tableName, Object data) 
+   {
+        String sqlUpdate = generateUpdateDataSQL(tableName);
+
+        try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlUpdate)) {
+            if (tableExists(dbManager.getConnection(), tableName)) {
+                setUpdateDataParameters(preparedStatement, tableName, data);
+                int rowCount = preparedStatement.executeUpdate();
+                if (rowCount > 0) {
+                    System.out.println("Data updated in table '" + tableName + "' successfully.");
+                } else {
+                    System.out.println("No records were updated.");
                 }
-                else if(tableName == "pet")
-                {
-                    String petID = rs.getString("petID");
-                    String petName = rs.getString("petName");
-                    String petInstance = rs.getString("petInstance");
-                    int petLevel = rs.getInt("petLevel");
-                    int petLevelXP = rs.getInt("petLevelXP");
-                    int petHunger = rs.getInt("petHunger");
-                    int petHygiene = rs.getInt("petHygiene");
-                    int petHappiness = rs.getInt("petHappiness");
-                    String userName = rs.getString("userName");
-
-                    PetData p = new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName);
-                    list.add(p);
-                }
-                else if(tableName == "food_inventory")
-                {
-                    String foodInventoryID = rs.getString("foodInventoryID");
-                    String foodInventory = rs.getString("foodInventory");
-                    String userName = rs.getString("userName");
-
-                    FoodInventoryData f = new FoodInventoryData(foodInventoryID, foodInventory, userName);
-                    list.add(f);
-                }
-            }
-        } catch(SQLException e)
-        {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
-        }
-        
-        return list;
-    }
-
-    /* getUserByUserName method
-    
-    Parameters: String name
-    Return: UserData
-    Description: The user's data for a specified name is returned 
-    */
-    public UserData getUserByUserName(String name)
-    {
-        ResultSet rs = dbManager.myQuery("SELECT * FROM user_data WHERE userName='" + name + "'");
-        
-        if(rs == null)
-        {
-            return null;
-        }
-        try
-        {
-            if(rs.next())
-            {
-                String userName = rs.getString("userName");
-                String userPassword = rs.getString("userPassword");
-                int userDabloons = rs.getInt("userDabloons");
-                boolean userHasPet = rs.getBoolean("userHasPet");
-
-                // Create and return a UserData object with the retrieved data
-                UserData u = new UserData(userName, userPassword, userDabloons, userHasPet);
-                return u;
-            }
-        } catch(SQLException e)
-        {
-            return null;
-        }
-        return null;
-    }
-    
-    /* getUserByFoodInventoryID method
-    
-    Parameters: String id (ID of foodInventory)
-    Return: UserData object
-    Description: The user's data for a specified foodInventoryID is returned 
-    */
-    
-    public UserData getUserByFoodInventoryID(String id) 
-    {
-        ResultSet rs = dbManager.myQuery("SELECT u.userName, u.userPassword, u.userHasPet "
-                                       + "FROM user_data u, food_inventory f "
-                                       + "WHERE f.foodInventoryID = " + id 
-                                       + " AND f.userName = u.userName");
-
-        // Check if the ResultSet is null
-        if (rs == null) {
-            return null; // or throw an exception, depending on your design
-        }
-
-        try {
-            if (rs.next()) {
-                String userName = rs.getString("userName");
-                String userPassword = rs.getString("userPassword");
-                int userDabloons = rs.getInt("userDabloons");
-                boolean userHasPet = rs.getBoolean("userHasPet");
-
-                // Create a userData object and return it
-                UserData u = new UserData(userName, userPassword, userDabloons, userHasPet);
-                return u;
+            } else {
+                System.out.println("Table '" + tableName + "' does not exist.");
             }
         } catch (SQLException e) {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
+            handleSQLException(e);
         }
-
-        // Return null if no matching user is found
-        return null;
     }
 
-    
-    /* getPetByPetID method
-    
-    Parameters: String id
-    Return: PetData object
-    Description: The pet's data for a specified pet ID is returned 
-    */
-    public PetData getPetByPetID(String id)
+    private String generateUpdateDataSQL(String tableName) 
     {
-        ResultSet rs = dbManager.myQuery("SELECT * FROM pet WHERE petID='" + id + "'");
-        
-        // Check if the ResultSet is null
-        if (rs == null) {
-            return null; // or throw an exception, depending on your design
+        // Create the SQL statement for updating data in the specified table
+        // Adapt this part to your specific use case
+        if (USER_DATA_TABLE.equals(tableName)) {
+            return "UPDATE user_data SET userPassword=?, userDabloons=?, userHasPet=? WHERE userName=?";
+        } else if (PET_TABLE.equals(tableName)) {
+            return "UPDATE pet SET petName=?, petInstance=?, petLevel=?, petLevelXP=?, petHunger=?, petHygiene=?, petHappiness=? WHERE petID=?";
+        } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+            return "UPDATE food_inventory SET foodInventory=? WHERE foodInventoryID=?";
         }
-        
-        try {
-            if (rs.next()) 
-            {
-                String petID = rs.getString("petID");
-                String petName = rs.getString("petName");
-                String petInstance = rs.getString("petInstance"); // Check the data type
-                int petLevel = rs.getInt("petLevel");
-                int petLevelXP = rs.getInt("petLevelXP");
-                int petHunger = rs.getInt("petHunger");
-                int petHygiene = rs.getInt("petHygiene");
-                int petHappiness = rs.getInt("petHappiness");
-                String userName = rs.getString("userName");
-
-                // Create and return a PetData object with the retrieved data
-                PetData p = new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName);
-                return p;
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
-        }
-        
-        return null; // Return null if no matching pet is found
-        
-    }
-    
-    /* getPetByPetNameAndUserName method
-    
-    Parameters: String userName & String petName
-    Return: PetData object
-    Description: Returns pet's data for a specified user and petname
-    */
-    public PetData getPetByPetNameAndUserName(String userName, String petName) 
-    {
-        ResultSet rs = dbManager.myQuery("SELECT * FROM pet WHERE userName='" + userName + "' AND petName='" + petName + "'");
-
-        // Check if the ResultSet is null
-        if (rs == null) {
-            return null; // or throw an exception, depending on your design
-        }
-
-        try {
-            if (rs.next()) {
-                String petID = rs.getString("petID");
-                String petInstance = rs.getString("petInstance");
-                int petLevel = rs.getInt("petLevel");
-                int petLevelXP = rs.getInt("petLevelXP");
-                int petHunger = rs.getInt("petHunger");
-                int petHygiene = rs.getInt("petHygiene");
-                int petHappiness = rs.getInt("petHappiness");
-
-                // Create and return a PetData object with the retrieved data
-                PetData p = new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName);
-                return p;
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
-        }
-        
-        return null; // Return null if no matching pet is found
+        return "";
     }
 
-    /* getFoodInventoryByUserName method
-    
-    Parameters: String name
-    Return: FoodInventoryData
-    Description: Returns food inventory data for a specified username
-    */
-    public FoodInventoryData getFoodInventoryByUserName(String name)
+    private void setUpdateDataParameters(PreparedStatement preparedStatement, String tableName, Object data) throws SQLException 
     {
-        ResultSet rs = dbManager.myQuery("SELECT * FROM food_inventory WHERE userName='" + name + "'");
-        
-        // Check if the ResultSet is null
-        if (rs == null) {
-            return null; // or throw an exception, depending on your design
+        // Set the parameters for the update statement based on the table name and data object
+        // Adapt this part to your specific use case
+        if (USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
+            UserData userData = (UserData) data;
+            preparedStatement.setString(1, userData.getUserPassword());
+            preparedStatement.setInt(2, userData.getUserDabloons());
+            preparedStatement.setBoolean(3, userData.isUserHasPet());
+            preparedStatement.setString(4, userData.getUserName());
+        } else if (PET_TABLE.equals(tableName) && data instanceof PetData) {
+            PetData petData = (PetData) data;
+            preparedStatement.setString(1, petData.getPetName());
+            preparedStatement.setString(2, petData.getPetInstance());
+            preparedStatement.setInt(3, petData.getPetLevel());
+            preparedStatement.setInt(4, petData.getPetLevelXP());
+            preparedStatement.setInt(5, petData.getPetHunger());
+            preparedStatement.setInt(6, petData.getPetHygiene());
+            preparedStatement.setInt(7, petData.getPetHappiness());
+            preparedStatement.setString(8, petData.getPetID());
+        } else if (FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
+            FoodInventoryData foodInventoryData = (FoodInventoryData) data;
+            preparedStatement.setString(1, foodInventoryData.getFoodInventory());
+            preparedStatement.setString(2, foodInventoryData.getFoodInventoryID());
         }
-        
-        try
-        {
-            if (rs.next()) 
-            {
-                String foodInventoryID = rs.getString("foodInventoryID");
-                String foodInventory = rs.getString("foodInventory");
-                String userName = rs.getString("userName");
-                
-                FoodInventoryData f = new FoodInventoryData(foodInventoryID, foodInventory, userName);
-                return f;
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
-        }
-        
-        return null;
-    }
-            
-    /* getFoodInventoryByFoodInventoryID method
-    
-    Parameters: String id
-    Return: FoodInventoryData object
-    Description: Returns food inventory data for a specified food inventory ID
-    */
-    public FoodInventoryData getFoodInventoryByFoodInventoryID(String id)
-    {
-        ResultSet rs = dbManager.myQuery("SELECT * FROM food_inventory WHERE foodInventoryID='" + id + "'");
-        
-        // Check if the ResultSet is null
-        if (rs == null) {
-            return null; // or throw an exception, depending on your design
-        }
-        
-        try
-        {
-            if (rs.next()) 
-            {
-                String foodInventoryID = rs.getString("foodInventoryID");
-                String foodInventory = rs.getString("foodInventory");
-                String userName = rs.getString("userName");
-                
-                FoodInventoryData f = new FoodInventoryData(foodInventoryID, foodInventory, userName);
-                return f;
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
-        }
-        
-        return null;
-    }
-          
-    /* dropTable method
-    
-    Parameters: String tableName
-    Return: void
-    Description: Drops specified table if it exists
-    */
-    public void dropTable(String tableName)
-    {
-        String sqlDropTable = "DROP TABLE " + tableName;
-        
-        try
-        {
-            if(this.tableExists(this.dbManager.getConnection(), tableName))
-            {
-                Statement statement = dbManager.getConnection().createStatement();
-                statement.executeUpdate(sqlDropTable);
-                System.out.println("Table '" + tableName + "' dropped successfully. ");
-            }
-            else
-            {
-                System.out.println("Table '" + tableName + "' does not exist");
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
-        }
-        
     }
     
     /* tableExists method
@@ -543,4 +343,41 @@ public class ForeverHomeDBOperations
         }
     }
     
+    private void handleSQLException(SQLException e) {
+        Logger.getLogger(ForeverHomeDBOperations.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
+    }
+    
+    /**
+    * primaryKeyExists method
+    *
+    * Parameters: String tableName, String primaryKey
+    * Return: boolean
+    * Description: Checks if a record with the specified primary key exists in the table.
+    */
+   public boolean primaryKeyExists(String tableName, String primaryKey) {
+       if (!tableExists(dbManager.getConnection(), tableName)) {
+           System.out.println("Table '" + tableName + "' does not exist.");
+           return false;
+       }
+
+       String sqlCheckExists = generateCheckPrimaryKeySQL(tableName);
+
+       try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlCheckExists)) {
+           setCheckPrimaryKeyParameters(preparedStatement, primaryKey);
+           try (ResultSet rs = preparedStatement.executeQuery()) {
+               return rs.next(); // Returns true if a record with the specified primary key exists
+           }
+       } catch (SQLException e) {
+           handleSQLException(e);
+           return false; // Default to false if an error occurs
+       }
+   }
+   
+   private String generateCheckPrimaryKeySQL(String tableName) {
+    return "SELECT 1 FROM " + tableName + " WHERE primaryKey = ?";
+    }
+
+    private void setCheckPrimaryKeyParameters(PreparedStatement preparedStatement, String primaryKey) throws SQLException {
+        preparedStatement.setString(1, primaryKey);
+    }
 }

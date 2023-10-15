@@ -22,12 +22,6 @@ public class UserData
     
     // CONSTRUCTORS
     
-    // 1-Parameter constructor
-    public UserData(String userName)
-    {
-        this.userName = userName;
-    }
-    
     // 3-Paramter constructor
     public UserData(String userName, String userPassword, int userDabloons, boolean userHasPet)
     {
@@ -91,6 +85,12 @@ public class UserData
     
     // METHODS
     
+    // Checks if a given password matches the user's password
+    public boolean authenticateUser(String inputPassword)
+    {
+        return inputPassword.equals(this.getUserPassword());
+    }
+    
     // Override equals method
     @Override
     public boolean equals(Object o) 
@@ -98,17 +98,14 @@ public class UserData
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserData userData = (UserData) o;
-        return getUserDabloons() == userData.getUserDabloons() &&
-                isUserHasPet() == userData.isUserHasPet() &&
-                Objects.equals(getUserName(), userData.getUserName()) &&
-                Objects.equals(getUserPassword(), userData.getUserPassword());
+        return Objects.equals(getUserName(), userData.getUserName());
     }
 
     // Override hashCode method
     @Override
     public int hashCode() 
     {
-        return Objects.hash(getUserName(), getUserPassword(), getUserDabloons(), isUserHasPet());
+        return Objects.hash(getUserName());
     }
     
     // toString method
@@ -121,6 +118,4 @@ public class UserData
             ", userHasPet=" + isUserHasPet() +
             '}';
     }
-
-    
 }

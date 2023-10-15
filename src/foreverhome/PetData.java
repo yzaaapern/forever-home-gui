@@ -5,6 +5,7 @@
 package foreverhome;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  *
@@ -27,6 +28,22 @@ public class PetData
     
     
     // Constructor
+    
+    // New pet within the database (doesn't have it's own ID yet)
+    public PetData(String petName, String petInstance, int petLevel, int petLevelXP, int petHunger, int petHygiene, int petHappiness, String userName)
+    {
+        this.petID = generateRandomPetID();
+        this.setPetName(petName);
+        this.setPetInstance(petInstance);
+        this.setPetLevel(petLevel);
+        this.setPetLevelXP(petLevelXP);
+        this.setPetHunger(petHunger);
+        this.setPetHygiene(petHygiene);
+        this.setPetHappiness(petHappiness);
+        this.setUserName(userName);
+    }
+    
+    // Existing pet within the database
     public PetData(String petID, String petName, String petInstance, int petLevel, int petLevelXP, int petHunger, int petHygiene, int petHappiness, String userName)
     {
         this.petID = petID;
@@ -163,27 +180,25 @@ public class PetData
     
     // METHODS
     
+    // Generate a random petID using UUID
+    private String generateRandomPetID()
+    {
+        return UUID.randomUUID().toString();
+    }
+    
     // Override equals method
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PetData petData = (PetData) o;
-        return getPetLevel() == petData.getPetLevel() &&
-                getPetLevelXP() == petData.getPetLevelXP() &&
-                getPetHunger() == petData.getPetHunger() &&
-                getPetHygiene() == petData.getPetHygiene() &&
-                getPetHappiness() == petData.getPetHappiness() &&
-                Objects.equals(getPetID(), petData.getPetID()) &&
-                Objects.equals(getPetName(), petData.getPetName()) &&
-                Objects.equals(getPetInstance(), petData.getPetInstance()) &&
-                Objects.equals(getUserName(), petData.getUserName());
+        return  Objects.equals(getPetID(), petData.getPetID());
     }
     
     // Override hashCode method
     @Override
     public int hashCode() {
-        return Objects.hash(getPetID(), getPetName(), getPetInstance(), getPetLevel(), getPetLevelXP(), getPetHunger(), getPetHygiene(), getPetHappiness(), getUserName());
+        return Objects.hash(getPetID());
     }
     
     // toString method
@@ -202,6 +217,4 @@ public class PetData
                 ", userName='" + getUserName() + '\'' +
                 '}';
     }
-
-    
 }
