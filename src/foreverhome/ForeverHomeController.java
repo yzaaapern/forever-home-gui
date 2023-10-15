@@ -21,8 +21,8 @@ public class ForeverHomeController {
         view.display();
 //        view.showLoadingPanel();
 //        simulateLoading();
-        view.showStartGamePanel();
-//        view.showLoginPanel();
+//        view.showStartGamePanel();
+        view.showLoginPanel();
         
     }
     

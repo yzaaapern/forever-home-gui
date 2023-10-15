@@ -4,9 +4,10 @@ RICHIE:10000|NoPet
 iuxta:0|Catty:2:15:15:15:0:140:1
 Anny:80|dog:1:15:15:15:0:260:4
 Marty:20|NoPet
+fruity:20|george:5:20:20:20:0:180:2
 y:20|NoPet
 z:20|parrot:4:0:0:0:0:100:0
 Bobby:10|Remy:3:40:15:15:10:140:1
 yza:10|malaya:2:15:15:15:0:140:1
 deiah:10|Catty:2:15:15:15:0:140:1
-fruity:20|george:5:20:20:20:0:180:2
+:20|NoPet
