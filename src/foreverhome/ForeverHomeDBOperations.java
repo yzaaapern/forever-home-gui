@@ -40,6 +40,7 @@ public class ForeverHomeDBOperations
     public static void main(String[] args) 
     {
         ForeverHomeDBOperations dbOperations = new ForeverHomeDBOperations();
+        ForeverHomeDBQueries dbQueries = new ForeverHomeDBQueries();
         
         // Drop tables
 //        dbOperations.dropTable(PET_TABLE);
@@ -50,6 +51,17 @@ public class ForeverHomeDBOperations
         dbOperations.createTable(USER_DATA_TABLE);
         dbOperations.createTable(PET_TABLE);
         dbOperations.createTable(FOOD_INVENTORY_TABLE);
+        
+        Animal pet1 = new Cat("catty");
+        PetData petData1 = new PetData(pet1, "anny");
+        dbOperations.insertData(PET_TABLE, petData1);
+
+        Player user1 = new Player("Roxy");
+        UserData userData1 = new UserData(user1);
+        dbOperations.insertData(USER_DATA_TABLE, userData1);
+
+        FoodInventoryData foodInventoryData1 = new FoodInventoryData(user1.getFoodInventory(), user1.getName());
+        dbOperations.insertData(FOOD_INVENTORY_TABLE, foodInventoryData1);
         
         // Closing connection
         dbOperations.dbManager.closeConnection();
@@ -116,6 +128,34 @@ public class ForeverHomeDBOperations
         return "";
     }
 
+    /* dropTable method
+    
+    Parameters: String tableName
+    Return: void
+    Description: Drops specified table if it exists
+    */
+    public void dropTable(String tableName)
+    {
+        String sqlDropTable = "DROP TABLE " + tableName;
+        
+        try
+        {
+            if(this.tableExists(this.dbManager.getConnection(), tableName))
+            {
+                Statement statement = dbManager.getConnection().createStatement();
+                statement.executeUpdate(sqlDropTable);
+                System.out.println("Table '" + tableName + "' dropped successfully. ");
+            }
+            else
+            {
+                System.out.println("Table '" + tableName + "' does not exist");
+            }
+        } catch (SQLException e) {
+            this.handleSQLException(e);
+        }
+        
+    }
+    
     // INSERT DATA METHODS
     
     // INSERTING
@@ -123,18 +163,31 @@ public class ForeverHomeDBOperations
     {
         String sqlInsert = generateInsertDataSQL(tableName);
 
-        try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlInsert)) {
+        try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlInsert)) 
+        {            
             if (tableExists(dbManager.getConnection(), tableName)) 
             {
-                setInsertDataParameters(preparedStatement, tableName, data);
-                preparedStatement.executeUpdate();
-                System.out.println("Data inserted into table '" + tableName + "' successfully.");
-            } else {
+                // Check if the primary key exists in the table
+                if (primaryKeyExists(tableName, data)) {
+                    System.out.println("Record with the specified primary key already exists in table '" + tableName + "'.");
+                    return;
+                }
+                else
+                {
+                    setInsertDataParameters(preparedStatement, tableName, data);
+                    preparedStatement.executeUpdate();
+                    System.out.println("Data inserted into table '" + tableName + "' successfully.");
+                }
+            } 
+            else 
+            {
                 System.out.println("Table '" + tableName + "' does not exist.");
             }
         } catch (SQLException e) {
             handleSQLException(e);
         }
+        
+
     }
     
     // SAMPLE DATA
@@ -142,42 +195,55 @@ public class ForeverHomeDBOperations
     {
         String sqlInsert = generateInsertDataSQL(tableName);
 
-        try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlInsert)) 
-        {
+        // sample playerSample1
+        Player playerSample1 = new Player("anny");
+        playerSample1.setPassword("123");
+        playerSample1.setDabloons(1000);
+        playerSample1.hasFosterPet = true;
+        UserData userData = new UserData(playerSample1);
+        
+        // sample petSample1
+        Animal petSample1 = new Dog("Pookie");
+        PetData petDataSample1 = new PetData(petSample1, playerSample1.getName());
+        
+        // sample foodInventory
+        FoodInventoryData foodInventoryDataSample1 = new FoodInventoryData(playerSample1.getFoodInventory(), playerSample1.getName());
+        
+        try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlInsert)) {
             if (tableExists(dbManager.getConnection(), tableName)) {
                 // Set the sample data parameters based on the table name
                 if (USER_DATA_TABLE.equals(tableName)) {
                     // Example sample data for user_data table
-                    preparedStatement.setString(1, "anny");
-                    preparedStatement.setString(2, "123");
-                    preparedStatement.setInt(3, 100);
-                    preparedStatement.setBoolean(4, true);
+                    preparedStatement.setString(1, userData.getUserName());
+                    preparedStatement.setString(2, userData.getUserPassword());
+                    preparedStatement.setInt(3, userData.getUserDabloons());
+                    preparedStatement.setBoolean(4, userData.isUserHasPet());
                 } else if (PET_TABLE.equals(tableName)) {
-                    // Example sample data for pet table
-                    preparedStatement.setString(1, "1234");
-                    preparedStatement.setString(2, "pookie");
-                    preparedStatement.setString(3, "dog");
-                    preparedStatement.setInt(4, 1);
-                    preparedStatement.setInt(5, 0);
-                    preparedStatement.setInt(6, 100);
-                    preparedStatement.setInt(7, 100);
-                    preparedStatement.setInt(8, 100);
-                    preparedStatement.setString(9, "anny");
+                    // Example sample data for petSample1 table
+                    preparedStatement.setString(1, petDataSample1.getPetID());
+                    preparedStatement.setString(2, petDataSample1.getPetName());
+                    preparedStatement.setString(3, petDataSample1.getPetInstance());
+                    preparedStatement.setInt(4, petDataSample1.getPetLevel());
+                    preparedStatement.setInt(5, petDataSample1.getPetLevelXP());
+                    preparedStatement.setInt(6, petDataSample1.getPetHunger());
+                    preparedStatement.setInt(7, petDataSample1.getPetHappiness());
+                    preparedStatement.setInt(8, petDataSample1.getPetHygiene());
+                    preparedStatement.setString(9, petDataSample1.getUserName());
                 } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
                     // Example sample data for food_inventory table
-                    preparedStatement.setString(1, "5323");
-                    preparedStatement.setString(2, "SampleFood1");
-                    preparedStatement.setString(3, "anny");
+                    preparedStatement.setString(1, foodInventoryDataSample1.getFoodInventoryID());
+                    preparedStatement.setString(2, foodInventoryDataSample1.getFoodInventory());
+                    preparedStatement.setString(3, foodInventoryDataSample1.getUserName());
                 }
 
                 // Execute the update
                 preparedStatement.executeUpdate();
                 System.out.println("Sample data for '" + tableName + "' inserted successfully.");
             } else {
-                System.out.println("Table '"+ tableName +"' does not exist.");
+                System.out.println("Table '" + tableName + "' does not exist.");
             }
         } catch (SQLException e) {
-            this.handleSQLException(e);
+            handleSQLException(e);
         }
     }
     
@@ -354,30 +420,58 @@ public class ForeverHomeDBOperations
     * Return: boolean
     * Description: Checks if a record with the specified primary key exists in the table.
     */
-   public boolean primaryKeyExists(String tableName, String primaryKey) {
-       if (!tableExists(dbManager.getConnection(), tableName)) {
-           System.out.println("Table '" + tableName + "' does not exist.");
-           return false;
-       }
+   public boolean primaryKeyExists(String tableName, Object data) 
+   {
+        String sqlCheckExists = generateCheckPrimaryKeySQL(tableName);
+        if (!tableExists(dbManager.getConnection(), tableName)) {
+            System.out.println("Table '" + tableName + "' does not exist.");
+            return false;
+        }
 
-       String sqlCheckExists = generateCheckPrimaryKeySQL(tableName);
-
-       try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlCheckExists)) {
-           setCheckPrimaryKeyParameters(preparedStatement, primaryKey);
-           try (ResultSet rs = preparedStatement.executeQuery()) {
-               return rs.next(); // Returns true if a record with the specified primary key exists
-           }
-       } catch (SQLException e) {
-           handleSQLException(e);
-           return false; // Default to false if an error occurs
-       }
-   }
+        else
+        {
+            try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlCheckExists)) 
+            {
+                setCheckPrimaryKeyParameters(preparedStatement, tableName, data);
+                try (ResultSet rs = preparedStatement.executeQuery()) 
+                {
+                    return rs.next(); // Returns true if a record with the specified primary key exists
+                }
+            } catch (SQLException e) {
+                handleSQLException(e);
+                return false; // Default to false if an error occurs
+            }
+        }
+    }
    
    private String generateCheckPrimaryKeySQL(String tableName) {
-    return "SELECT 1 FROM " + tableName + " WHERE primaryKey = ?";
+       if(USER_DATA_TABLE.equals(tableName))
+       {
+           return "SELECT 1 FROM " + tableName + " WHERE userName = ?";
+       }
+       else if(PET_TABLE.equals(tableName))
+       {
+           return "SELECT 1 FROM " + tableName + " WHERE petID = ?";
+       }
+       else if(FOOD_INVENTORY_TABLE.equals(tableName))
+       {
+           return "SELECT 1 FROM " + tableName + " WHERE foodInventoryID = ?";
+       }
+       return "";
     }
 
-    private void setCheckPrimaryKeyParameters(PreparedStatement preparedStatement, String primaryKey) throws SQLException {
-        preparedStatement.setString(1, primaryKey);
+    private void setCheckPrimaryKeyParameters(PreparedStatement preparedStatement, String tableName, Object data) throws SQLException 
+    {
+        // Set the parameters for the check based on the table name and data object
+        if (USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
+            UserData userData = (UserData) data;
+            preparedStatement.setString(1, userData.getUserName());
+        } else if (PET_TABLE.equals(tableName) && data instanceof PetData) {
+            PetData petData = (PetData) data;
+            preparedStatement.setString(1, petData.getPetID());
+        } else if (FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
+            FoodInventoryData foodInventoryData = (FoodInventoryData) data;
+            preparedStatement.setString(1, foodInventoryData.getFoodInventoryID());
+        }
     }
 }

@@ -28,7 +28,6 @@ public class PetData
     
     
     // Constructor
-    
     // New pet within the database (doesn't have it's own ID yet)
     public PetData(String petName, String petInstance, int petLevel, int petLevelXP, int petHunger, int petHygiene, int petHappiness, String userName)
     {
@@ -68,6 +67,20 @@ public class PetData
         this.setPetHunger(petHunger);
         this.setPetHygiene(petHygiene);
         this.setPetHappiness(petHappiness);
+        this.setUserName(userName);
+    }
+    
+    // Existing pet within the database
+    public PetData(String petID, Animal pet, String userName)
+    {
+        this.petID = petID;
+        this.setPetName(pet.getName());
+        this.setPetInstance(this.checkPetInstance(pet));
+        this.setPetLevel(pet.getLevel());
+        this.setPetLevelXP(pet.getLevelXP());
+        this.setPetHunger(pet.getHunger());
+        this.setPetHygiene(pet.getHygiene());
+        this.setPetHappiness(pet.getHappiness());
         this.setUserName(userName);
     }
     

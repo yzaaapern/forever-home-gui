@@ -20,13 +20,15 @@ public class FoodInventoryData
     
     // CONSTRUCTORS
     
-    // 1-Parameter Constructor
-    public FoodInventoryData(String foodInventoryID)
+    // new FoodInventoryData in the database (doesn't have an ID yet)
+    public FoodInventoryData(FoodInventory foodInventory, String userName)
     {
-        this.foodInventoryID = foodInventoryID;
+        this.foodInventoryID = this.generateRandomFoodInventoryID();
+        this.setFoodInventory(this.dbFoodInventoryToString(foodInventory));
+        this.userName = userName;
     }
     
-    // 2-Parameter Constructor
+    // 2-Parameter Constructor: new FoodInventoryData in the database (doesn't have an ID yet)
     public FoodInventoryData(String foodInventory, String userName)
     {
         this.foodInventoryID = this.generateRandomFoodInventoryID();
@@ -34,13 +36,22 @@ public class FoodInventoryData
         this.setUserName(userName);
     }
     
-    // 3-Parameter Constructor
+    // 3-Parameter Constructor: existing FoodInventoryData in the database
+    public FoodInventoryData(String foodInventoryID, FoodInventory foodInventory, String userName)
+    {
+        this.foodInventoryID = foodInventoryID;
+        this.setFoodInventory(this.dbFoodInventoryToString(foodInventory));
+        this.setUserName(userName);
+    }
+    
+    // 3-Parameter Constructor: existing FoodInventoryData in the database
     public FoodInventoryData(String foodInventoryID, String foodInventory, String userName)
     {
         this.foodInventoryID = foodInventoryID;
         this.setFoodInventory(foodInventory);
         this.setUserName(userName);
     }
+    
     
     // GET & SET METHODS
     /**
@@ -84,6 +95,35 @@ public class FoodInventoryData
     private String generateRandomFoodInventoryID()
     {
         return UUID.randomUUID().toString();
+    }
+    
+    // Converts FoodInventory String to a readable string for the database
+    public String dbFoodInventoryToString(FoodInventory foodInventory)
+    {
+        String output = "";
+        
+        for(Food f : foodInventory.getFoods())
+        {
+            output += f.getFoodName() + ":" + f.getFoodCount() + "^";
+        }
+        // Remove the trailing comma
+        if (output.endsWith("^")) 
+        {
+            output = output.substring(0, output.length() - 1);
+        }
+        return output;
+    }
+    
+    // Converts dbFoodInventory to foodInventory
+    public FoodInventory dbFoodInventoryToFoodInventory(String foodInventoryString)
+    {
+        FoodInventory foodInventory = new FoodInventory();
+        for(int i = 0; i < FoodInventory.NUM_OF_FOODS; i++)
+        {
+            int foodCount = Integer.parseInt(foodInventoryString.split("^")[i].split(":")[0]);
+            foodInventory.getFoods()[i].setFoodCount(foodCount);
+        }
+        return foodInventory;
     }
     
     // Override equals method

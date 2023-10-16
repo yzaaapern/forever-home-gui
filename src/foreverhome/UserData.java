@@ -22,6 +22,17 @@ public class UserData
     
     // CONSTRUCTORS
     
+    // New user in the database
+    public UserData(Player player)
+    {
+        this.userName = player.getName();
+        this.userPassword = player.getPassword();
+        this.userDabloons = player.getDabloons();
+        this.userHasPet = player.hasFosterPet;
+        
+        FoodInventoryData foodInventoryData = new FoodInventoryData(player.getFoodInventory(), this.getUserName());
+    }
+    
     // 3-Paramter constructor
     public UserData(String userName, String userPassword, int userDabloons, boolean userHasPet)
     {
