@@ -19,7 +19,7 @@ public class ForeverHomeModel extends Observable {
      */
     public static volatile boolean startThreads = true;
 //    public Database db;
-//    public Data data;
+    public ForeverHomeData data;
     public DecrementStatsRunnable dsr;
     public Thread petDecrementStatsThread;
     public InteractionList interactionList;

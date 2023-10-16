@@ -20,10 +20,10 @@ import javax.swing.JPanel;
  * @author yzape Name: Yza Pernia Student ID: 21137984
  */
 public final class LoginView {
-
+    
+    public JPanel loginPanel;
     private JLabel loginLabel;
     private JLabel introLabel;
-    public JPanel loginPanel;
     private JPanel loginForm;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
@@ -32,7 +32,7 @@ public final class LoginView {
     private GameButton continueBtn;
     private GameButton goBackBtn;
 
-    private final String bgFilePath = "./resources/images/bg3.png";
+    private final String BG_FILE_PATH = "./resources/images/bg3.png";
     public String intro = "Please make sure to enter your correct information.";
 
     public LoginView() {
@@ -81,11 +81,11 @@ public final class LoginView {
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(50, 20, 0, 10);
         gbc.gridwidth = 1;
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 6;
         loginForm.add(continueBtn, gbc);
 
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 6;
         loginForm.add(goBackBtn, gbc);
 
@@ -136,8 +136,8 @@ public final class LoginView {
         loginForm = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
                 g.setColor(Color.decode("#D17272"));
-
                 g.fillRect(loginPanel.getWidth() / 8, loginPanel.getHeight() / 5, 600, 350);
             }
         };
@@ -150,7 +150,8 @@ public final class LoginView {
         loginPanel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
-                GameImage bgImage = new GameImage(bgFilePath);
+                super.paintComponent(g);
+                GameImage bgImage = new GameImage(BG_FILE_PATH);
                 g.drawImage(bgImage.getImage(), 0, 0, null);
             }
         };

@@ -18,17 +18,17 @@ public class ForeverHomeController {
     }
     
     public void start(){
-        view.display();
-//        view.showLoadingPanel();
+//        view.display();
 //        simulateLoading();
 //        view.showStartGamePanel();
-        view.showLoginPanel();
+//        view.showLoginPanel();
+        view.showFosterPanel();
         
     }
     
     private void simulateLoading(){
         try{
-            Thread.sleep(22000);
+            Thread.sleep(14000);
         } catch(InterruptedException e){
             e.printStackTrace();
         }

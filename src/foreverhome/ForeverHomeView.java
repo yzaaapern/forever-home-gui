@@ -14,12 +14,13 @@ import javax.swing.JFrame;
 public class ForeverHomeView {
 
     public static JFrame frame;
-    private final LoadingView loadingView;
-    private final StartGameView startGameView;
-    private final LoginView loginView;
+    private final LoadingView LOADING_VIEW;
+    private final StartGameView STARTGAME_VIEW;
+    private final LoginView LOGIN_VIEW;
+    private final FosterView FOSTER_VIEW;
 
-    private final int WIDTH = 800;
-    private final int HEIGHT = 600;
+    private final int WIDTH = 814;
+    private final int HEIGHT = 610;
 
     public ForeverHomeView() {
         frame = new JFrame("Forever Home Game");
@@ -29,26 +30,29 @@ public class ForeverHomeView {
         frame.setResizable(false);
         frame.setLayout(new CardLayout());
 
-        loadingView = new LoadingView();
-        loginView = new LoginView();
-        startGameView = new StartGameView();
-        
-        frame.add(loadingView.loadingPanel, "loading");
-        frame.add(startGameView.startGamePanel, "start");
-        frame.add(loginView.loginPanel, "login");
-        
+        LOADING_VIEW = new LoadingView();
+        LOGIN_VIEW = new LoginView();
+        STARTGAME_VIEW = new StartGameView();
+        FOSTER_VIEW = new FosterView();
+
+        frame.add(LOADING_VIEW.loadingPanel, "loading");
+        frame.add(STARTGAME_VIEW.startGamePanel, "start");
+        frame.add(LOGIN_VIEW.loginPanel, "login");
+        frame.add(FOSTER_VIEW.fosterPanel, "foster");
+
         frame.setVisible(true);
     }
 
     public void display() {
         frame.setVisible(true);
+        showLoadingPanel();
     }
 
     public void showLoadingPanel() {
-        loadingView.showLoadingTextAnimation();
+        LOADING_VIEW.showLoadingTextAnimation();
     }
-    
-    public void showStartGamePanel(){
+
+    public void showStartGamePanel() {
         CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
         cardLayout.show(frame.getContentPane(), "start");
     }
@@ -56,6 +60,11 @@ public class ForeverHomeView {
     public void showLoginPanel() {
         CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
         cardLayout.show(frame.getContentPane(), "login");
+    }
+
+    public void showFosterPanel() {
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), "foster");
     }
 
 }
