@@ -16,6 +16,7 @@ public class Player
     public static final int INC_DABLOONS = 10; // when the player levels their pet they get 10 dabloons
     public static final int REWARD_DABLOONS = 100; // when the player's pet reaches max level they get 100 dabloons
     private String name;
+    private String password;
     public Animal fosterPet;
     public boolean isPlaying;
     public boolean hasFosterPet;
@@ -32,6 +33,13 @@ public class Player
         this.foodInventory = new FoodInventory();
     }
     
+    // Player with a foster pet
+    public Player(String name, Animal fosterPet) {
+        this(name); // Call the default constructor
+        this.setFosterPet(fosterPet);
+        this.hasFosterPet = true; // Set hasFosterPet to true since the player has a foster pet
+    }
+    
     // GET & SET METHODS
     
     public void setName(String name){
@@ -40,6 +48,14 @@ public class Player
     
     public String getName(){
         return this.name;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     public void setFosterPet(Animal fosterPet){

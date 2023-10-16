@@ -6,20 +6,46 @@ package foreverhome;
 
 /**
  *
- * @author AnnGa
+ * @author annga
  */
 public class ForeverHomeData 
 {
     // Instance variables
-    UserData userData;
-    PetData petData;
-    FoodInventoryData foodInventoryData;
+    private UserData userData;
+    private PetData petData;
+    private FoodInventoryData foodInventoryData;
     
     // Constructor
     public ForeverHomeData(UserData userData, PetData petData, FoodInventoryData foodInventoryData)
     {
-        this.userData = userData;
+        this.setUserData(userData);
+        this.setPetData(petData);
+        this.setFoodInventoryData(foodInventoryData);
+    }
+
+    // METHODS
+    
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userdata) {
+        this.userData = userdata;
+    }
+
+    public PetData getPetData() {
+        return petData;
+    }
+
+    public void setPetData(PetData petData) {
         this.petData = petData;
+    }
+
+    public FoodInventoryData getFoodInventoryData() {
+        return foodInventoryData;
+    }
+
+    public void setFoodInventoryData(FoodInventoryData foodInventoryData) {
         this.foodInventoryData = foodInventoryData;
     }
 }

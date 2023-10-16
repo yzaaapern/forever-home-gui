@@ -49,9 +49,11 @@ public class ForeverHomeDBQueries
         System.out.println(dbQueries.getAll(PET_TABLE));
         System.out.println(dbQueries.getAll(FOOD_INVENTORY_TABLE));
         System.out.println(dbQueries.getUserByUserName("anny"));
-        System.out.println(dbQueries.getPetByPetNameAndUserName("anny", "pookie"));
-        System.out.println(dbQueries.getUserByFoodInventoryID("5323"));
-        System.out.println(dbQueries.getPetByPetID("1234"));
+        System.out.println(dbQueries.getPetByPetNameAndUserName("anny", "Pookie"));
+        System.out.println(dbQueries.getUserByFoodInventoryID("ecf77bba-0ca2-495c-b6f9-b6fb6fdb3aa6"));
+        System.out.println(dbQueries.getPetByPetID("03a5f174-5ca8-4f99-a46b-380e5c195837"));
+        System.out.println(dbQueries.getPetByPetID("843ff3bf-df2a-47f7-9542-0fe2664dc404"));
+        System.out.println(dbQueries.getFoodInventoryByUserName("anny"));
     }
     
     // METHODS
@@ -363,34 +365,6 @@ public class ForeverHomeDBQueries
         }
 
         return null;
-    }
-    
-    /* dropTable method
-    
-    Parameters: String tableName
-    Return: void
-    Description: Drops specified table if it exists
-    */
-    public void dropTable(String tableName)
-    {
-        String sqlDropTable = "DROP TABLE " + tableName;
-        
-        try
-        {
-            if(this.tableExists(this.dbManager.getConnection(), tableName))
-            {
-                Statement statement = dbManager.getConnection().createStatement();
-                statement.executeUpdate(sqlDropTable);
-                System.out.println("Table '" + tableName + "' dropped successfully. ");
-            }
-            else
-            {
-                System.out.println("Table '" + tableName + "' does not exist");
-            }
-        } catch (SQLException e) {
-            this.handleSQLException(e);
-        }
-        
     }
     
     /* tableExists method
