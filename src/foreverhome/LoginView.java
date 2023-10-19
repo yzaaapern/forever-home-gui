@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * @author yzape Name: Yza Pernia Student ID: 21137984
  */
 public final class LoginView {
-    
+
     public JPanel loginPanel;
     private JLabel loginLabel;
     private JLabel introLabel;
@@ -67,11 +67,13 @@ public final class LoginView {
         gbc.gridy = 3;
         loginForm.add(usernameField, gbc);
 
+        gbc.insets = new Insets(30, 20, 0, 20);
         gbc.gridwidth = 1;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.NONE;
         loginForm.add(passwordLabel, gbc);
 
+        gbc.insets = new Insets(10, 20, 0, 20);
         gbc.gridwidth = 3;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -119,11 +121,9 @@ public final class LoginView {
         Font buttonFont = GameFont.getPixelFont(12, 0);
         continueBtn = new GameButton("Continue");
         continueBtn.setFont(buttonFont);
-        continueBtn.setForeground(Color.white);
 
         goBackBtn = new GameButton("Go Back");
         goBackBtn.setFont(buttonFont);
-        goBackBtn.setForeground(Color.white);
 
     }
 

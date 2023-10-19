@@ -18,38 +18,37 @@ import javax.swing.JButton;
  */
 public class GameButton extends JButton {
 
-    private GameImage NORMAL_IMAGE;
-    private GameImage HOVER_IMAGE;
+    private GameImage normalImage;
+    private GameImage hoverImage;
     private String text;
     private boolean isHovered = false;
 
     public GameButton(String text) {
         super.setText(text);
-        this.text = text;
         initializeButton();
     }
 
     public GameButton(String normalImageFilePath, String hoverImageFilePath) {
-        NORMAL_IMAGE = new GameImage(normalImageFilePath);
-        HOVER_IMAGE = new GameImage(hoverImageFilePath);
+        normalImage = new GameImage(normalImageFilePath);
+        hoverImage = new GameImage(hoverImageFilePath);
         initializeButton();
     }
 
     public GameButton(String text, String normalImageFilePath, String hoverImageFilePath) {
-        NORMAL_IMAGE = new GameImage(normalImageFilePath, true);
-        HOVER_IMAGE = new GameImage(hoverImageFilePath, true);
+        normalImage = new GameImage(normalImageFilePath, true);
+        hoverImage = new GameImage(hoverImageFilePath, true);
         super.setText(text);
-        this.text = text;
         initializeButton();
     }
 
     private void initializeButton() {
         if (!isFilePathNull()) {
-            this.setIcon(NORMAL_IMAGE.getImageIcon());
+            this.setIcon(normalImage.getImageIcon());
         }
         this.setBorderPainted(false);
         this.setFocusPainted(false);
         this.setContentAreaFilled(false);
+        this.setForeground(Color.white);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -57,7 +56,7 @@ public class GameButton extends JButton {
                 isHovered = true;
                 if (isFilePathNull()) {
                 } else {
-                    setIcon(HOVER_IMAGE.getImageIcon());
+                    setIcon(hoverImage.getImageIcon());
                 }
 
                 repaint();
@@ -68,7 +67,7 @@ public class GameButton extends JButton {
                 isHovered = false;
                 if (isFilePathNull()) {
                 } else {
-                    setIcon(NORMAL_IMAGE.getImageIcon());
+                    setIcon(normalImage.getImageIcon());
                 }
                 repaint();
             }
@@ -76,7 +75,7 @@ public class GameButton extends JButton {
     }
 
     private boolean isFilePathNull() {
-        return (HOVER_IMAGE == null || NORMAL_IMAGE == null);
+        return (hoverImage == null || normalImage == null);
     }
 
     @Override
@@ -90,7 +89,6 @@ public class GameButton extends JButton {
         int fontSize = btnFont.getSize();
 
         if (isHovered && isFilePathNull()) {
-
             this.setFont(GameFont.getPixelFont(fontSize, 1));
             g.setColor(Color.white);
             g.drawLine(xStart, getHeight() - 3, xEnd, getHeight() - 3);

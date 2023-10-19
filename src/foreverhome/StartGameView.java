@@ -57,19 +57,16 @@ public class StartGameView{
         
         startButton = new GameButton("New Game", NORMAL_BTN_FILE_PATH, HOVER_BTN_FILE_PATH);
         startButton.setFont(btnFont);
-        startButton.setForeground(Color.white);
         gbc.gridy = 1;
         startGamePanel.add(startButton, gbc);
         
         continueButton = new GameButton("Continue", NORMAL_BTN_FILE_PATH, HOVER_BTN_FILE_PATH);
         continueButton.setFont(btnFont);
-        continueButton.setForeground(Color.white);
         gbc.gridy = 2;
         startGamePanel.add(continueButton, gbc);
         
         exitButton = new GameButton("Exit Game", NORMAL_BTN_FILE_PATH, HOVER_BTN_FILE_PATH);
         exitButton.setFont(btnFont);
-        exitButton.setForeground(Color.white);
         gbc.gridy = 3;
         startGamePanel.add(exitButton, gbc);
     }
