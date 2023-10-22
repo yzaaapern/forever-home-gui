@@ -59,10 +59,9 @@ public class GameTextField extends JTextField {
             int scaledWidth = (int) (FIELD_IMAGE.getImage().getWidth(this) * scaleXFactor);
             int scaledHeight = (int) (FIELD_IMAGE.getImage().getHeight(this) * scaleYFactor);
 
-            int x = getX();
-            int y = getHeight() / 2 - scaledHeight / 2;
+            int y = (getHeight() / 2 - scaledHeight / 2) + 1;
 
-            g.drawImage(FIELD_IMAGE.getImage(), x, y, 500, 10, this);
+            g.drawImage(FIELD_IMAGE.getImage(), 0, y, scaledWidth, 10, this);
 
         }
     }
