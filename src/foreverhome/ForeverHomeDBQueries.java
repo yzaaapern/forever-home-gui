@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package foreverhome;
 
 import java.sql.Connection;
@@ -19,41 +16,40 @@ import java.util.logging.Logger;
  * @author annga
  */
 public class ForeverHomeDBQueries 
-{
-    // Constants
-    private static final String USER_DATA_TABLE = "user_data";
-    private static final String PET_TABLE = "pet";
-    private static final String FOOD_INVENTORY_TABLE = "food_inventory";
-    
+{    
     // Instance variables
-    public ForeverHomeDBManager dbManager;
+    private ForeverHomeDBManager dbManager;
     
     // Constructor
-    public ForeverHomeDBQueries()
+    public ForeverHomeDBQueries(ForeverHomeDBManager dbManager) 
     {
-        dbManager = new ForeverHomeDBManager();
+        this.dbManager = dbManager;
     }
     
     // MAIN
     public static void main(String[] args) 
     {
-        ForeverHomeDBQueries dbQueries = new ForeverHomeDBQueries();
+        ForeverHomeDBManager dbManager = ForeverHomeDBManager.getInstance();
+        ForeverHomeDBQueries dbQueries = new ForeverHomeDBQueries(dbManager);
         
         // Getting queries
-        dbQueries.getQuery(USER_DATA_TABLE);
-        dbQueries.getQuery(PET_TABLE);
-        dbQueries.getQuery(FOOD_INVENTORY_TABLE);
+        dbQueries.getQuery(ForeverHomeDB.USER_DATA_TABLE);
+        dbQueries.getQuery(ForeverHomeDB.PET_TABLE);
+        dbQueries.getQuery(ForeverHomeDB.FOOD_INVENTORY_TABLE);
         
         // Queries
-        System.out.println(dbQueries.getAll(USER_DATA_TABLE));
-        System.out.println(dbQueries.getAll(PET_TABLE));
-        System.out.println(dbQueries.getAll(FOOD_INVENTORY_TABLE));
+        System.out.println(dbQueries.getAll(ForeverHomeDB.USER_DATA_TABLE));
+        System.out.println(dbQueries.getAll(ForeverHomeDB.PET_TABLE));
+        System.out.println(dbQueries.getAll(ForeverHomeDB.FOOD_INVENTORY_TABLE));
         System.out.println(dbQueries.getUserByUserName("anny"));
         System.out.println(dbQueries.getPetByPetNameAndUserName("anny", "Pookie"));
         System.out.println(dbQueries.getUserByFoodInventoryID("ecf77bba-0ca2-495c-b6f9-b6fb6fdb3aa6"));
         System.out.println(dbQueries.getPetByPetID("03a5f174-5ca8-4f99-a46b-380e5c195837"));
         System.out.println(dbQueries.getPetByPetID("843ff3bf-df2a-47f7-9542-0fe2664dc404"));
         System.out.println(dbQueries.getFoodInventoryByUserName("anny"));
+        
+        // Closing connection
+        dbQueries.dbManager.closeConnection();
     }
     
     // METHODS
@@ -81,14 +77,14 @@ public class ForeverHomeDBQueries
 
                 while(rs.next())
                 {
-                    if(USER_DATA_TABLE.equals(tableName))
+                    if(ForeverHomeDB.USER_DATA_TABLE.equals(tableName))
                     {
                         String userName = rs.getString("userName");
                         String userPassword = rs.getString("userPassword");
                         int userDabloons = rs.getInt("userDabloons");
                         boolean userHasPet = rs.getBoolean("userHasPet");
                     }
-                    else if(PET_TABLE.equals(tableName))
+                    else if(ForeverHomeDB.PET_TABLE.equals(tableName))
                     {
                         String petID = rs.getString("petID");
                         String petName = rs.getString("petName");
@@ -100,7 +96,7 @@ public class ForeverHomeDBQueries
                         int petHappiness = rs.getInt("petHappiness");
                         String userName = rs.getString("userName");
                     }
-                    else if(FOOD_INVENTORY_TABLE.equals(tableName))
+                    else if(ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName))
                     {
                         String foodInventoryID = rs.getString("foodInventoryID");
                         String foodInventory = rs.getString("foodInventory");
@@ -135,7 +131,7 @@ public class ForeverHomeDBQueries
         {
             while(rs.next())
             {
-                if (USER_DATA_TABLE.equals(tableName)) {
+                if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName)) {
                     String userName = rs.getString("userName");
                     String userPassword = rs.getString("userPassword");
                     int userDabloons = rs.getInt("userDabloons");
@@ -144,7 +140,7 @@ public class ForeverHomeDBQueries
                     UserData userData = new UserData(userName, userPassword, userDabloons, userHasPet);
                     list.add(userData);
                 }
-                else if (PET_TABLE.equals(tableName)) {
+                else if (ForeverHomeDB.PET_TABLE.equals(tableName)) {
                     String petID = rs.getString("petID");
                     String petName = rs.getString("petName");
                     String petInstance = rs.getString("petInstance");
@@ -158,7 +154,7 @@ public class ForeverHomeDBQueries
                     PetData petData = new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName);
                     list.add(petData);
                 }
-                else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+                else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
                     String foodInventoryID = rs.getString("foodInventoryID");
                     String foodInventory = rs.getString("foodInventory");
                     String userName = rs.getString("userName");
@@ -183,7 +179,7 @@ public class ForeverHomeDBQueries
     */
     public UserData getUserByUserName(String name) 
     {
-        String sqlQuery = "SELECT * FROM " + USER_DATA_TABLE + " WHERE userName=?";
+        String sqlQuery = "SELECT * FROM " + ForeverHomeDB.USER_DATA_TABLE + " WHERE userName=?";
 
         try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlQuery))
         {

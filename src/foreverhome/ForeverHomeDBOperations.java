@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package foreverhome;
 
 import java.sql.Connection;
@@ -19,19 +16,14 @@ import java.sql.PreparedStatement;
  * @author annga
  */
 public class ForeverHomeDBOperations 
-{
-    // Constants
-    private static final String USER_DATA_TABLE = "user_data";
-    private static final String PET_TABLE = "pet";
-    private static final String FOOD_INVENTORY_TABLE = "food_inventory";
-    
+{    
     // Instance variables
-    public ForeverHomeDBManager dbManager;
+    private ForeverHomeDBManager dbManager;
     
     // Constructor
-    public ForeverHomeDBOperations()
+    public ForeverHomeDBOperations(ForeverHomeDBManager dbManager)
     {
-        dbManager = new ForeverHomeDBManager();
+        this.dbManager = dbManager;
     }
     
     // METHODS
@@ -39,29 +31,29 @@ public class ForeverHomeDBOperations
     // MAIN METHOD
     public static void main(String[] args) 
     {
-        ForeverHomeDBOperations dbOperations = new ForeverHomeDBOperations();
-        ForeverHomeDBQueries dbQueries = new ForeverHomeDBQueries();
+        ForeverHomeDBManager dbManager = ForeverHomeDBManager.getInstance();
+        ForeverHomeDBOperations dbOperations = new ForeverHomeDBOperations(dbManager);
         
         // Drop tables
-//        dbOperations.dropTable(PET_TABLE);
-//        dbOperations.dropTable(FOOD_INVENTORY_TABLE);
-//        dbOperations.dropTable(USER_DATA_TABLE);
+        dbOperations.dropTable(ForeverHomeDB.PET_TABLE);
+        dbOperations.dropTable(ForeverHomeDB.FOOD_INVENTORY_TABLE);
+        dbOperations.dropTable(ForeverHomeDB.USER_DATA_TABLE);
         
         // Create tables
-        dbOperations.createTable(USER_DATA_TABLE);
-        dbOperations.createTable(PET_TABLE);
-        dbOperations.createTable(FOOD_INVENTORY_TABLE);
+        dbOperations.createTable(ForeverHomeDB.USER_DATA_TABLE);
+        dbOperations.createTable(ForeverHomeDB.PET_TABLE);
+        dbOperations.createTable(ForeverHomeDB.FOOD_INVENTORY_TABLE);
         
         Animal pet1 = new Cat("catty");
         PetData petData1 = new PetData(pet1, "anny");
-        dbOperations.insertData(PET_TABLE, petData1);
+        dbOperations.insertData(ForeverHomeDB.PET_TABLE, petData1);
 
         Player user1 = new Player("Roxy");
         UserData userData1 = new UserData(user1);
-        dbOperations.insertData(USER_DATA_TABLE, userData1);
+        dbOperations.insertData(ForeverHomeDB.USER_DATA_TABLE, userData1);
 
         FoodInventoryData foodInventoryData1 = new FoodInventoryData(user1.getFoodInventory(), user1.getName());
-        dbOperations.insertData(FOOD_INVENTORY_TABLE, foodInventoryData1);
+        dbOperations.insertData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventoryData1);
         
         // Closing connection
         dbOperations.dbManager.closeConnection();
@@ -97,14 +89,14 @@ public class ForeverHomeDBOperations
     private String generateCreateTableSQL(String tableName) 
     {
         // Generate SQL for creating the specified table
-        if (USER_DATA_TABLE.equals(tableName)) {
+        if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName)) {
             return "CREATE TABLE user_data (" +
                 "userName VARCHAR(20) PRIMARY KEY," +
                 "userPassword VARCHAR(25)," +
                 "userDabloons INT," +
                 "userHasPet BOOLEAN" +
                 ")";
-        } else if (PET_TABLE.equals(tableName)) {
+        } else if (ForeverHomeDB.PET_TABLE.equals(tableName)) {
             return "CREATE TABLE pet (" +
                 "petID VARCHAR(36) PRIMARY KEY," +
                 "petName VARCHAR(25)," +
@@ -117,7 +109,7 @@ public class ForeverHomeDBOperations
                 "userName VARCHAR(20)," +
                 "FOREIGN KEY (userName) REFERENCES user_data(userName)" +
                 ")";
-        } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+        } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
             return "CREATE TABLE food_inventory (" +
                 "foodInventoryID VARCHAR(36) PRIMARY KEY," +
                 "foodInventory VARCHAR(255)," +
@@ -212,13 +204,13 @@ public class ForeverHomeDBOperations
         try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlInsert)) {
             if (tableExists(dbManager.getConnection(), tableName)) {
                 // Set the sample data parameters based on the table name
-                if (USER_DATA_TABLE.equals(tableName)) {
+                if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName)) {
                     // Example sample data for user_data table
                     preparedStatement.setString(1, userData.getUserName());
                     preparedStatement.setString(2, userData.getUserPassword());
                     preparedStatement.setInt(3, userData.getUserDabloons());
                     preparedStatement.setBoolean(4, userData.isUserHasPet());
-                } else if (PET_TABLE.equals(tableName)) {
+                } else if (ForeverHomeDB.PET_TABLE.equals(tableName)) {
                     // Example sample data for petSample1 table
                     preparedStatement.setString(1, petDataSample1.getPetID());
                     preparedStatement.setString(2, petDataSample1.getPetName());
@@ -229,7 +221,7 @@ public class ForeverHomeDBOperations
                     preparedStatement.setInt(7, petDataSample1.getPetHappiness());
                     preparedStatement.setInt(8, petDataSample1.getPetHygiene());
                     preparedStatement.setString(9, petDataSample1.getUserName());
-                } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+                } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
                     // Example sample data for food_inventory table
                     preparedStatement.setString(1, foodInventoryDataSample1.getFoodInventoryID());
                     preparedStatement.setString(2, foodInventoryDataSample1.getFoodInventory());
@@ -248,11 +240,11 @@ public class ForeverHomeDBOperations
     }
     
     private String generateInsertDataSQL(String tableName) {
-        if (USER_DATA_TABLE.equals(tableName)) {
+        if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName)) {
             return "INSERT INTO user_data (userName, userPassword, userDabloons, userHasPet) VALUES (?, ?, ?, ?)";
-        } else if (PET_TABLE.equals(tableName)) {
+        } else if (ForeverHomeDB.PET_TABLE.equals(tableName)) {
             return "INSERT INTO pet (petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+        } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
             return "INSERT INTO food_inventory (foodInventoryID, foodInventory, userName) VALUES (?, ?, ?)";
         }
         return "";
@@ -260,13 +252,13 @@ public class ForeverHomeDBOperations
     
     private void setInsertDataParameters(PreparedStatement preparedStatement, String tableName, Object data) throws SQLException 
     {
-        if (USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
+        if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
             UserData userData = (UserData) data;
             preparedStatement.setString(1, userData.getUserName());
             preparedStatement.setString(2, userData.getUserPassword());
             preparedStatement.setInt(3, userData.getUserDabloons());
             preparedStatement.setBoolean(4, userData.isUserHasPet());
-        } else if (PET_TABLE.equals(tableName) && data instanceof PetData) {
+        } else if (ForeverHomeDB.PET_TABLE.equals(tableName) && data instanceof PetData) {
             PetData petData = (PetData) data;
             preparedStatement.setString(1, petData.getPetID());
             preparedStatement.setString(2, petData.getPetName());
@@ -277,7 +269,7 @@ public class ForeverHomeDBOperations
             preparedStatement.setInt(7, petData.getPetHygiene());
             preparedStatement.setInt(8, petData.getPetHappiness());
             preparedStatement.setString(9, petData.getUserName());
-        } else if (FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
+        } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
             FoodInventoryData foodInventoryData = (FoodInventoryData) data;
             preparedStatement.setString(1, foodInventoryData.getFoodInventoryID());
             preparedStatement.setString(2, foodInventoryData.getFoodInventory());
@@ -355,11 +347,11 @@ public class ForeverHomeDBOperations
     {
         // Create the SQL statement for updating data in the specified table
         // Adapt this part to your specific use case
-        if (USER_DATA_TABLE.equals(tableName)) {
+        if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName)) {
             return "UPDATE user_data SET userPassword=?, userDabloons=?, userHasPet=? WHERE userName=?";
-        } else if (PET_TABLE.equals(tableName)) {
+        } else if (ForeverHomeDB.PET_TABLE.equals(tableName)) {
             return "UPDATE pet SET petName=?, petInstance=?, petLevel=?, petLevelXP=?, petHunger=?, petHygiene=?, petHappiness=? WHERE petID=?";
-        } else if (FOOD_INVENTORY_TABLE.equals(tableName)) {
+        } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
             return "UPDATE food_inventory SET foodInventory=? WHERE foodInventoryID=?";
         }
         return "";
@@ -369,13 +361,13 @@ public class ForeverHomeDBOperations
     {
         // Set the parameters for the update statement based on the table name and data object
         // Adapt this part to your specific use case
-        if (USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
+        if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
             UserData userData = (UserData) data;
             preparedStatement.setString(1, userData.getUserPassword());
             preparedStatement.setInt(2, userData.getUserDabloons());
             preparedStatement.setBoolean(3, userData.isUserHasPet());
             preparedStatement.setString(4, userData.getUserName());
-        } else if (PET_TABLE.equals(tableName) && data instanceof PetData) {
+        } else if (ForeverHomeDB.PET_TABLE.equals(tableName) && data instanceof PetData) {
             PetData petData = (PetData) data;
             preparedStatement.setString(1, petData.getPetName());
             preparedStatement.setString(2, petData.getPetInstance());
@@ -385,7 +377,7 @@ public class ForeverHomeDBOperations
             preparedStatement.setInt(6, petData.getPetHygiene());
             preparedStatement.setInt(7, petData.getPetHappiness());
             preparedStatement.setString(8, petData.getPetID());
-        } else if (FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
+        } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
             FoodInventoryData foodInventoryData = (FoodInventoryData) data;
             preparedStatement.setString(1, foodInventoryData.getFoodInventory());
             preparedStatement.setString(2, foodInventoryData.getFoodInventoryID());
@@ -445,15 +437,15 @@ public class ForeverHomeDBOperations
     }
    
    private String generateCheckPrimaryKeySQL(String tableName) {
-       if(USER_DATA_TABLE.equals(tableName))
+       if(ForeverHomeDB.USER_DATA_TABLE.equals(tableName))
        {
            return "SELECT 1 FROM " + tableName + " WHERE userName = ?";
        }
-       else if(PET_TABLE.equals(tableName))
+       else if(ForeverHomeDB.PET_TABLE.equals(tableName))
        {
            return "SELECT 1 FROM " + tableName + " WHERE petID = ?";
        }
-       else if(FOOD_INVENTORY_TABLE.equals(tableName))
+       else if(ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName))
        {
            return "SELECT 1 FROM " + tableName + " WHERE foodInventoryID = ?";
        }
@@ -463,13 +455,13 @@ public class ForeverHomeDBOperations
     private void setCheckPrimaryKeyParameters(PreparedStatement preparedStatement, String tableName, Object data) throws SQLException 
     {
         // Set the parameters for the check based on the table name and data object
-        if (USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
+        if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
             UserData userData = (UserData) data;
             preparedStatement.setString(1, userData.getUserName());
-        } else if (PET_TABLE.equals(tableName) && data instanceof PetData) {
+        } else if (ForeverHomeDB.PET_TABLE.equals(tableName) && data instanceof PetData) {
             PetData petData = (PetData) data;
             preparedStatement.setString(1, petData.getPetID());
-        } else if (FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
+        } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
             FoodInventoryData foodInventoryData = (FoodInventoryData) data;
             preparedStatement.setString(1, foodInventoryData.getFoodInventoryID());
         }

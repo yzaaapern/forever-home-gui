@@ -24,7 +24,7 @@ public class FoodInventoryData
     public FoodInventoryData(FoodInventory foodInventory, String userName)
     {
         this.foodInventoryID = this.generateRandomFoodInventoryID();
-        this.setFoodInventory(this.dbFoodInventoryToString(foodInventory));
+        this.setFoodInventory(this.dbFoodInventoryToDBString(foodInventory));
         this.userName = userName;
     }
     
@@ -40,7 +40,7 @@ public class FoodInventoryData
     public FoodInventoryData(String foodInventoryID, FoodInventory foodInventory, String userName)
     {
         this.foodInventoryID = foodInventoryID;
-        this.setFoodInventory(this.dbFoodInventoryToString(foodInventory));
+        this.setFoodInventory(this.dbFoodInventoryToDBString(foodInventory));
         this.setUserName(userName);
     }
     
@@ -98,7 +98,7 @@ public class FoodInventoryData
     }
     
     // Converts FoodInventory String to a readable string for the database
-    public String dbFoodInventoryToString(FoodInventory foodInventory)
+    public String dbFoodInventoryToDBString(FoodInventory foodInventory)
     {
         String output = "";
         
@@ -128,17 +128,20 @@ public class FoodInventoryData
     
     // Override equals method
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) 
+    {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         FoodInventoryData other = (FoodInventoryData) obj;
-        return Objects.equals(getFoodInventoryID(), other.getFoodInventoryID());
+        return Objects.equals(getUserName(), other.getUserName());
     }
+
     
     // Override hashCode method
     @Override
-    public int hashCode() {
-        return Objects.hash(getFoodInventoryID());
+    public int hashCode() 
+    {
+        return Objects.hash(getUserName());
     }
     
     // toString method
