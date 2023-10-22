@@ -34,7 +34,7 @@ public class FosterView {
     private GameButton parrotBtn;
     private GameButton chickenBtn;
     private GameButton continueBtn;
-    private GameButton goBackBtn;
+    private GameButton cancelkBtn;
 
     private final String BG_FILE_PATH = "./resources/images/bg3.png";
     private final String POPUP_FILE_PATH = "./resources/images/popup_box.png";
@@ -67,16 +67,16 @@ public class FosterView {
     }
 
     private void addComponents(GridBagConstraints gbc) {
-        gbc.insets = new Insets(40, 0, 5, 0);
+        gbc.insets = new Insets(50, 0, 5, 0);
         gbc.gridwidth = 5;
         gbc.gridy = 0;
         petsPanel.add(titleLabel, gbc);
 
-        gbc.insets = new Insets(5, 0, 5, 0);
+        gbc.insets = new Insets(15, 0, 5, 0);
         gbc.gridy++;
         petsPanel.add(introLabel, gbc);
 
-        gbc.insets = new Insets(50, 0, 0, 0);
+        gbc.insets = new Insets(100, 0, 0, 0);
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy++;
@@ -110,7 +110,7 @@ public class FosterView {
         petsPanel.revalidate();
         petsPanel.repaint();
 
-        gbc.insets = new Insets(100, 20, 5, 20);
+        gbc.insets = new Insets(90, 20, 5, 20);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 1.0;
@@ -119,17 +119,17 @@ public class FosterView {
         gbc.gridy++;
         popUpPanel.add(popUpLabel, gbc);
         
-        gbc.insets = new Insets(20, 20, 0, 20);
+        gbc.insets = new Insets(10, 20, 0, 20);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridy++;
         popUpPanel.add(petNameField, gbc);
 
         
-        gbc.insets = new Insets(30, 20, 0, 20);
+        gbc.insets = new Insets(10, 20, 0, 20);
         gbc.fill = GridBagConstraints.NONE;
         gbc.gridx = 0;
         gbc.gridy++;
-        popUpPanel.add(goBackBtn, gbc);
+        popUpPanel.add(cancelkBtn, gbc);
         
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridx = 5;
@@ -161,7 +161,7 @@ public class FosterView {
         chickenBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 
         continueBtn = new GameButton("Continue");
-        goBackBtn = new GameButton("Go Back");
+        cancelkBtn = new GameButton("Cancel");
     }
 
     private void initializeLabels() {

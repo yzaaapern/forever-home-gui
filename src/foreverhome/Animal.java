@@ -6,9 +6,7 @@ package foreverhome;
 
 /**
  *
- * @author yzape 
- * Name: Yza Pernia 
- * Student ID: 21137984
+ * @author yzape Name: Yza Pernia Student ID: 21137984
  */
 public abstract class Animal implements Level {
 
@@ -193,7 +191,7 @@ public abstract class Animal implements Level {
         METHODS
      */
 
-    /*  incHunger Method
+ /*  incHunger Method
     
         Parameters: Food object
         Return: None
@@ -299,8 +297,7 @@ public abstract class Animal implements Level {
     /*
         OVERRIDE LEVEL METHODS
      */
-    
-     /*
+ /*
         checkLevelForInteract Method
     
         Parameters: int level
@@ -341,8 +338,7 @@ public abstract class Animal implements Level {
      */
     @Override
     public void incLevel() {
-        if (this.checkLevelForIncLevel()) 
-        {
+        if (this.checkLevelForIncLevel()) {
             this.resetLevelXP();
             this.setLevelXPBar(this.getLevelXPBar() + Level.INC_LEVELXP_CAP);
             this.setHappiness(RESET_STAT);
@@ -423,28 +419,24 @@ public abstract class Animal implements Level {
         checkFosterPet Method
     
         Parameters: Animal object
-        Return: int animalType
+        Return: String animalType
         Description: Checks the animal sub-class instance of the parameter foster pet and returns a respective integer number.
      */
-    public int checkFosterPet(Animal fosterPet) {
-        int animalType = 0;
+    public String checkFosterPet(Animal fosterPet) {
+        String animalType = "";
 
         if (fosterPet instanceof Dog) {
-            animalType = 1;
-            return animalType;
+            animalType = "dog";
         } else if (fosterPet instanceof Cat) {
-            animalType = 2;
-            return animalType;
+            animalType = "cat";
         } else if (fosterPet instanceof Rat) {
-            animalType = 3;
-            return animalType;
+            animalType = "rat";
         } else if (fosterPet instanceof Parrot) {
-            animalType = 4;
-            return animalType;
+            animalType = "parrot";
         } else {
-            animalType = 5;
-            return animalType;
+            animalType = "chicken";
         }
+        return animalType;
 
     }
 

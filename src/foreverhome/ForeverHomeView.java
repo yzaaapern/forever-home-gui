@@ -18,6 +18,7 @@ public class ForeverHomeView {
     private final StartGameView STARTGAME_VIEW;
     private final LoginView LOGIN_VIEW;
     private final FosterView FOSTER_VIEW;
+    private final PetFosterView PET_FOSTER_VIEW;
 
     private final int WIDTH = 814;
     private final int HEIGHT = 610;
@@ -34,11 +35,13 @@ public class ForeverHomeView {
         LOGIN_VIEW = new LoginView();
         STARTGAME_VIEW = new StartGameView();
         FOSTER_VIEW = new FosterView();
+        PET_FOSTER_VIEW = new PetFosterView();
 
         frame.add(LOADING_VIEW.loadingPanel, "loading");
         frame.add(STARTGAME_VIEW.startGamePanel, "start");
         frame.add(LOGIN_VIEW.loginPanel, "login");
         frame.add(FOSTER_VIEW.fosterPanel, "foster");
+        frame.add(PET_FOSTER_VIEW.petFosterPanel, "pet foster");
 
         frame.setVisible(true);
     }
@@ -67,4 +70,8 @@ public class ForeverHomeView {
         cardLayout.show(frame.getContentPane(), "foster");
     }
 
+    public void showPetFosterPanel(){
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), "pet foster");
+    }
 }

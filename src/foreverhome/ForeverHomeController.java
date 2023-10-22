@@ -23,6 +23,7 @@ public class ForeverHomeController {
 //        view.showStartGamePanel();
 //        view.showLoginPanel();
         view.showFosterPanel();
+//        view.showPetFosterPanel();
         
     }
     
