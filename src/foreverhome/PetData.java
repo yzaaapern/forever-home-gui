@@ -239,18 +239,20 @@ public class PetData
     
     // Override equals method
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) 
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PetData petData = (PetData) o;
-        return  Objects.equals(getPetID(), petData.getPetID());
+        return Objects.equals(getPetName(), petData.getPetName()) &&
+               Objects.equals(getUserName(), petData.getUserName());
     }
-    
-    // Override hashCode method
+
     @Override
     public int hashCode() {
-        return Objects.hash(getPetID());
+        return Objects.hash(getPetName(), getUserName());
     }
+
     
     // toString method
     @Override

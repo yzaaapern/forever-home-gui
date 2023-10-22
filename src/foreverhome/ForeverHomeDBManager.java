@@ -14,6 +14,7 @@ public class ForeverHomeDBManager {
     private static final String DATABASE_USER = "foreverhome";
     private static final String DATABASE_PASSWORD = "77";
     private Connection connection = null;
+    private static ForeverHomeDBManager uniqueInstance;
 
     // Constructor
     public ForeverHomeDBManager() 
@@ -34,6 +35,14 @@ public class ForeverHomeDBManager {
     public Connection getConnection() 
     {
         return this.connection;
+    }
+    
+    
+    public static synchronized ForeverHomeDBManager getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new ForeverHomeDBManager();
+        }
+        return uniqueInstance;
     }
     
     // Establish a foreverHomeDBManager connection
