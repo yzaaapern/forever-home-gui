@@ -27,7 +27,7 @@ public class LoadingView {
     private final JLabel loadingTextLabel;
     public JPanel loadingPanel;
 
-    private final String imageFilePath = "./resources/images/bg.png";
+    private final String imageFilePath = "./resources/images/backgrounds/bg.png";
     private final String gameTitle = "FOREVER HOME";
     public final String loadingText = "LOADING...";
     private int loadingTextIndex;
@@ -44,7 +44,7 @@ public class LoadingView {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0, 0, 40, 0);
 
-        Font titleFont = GameFont.getPixelFont(50, 1);
+        Font titleFont = GameFont.getPixelFont(80, 1);
         titleLabel = new JLabel(gameTitle);
         titleLabel.setFont(titleFont);
         titleLabel.setForeground(Color.white);
@@ -52,7 +52,7 @@ public class LoadingView {
         gbc.gridy = 0;
         loadingPanel.add(titleLabel, gbc);
 
-        Font loadingTextFont = GameFont.getPixelFont(25, 0);
+        Font loadingTextFont = GameFont.getPixelFont(40, 0);
         loadingTextLabel = new JLabel("");
         loadingTextLabel.setFont(loadingTextFont);
         loadingTextLabel.setForeground(Color.white);
