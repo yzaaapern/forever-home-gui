@@ -18,19 +18,20 @@ public class PetFosterView {
     private JPanel petStatsPanel;
     private JPanel petSpritePanel;
     private JPanel petFosterMenuPanel;
+    
     private GameButton feedBtn;
     private GameButton interactBtn;
     private GameButton batheBtn;
     private GameButton escBtn;
 
-    private final String BG_FILE_PATH = "./resources/images/petFoster_bg.png";
-
-    private final String HAPPINESS_BAR_FILE_PATH = "./resources/images/happiness_bar.png";
-    private final String HUNGER_BAR_FILE_PATH = "./resources/images/hunger_bar.png";
-    private final String HYGIENE_BAR_FILE_PATH = "./resources/images/hygiene_bar.png";
-    private final String XP_BAR_FILE_PATH = "./resources/images/xp_bar.png";
-    private final String LEVEL_BAR_FILE_PATH = "./resources/images/level_bar.png";
-    private final String LEVEL_NOTF_FILE_PATH = "./resources/images/levelup_notif.png";
+    private final String BG_FILE_PATH = "./resources/images/backgrounds/petFoster_bg.png";
+    
+    private final String HAPPINESS_BAR_FILE_PATH = "./resources/images/statbars/happiness_bar.png";
+    private final String HUNGER_BAR_FILE_PATH = "./resources/images/statbars/hunger_bar.png";
+    private final String HYGIENE_BAR_FILE_PATH = "./resources/images/statbars/hygiene_bar.png";
+    private final String XP_BAR_FILE_PATH = "./resources/images/statbars/xp_bar.png";
+    private final String LEVEL_BAR_FILE_PATH = "./resources/images/statbars/level_bar.png";
+    private final String LEVEL_NOTF_FILE_PATH = "./resources/images/misc/levelup_notif.png";
 
     public PetFosterView() {
         initializePanels();

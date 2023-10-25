@@ -27,9 +27,9 @@ public class StartGameView{
     private GameButton continueButton;
     private GameButton exitButton;
     
-    private final String BG_FILE_PATH = "./resources/images/bg2.png";
-    private final String NORMAL_BTN_FILE_PATH = "./resources/images/mainButton_normal.png";
-    private final String HOVER_BTN_FILE_PATH = "./resources/images/mainButton_hover.png";
+    private final String BG_FILE_PATH = "./resources/images/backgrounds/bg2.png";
+    private final String NORMAL_BTN_FILE_PATH = "./resources/images/buttons/mainButton_normal.png";
+    private final String HOVER_BTN_FILE_PATH = "./resources/images/buttons/mainButton_hover.png";
     private final String START_GAME_TITLE = "WELCOME TO FOREVER HOME!";
     
     public StartGameView(){
@@ -43,17 +43,17 @@ public class StartGameView{
         };
         
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(0,0, 40,0);
+        gbc.insets = new Insets(0,0, 50,0);
         
-        Font titleFont = GameFont.getPixelFont(35, 1);
+        Font titleFont = GameFont.getPixelFont(60, 1);
         TITLE_LABEL = new JLabel(START_GAME_TITLE);
         TITLE_LABEL.setFont(titleFont);
         TITLE_LABEL.setForeground(Color.white);
         gbc.gridy = 0;
         startGamePanel.add(TITLE_LABEL, gbc);
 
-        gbc.insets = new Insets(5,0,0,0);        
-        Font btnFont = GameFont.getPixelFont(15, 0);
+        gbc.insets = new Insets(20,0,0,0);        
+        Font btnFont = GameFont.getPixelFont(20, 0);
         
         startButton = new GameButton("New Game", NORMAL_BTN_FILE_PATH, HOVER_BTN_FILE_PATH);
         startButton.setFont(btnFont);

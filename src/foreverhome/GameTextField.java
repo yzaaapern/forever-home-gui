@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 public class GameTextField extends JTextField {
 
     private final GameImage FIELD_IMAGE;
-    private final String TEXT_FIELD_FILE_PATH = "./resources/images/input_field.png";
+    private final String TEXT_FIELD_FILE_PATH = "./resources/images/misc/input_field.png";
 
     public GameTextField() {
         super();
@@ -38,7 +38,7 @@ public class GameTextField extends JTextField {
     }
 
     private void initializeField() {
-        Font textFieldFont = GameFont.getPixelFont(12, 0);
+        Font textFieldFont = GameFont.getPixelFont(13, 0);
         this.setOpaque(false);
         this.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.setFont(textFieldFont);
