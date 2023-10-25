@@ -32,8 +32,9 @@ public class ForeverHomeModel extends Observable {
      */
     public ForeverHomeModel() 
     {
+        
 //        this.player = player;
-        this.player.isPlaying = true;
+//        this.player.isPlaying = true;
     }
     
     /*
