@@ -19,6 +19,7 @@ public class ForeverHomeModel extends Observable {
      */
     public static volatile boolean startThreads = true;
 //    public Database db;
+    public ForeverHomeDB db;
     public ForeverHomeData data;
     public DecrementStatsRunnable dsr;
     public Thread petDecrementStatsThread;
@@ -29,7 +30,10 @@ public class ForeverHomeModel extends Observable {
     /*
         OBJECT CONSTRUCTOR
      */
-    public ForeverHomeModel() {
+    public ForeverHomeModel() 
+    {
+//        this.player = player;
+        this.player.isPlaying = true;
     }
     
     /*
@@ -47,6 +51,8 @@ public class ForeverHomeModel extends Observable {
     */
     public void checkName(String username, String password){
         this.username = username;
+        
+        
         
         // change later!!
         /*

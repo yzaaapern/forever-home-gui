@@ -47,7 +47,7 @@ public class PetData
     {
         this.petID = generateRandomPetID();
         this.setPetName(pet.getName());
-        this.setPetInstance(this.checkPetInstance(pet));
+        this.setPetInstance(pet.checkFosterPet(pet));
         this.setPetLevel(pet.getLevel());
         this.setPetLevelXP(pet.getLevelXP());
         this.setPetHunger(pet.getHunger());
@@ -75,7 +75,7 @@ public class PetData
     {
         this.petID = petID;
         this.setPetName(pet.getName());
-        this.setPetInstance(this.checkPetInstance(pet));
+        this.setPetInstance(pet.checkFosterPet(pet));
         this.setPetLevel(pet.getLevel());
         this.setPetLevelXP(pet.getLevelXP());
         this.setPetHunger(pet.getHunger());
@@ -206,30 +206,6 @@ public class PetData
     }
     
     // METHODS
-    
-    private String checkPetInstance(Animal pet)
-    {
-        if(pet instanceof Dog)
-        {
-            return "dog";
-        }
-        else if(pet instanceof Cat)
-        {
-            return "cat";
-        }
-        else if(pet instanceof Rat)
-        {
-            return "rat";
-        }
-        else if(pet instanceof Parrot)
-        {
-            return "parrot";
-        }
-        else
-        {
-            return "chicken";
-        }
-    }
     
     // Generate a random petID using UUID
     private String generateRandomPetID()
