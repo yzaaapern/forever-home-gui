@@ -27,7 +27,7 @@ public class LoadingView {
     private final JLabel loadingTextLabel;
     public JPanel loadingPanel;
 
-    private final String imageFilePath = "./resources/images/bg.png";
+    private final String imageFilePath = "./resources/images/backgrounds/bg.png";
     private final String gameTitle = "FOREVER HOME";
     public final String loadingText = "LOADING...";
     private int loadingTextIndex;

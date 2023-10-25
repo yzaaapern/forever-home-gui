@@ -27,9 +27,9 @@ public class StartGameView{
     private GameButton continueButton;
     private GameButton exitButton;
     
-    private final String BG_FILE_PATH = "./resources/images/bg2.png";
-    private final String NORMAL_BTN_FILE_PATH = "./resources/images/mainButton_normal.png";
-    private final String HOVER_BTN_FILE_PATH = "./resources/images/mainButton_hover.png";
+    private final String BG_FILE_PATH = "./resources/images/backgrounds/bg2.png";
+    private final String NORMAL_BTN_FILE_PATH = "./resources/images/buttons/mainButton_normal.png";
+    private final String HOVER_BTN_FILE_PATH = "./resources/images/buttons/mainButton_hover.png";
     private final String START_GAME_TITLE = "WELCOME TO FOREVER HOME!";
     
     public StartGameView(){

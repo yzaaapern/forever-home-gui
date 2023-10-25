@@ -32,7 +32,7 @@ public final class LoginView {
     private GameButton continueBtn;
     private GameButton goBackBtn;
 
-    private final String BG_FILE_PATH = "./resources/images/bg3.png";
+    private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
     public String intro = "Please make sure to enter your correct information.";
 
     public LoginView() {
