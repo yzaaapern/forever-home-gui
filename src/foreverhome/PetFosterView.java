@@ -6,6 +6,7 @@ package foreverhome;
 
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 /**
@@ -51,5 +52,29 @@ public class PetFosterView {
            }
        };
     }
+    
+    public void addActionListener(ActionListener listener)
+    {
+        feedBtn.addActionListener(listener);
+        interactBtn.addActionListener(listener);
+        batheBtn.addActionListener(listener);
+        escBtn.addActionListener(listener);
+    }
 
+    public GameButton getFeedBtn() {
+        return feedBtn;
+    }
+
+    public GameButton getInteractBtn() {
+        return interactBtn;
+    }
+
+    public GameButton getBatheBtn() {
+        return batheBtn;
+    }
+
+    public GameButton getEscBtn() {
+        return escBtn;
+    }
+    
 }

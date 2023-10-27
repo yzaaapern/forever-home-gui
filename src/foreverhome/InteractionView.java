@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -35,6 +36,7 @@ public class InteractionView {
     private GameButton spinBtn;
     private GameButton playDeadBtn;
     private GameButton fetchBtn;
+    
     private GameButton goBackBtn;
 
     private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
@@ -209,4 +211,55 @@ public class InteractionView {
         interactionMenuPanel.setOpaque(false);
         interactionMenuPanel.setPreferredSize(new Dimension(1000, 700));
     }
+    
+    public void addActionListener(ActionListener listener)
+    {
+        patBtn.addActionListener(listener);
+        playBtn.addActionListener(listener);
+        pottyBtn.addActionListener(listener);
+        bowBtn.addActionListener(listener);
+        handshakeBtn.addActionListener(listener);
+        spinBtn.addActionListener(listener);
+        playDeadBtn.addActionListener(listener);
+        fetchBtn.addActionListener(listener);
+
+        goBackBtn.addActionListener(listener);
+    }
+
+    public GameButton getPatBtn() {
+        return patBtn;
+    }
+
+    public GameButton getPlayBtn() {
+        return playBtn;
+    }
+
+    public GameButton getPottyBtn() {
+        return pottyBtn;
+    }
+
+    public GameButton getBowBtn() {
+        return bowBtn;
+    }
+
+    public GameButton getHandshakeBtn() {
+        return handshakeBtn;
+    }
+
+    public GameButton getSpinBtn() {
+        return spinBtn;
+    }
+
+    public GameButton getPlayDeadBtn() {
+        return playDeadBtn;
+    }
+
+    public GameButton getFetchBtn() {
+        return fetchBtn;
+    }
+
+    public GameButton getGoBackBtn() {
+        return goBackBtn;
+    }
+
 }

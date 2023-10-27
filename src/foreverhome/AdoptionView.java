@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author yzape
  */
-public class AdoptionView {
+public class AdoptionView{
 
     public JPanel adoptionPanel;
     private JPanel adoptedPetPanel;
@@ -155,6 +156,19 @@ public class AdoptionView {
                 g.drawImage(bgImage.getImage(), 0, yCoordinate, bgImage.getImage().getWidth(this), bgImage.getImage().getHeight(this), this);
             }
         };
-        popupPanel.setOpaque(false);
+        popupPanel.setOpaque(false);   
+    }
+    
+    public void addActionListener(ActionListener listener){
+        this.noBtn.addActionListener(listener);
+        this.yesBtn.addActionListener(listener);
+    }
+    
+    public GameButton getYesBtn() {
+        return yesBtn;
+    }
+
+    public GameButton getNoBtn() {
+        return noBtn;
     }
 }

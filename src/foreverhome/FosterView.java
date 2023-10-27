@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -224,5 +225,44 @@ public class FosterView {
             }
         };
         popUpPanel.setOpaque(false);
+    }
+    
+    public void addActionListener(ActionListener listener)
+    {
+        dogBtn.addActionListener(listener);
+        catBtn.addActionListener(listener);
+        ratBtn.addActionListener(listener);
+        parrotBtn.addActionListener(listener);
+        chickenBtn.addActionListener(listener);
+        continueBtn.addActionListener(listener);
+        cancelBtn.addActionListener(listener);
+    }
+    
+    public GameButton getDogBtn() {
+        return dogBtn;
+    }
+
+    public GameButton getCatBtn() {
+        return catBtn;
+    }
+
+    public GameButton getRatBtn() {
+        return ratBtn;
+    }
+
+    public GameButton getParrotBtn() {
+        return parrotBtn;
+    }
+
+    public GameButton getChickenBtn() {
+        return chickenBtn;
+    }
+
+    public GameButton getContinueBtn() {
+        return continueBtn;
+    }
+
+    public GameButton getCancelBtn() {
+        return cancelBtn;
     }
 }

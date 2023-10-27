@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -155,5 +156,21 @@ public final class SignupAndLoginView {
 
         signUpAndLoginForm.setOpaque(false);
         signUpAndLoginForm.setPreferredSize(new Dimension(1000, 600));
+    }
+    
+    public void addActionListener(ActionListener listener)
+    {
+        continueBtn.addActionListener(listener);
+        goBackBtn.addActionListener(listener);
+    }
+    
+    public GameButton getContinueBtn()
+    {
+        return continueBtn;
+    }
+    
+    public GameButton getBackBtn()
+    {
+        return goBackBtn;
     }
 }

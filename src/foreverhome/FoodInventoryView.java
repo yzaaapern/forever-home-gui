@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -493,4 +494,85 @@ public class FoodInventoryView {
         foodMenuPanel.setPreferredSize(new Dimension(1000, 700));
     }
 
+    public void addActionListener(ActionListener listener)
+    {
+        buyFoodForAll.addActionListener(listener);
+        buyRainbowTreat.addActionListener(listener);
+        buyKibble.addActionListener(listener);
+        buyCannedFood.addActionListener(listener);
+        buyVeggieMix.addActionListener(listener);
+        buySeeds.addActionListener(listener);
+        buyWater.addActionListener(listener);
+
+        feedWithFoodForAll.addActionListener(listener);
+        feedWithRainbowTreat.addActionListener(listener);
+        feedWithKibble.addActionListener(listener);
+        feedWithCannedFood.addActionListener(listener);
+        feedWithVeggieMix.addActionListener(listener);
+        feedWithSeeds.addActionListener(listener);
+        drinkWater.addActionListener(listener);
+
+        goBackBtn.addActionListener(listener);
+    }
+    
+    public GameButton getBuyFoodForAll() {
+        return buyFoodForAll;
+    }
+
+    public GameButton getBuyRainbowTreat() {
+        return buyRainbowTreat;
+    }
+
+    public GameButton getBuyKibble() {
+        return buyKibble;
+    }
+
+    public GameButton getBuyCannedFood() {
+        return buyCannedFood;
+    }
+
+    public GameButton getBuyVeggieMix() {
+        return buyVeggieMix;
+    }
+
+    public GameButton getBuySeeds() {
+        return buySeeds;
+    }
+
+    public GameButton getBuyWater() {
+        return buyWater;
+    }
+
+    public GameButton getFeedWithFoodForAll() {
+        return feedWithFoodForAll;
+    }
+
+    public GameButton getFeedWithRainbowTreat() {
+        return feedWithRainbowTreat;
+    }
+
+    public GameButton getFeedWithKibble() {
+        return feedWithKibble;
+    }
+
+    public GameButton getFeedWithCannedFood() {
+        return feedWithCannedFood;
+    }
+
+    public GameButton getFeedWithVeggieMix() {
+        return feedWithVeggieMix;
+    }
+
+    public GameButton getFeedWithSeeds() {
+        return feedWithSeeds;
+    }
+
+    public GameButton getDrinkWater() {
+        return drinkWater;
+    }
+
+    public GameButton getGoBackBtn() {
+        return goBackBtn;
+    }
+    
 }

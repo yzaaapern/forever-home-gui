@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JLabel;
@@ -69,5 +70,27 @@ public class StartGameView{
         exitButton.setFont(btnFont);
         gbc.gridy = 3;
         startGamePanel.add(exitButton, gbc);
+    }
+    
+    public void addActionListener(ActionListener listener)
+    {
+        startButton.addActionListener(listener);
+        continueButton.addActionListener(listener);
+        exitButton.addActionListener(listener);
+    }
+    
+    public GameButton getStartButton()
+    {
+        return startButton;
+    }
+    
+    public GameButton getContinueButton()
+    {
+        return continueButton;
+    }
+    
+    public GameButton getExitButton()
+    {
+        return exitButton;
     }
 }

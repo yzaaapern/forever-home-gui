@@ -5,6 +5,7 @@
 package foreverhome;
 
 import java.awt.CardLayout;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
@@ -62,7 +63,7 @@ public class ForeverHomeView {
     }
 
     public void showLoadingPanel() {
-        LOADING_VIEW.showLoadingTextAnimation();
+        getLOADING_VIEW().showLoadingTextAnimation();
     }
 
     public void showStartGamePanel() {
@@ -97,6 +98,51 @@ public class ForeverHomeView {
     
     public void showAdoptionPanel(){
         CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
-        cardLayout.show(frame.getContentPane(), "adoption");       
+        cardLayout.show(frame.getContentPane(), "adoption");
+    }
+
+    // GET VIEW METHODS
+    
+    public LoadingView getLOADING_VIEW() {
+        return LOADING_VIEW;
+    }
+
+    public StartGameView getSTARTGAME_VIEW() {
+        return STARTGAME_VIEW;
+    }
+
+    public SignupAndLoginView getLOGIN_VIEW() {
+        return LOGIN_VIEW;
+    }
+
+    public FosterView getFOSTER_VIEW() {
+        return FOSTER_VIEW;
+    }
+
+    public PetFosterView getPET_FOSTER_VIEW() {
+        return PET_FOSTER_VIEW;
+    }
+
+    public FoodInventoryView getFOOD_INVEN_VIEW() {
+        return FOOD_INVEN_VIEW;
+    }
+
+    public InteractionView getINTERACTION_VIEW() {
+        return INTERACTION_VIEW;
+    }
+
+    public AdoptionView getADOPTION_VIEW() {
+        return ADOPTION_VIEW;  
+    }
+
+    public void addActionListeners(ActionListener listener)
+    {
+        LOGIN_VIEW.addActionListener(listener);
+        STARTGAME_VIEW.addActionListener(listener);
+        FOSTER_VIEW.addActionListener(listener);
+        PET_FOSTER_VIEW.addActionListener(listener);
+        FOOD_INVEN_VIEW.addActionListener(listener);
+        INTERACTION_VIEW.addActionListener(listener);
+        ADOPTION_VIEW.addActionListener(listener);
     }
 }
