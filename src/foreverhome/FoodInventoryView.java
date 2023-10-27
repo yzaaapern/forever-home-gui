@@ -67,6 +67,9 @@ public class FoodInventoryView {
 
     public static boolean isFeed = true;
     private final String BG_FILE_PATH = "./resources/images/backgrounds/foodInventory_bg.png";
+    private final String BTN_FILE_PATH = "./resources/images/buttons/mainButton.png";
+    private final String BTN_HOVER_FILE_PATH = "./resources/images/buttons/mainButton_hover.png";
+    
     private final String TITLE = "FOOD INVENTORY MENU";
     private final String INTRO = isFeed ? "Feed your pet something tasty!" : "Buy more foods for your foster pet!";
 
@@ -338,46 +341,46 @@ public class FoodInventoryView {
     private void initializeButtons() {
         Font buttonFont = GameFont.getPixelFont(13, 0);
         if (isFeed) {
-            feedWithFoodForAll = new GameButton("Feed with Food For All");
+            feedWithFoodForAll = new GameButton("Feed with Food For All", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             feedWithFoodForAll.setFont(buttonFont);
 
-            feedWithRainbowTreat = new GameButton("Give them a Rainbow Treat!");
+            feedWithRainbowTreat = new GameButton("Give them a Rainbow Treat!", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             feedWithRainbowTreat.setFont(buttonFont);
 
-            feedWithKibble = new GameButton("Feed with Kibble");
+            feedWithKibble = new GameButton("Feed with Kibble", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             feedWithKibble.setFont(buttonFont);
 
-            feedWithCannedFood = new GameButton("Feed with Canned Food");
+            feedWithCannedFood = new GameButton("Feed with Canned Food", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             feedWithCannedFood.setFont(buttonFont);
 
-            feedWithVeggieMix = new GameButton("Feed with Veggie Mix");
+            feedWithVeggieMix = new GameButton("Feed with Veggie Mix", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             feedWithVeggieMix.setFont(buttonFont);
 
-            feedWithSeeds = new GameButton("Feed with Seeds");
+            feedWithSeeds = new GameButton("Feed with Seeds", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             feedWithSeeds.setFont(buttonFont);
 
-            drinkWater = new GameButton("Give them some Water");
+            drinkWater = new GameButton("Give them some Water", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             drinkWater.setFont(buttonFont);
         } else {
-            buyFoodForAll = new GameButton("Buy Food For All");
+            buyFoodForAll = new GameButton("Buy Food For All", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             buyFoodForAll.setFont(buttonFont);
 
-            buyRainbowTreat = new GameButton("Buy Rainbow Treat");
+            buyRainbowTreat = new GameButton("Buy Rainbow Treat", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             buyRainbowTreat.setFont(buttonFont);
 
-            buyKibble = new GameButton("Buy Kibble");
+            buyKibble = new GameButton("Buy Kibble", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             buyKibble.setFont(buttonFont);
 
-            buyCannedFood = new GameButton("Buy Canned Food");
+            buyCannedFood = new GameButton("Buy Canned Food", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             buyCannedFood.setFont(buttonFont);
 
-            buyVeggieMix = new GameButton("Buy Veggie Mix");
+            buyVeggieMix = new GameButton("Buy Veggie Mix", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             buyVeggieMix.setFont(buttonFont);
 
-            buySeeds = new GameButton("Buy Seeds");
+            buySeeds = new GameButton("Buy Seeds", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             buySeeds.setFont(buttonFont);
 
-            buyWater = new GameButton("Buy Water");
+            buyWater = new GameButton("Buy Water", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
             buyWater.setFont(buttonFont);
         }
 

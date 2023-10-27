@@ -439,5 +439,4 @@ public abstract class Animal implements Level {
         return animalType;
 
     }
-
 }
