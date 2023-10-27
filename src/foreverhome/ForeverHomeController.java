@@ -26,8 +26,8 @@ public class ForeverHomeController implements ActionListener{
 //        simulateLoading();
 //        view.showStartGamePanel();
 //        view.showLoginPanel();
-//        view.showFosterPanel();
-        view.showPetFosterPanel();
+        view.showFosterPanel();
+//        view.showPetFosterPanel();
 //        view.showFoodInventoryPanel();
 //        view.showInteractionPanel();
 //        view.showAdoptionPanel();

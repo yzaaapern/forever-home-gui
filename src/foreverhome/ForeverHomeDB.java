@@ -71,6 +71,12 @@ public class ForeverHomeDB
     
     
     // METHODS
+    
+    public void foreverHomeDBSetup()
+    {
+        
+    }
+    
     public ForeverHomeDBOperations getDBOperations() {
         return dbOperations;
     }
