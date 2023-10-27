@@ -5,6 +5,7 @@
 package foreverhome;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
@@ -27,6 +28,9 @@ public class GameProgressBar extends JProgressBar {
         BORDER_IMAGE = new GameImage(progressBarImageFilePath);
         BAR_COLOR = Color.decode(progressBarColor);
         setUI(new GameProgressBarUI());
+        setOpaque(false);
+        setBorderPainted(false);
+        setPreferredSize(new Dimension(490,70));
     }
 
     @Override

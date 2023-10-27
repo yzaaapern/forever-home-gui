@@ -26,9 +26,9 @@ public class ForeverHomeController implements ActionListener{
 //        simulateLoading();
 //        view.showStartGamePanel();
 //        view.showLoginPanel();
-        view.showFosterPanel();
+//        view.showFosterPanel();
 //        view.showPetFosterPanel();
-//        view.showFoodInventoryPanel();
+        view.showFoodInventoryPanel();
 //        view.showInteractionPanel();
 //        view.showAdoptionPanel();
     }
@@ -162,7 +162,7 @@ public class ForeverHomeController implements ActionListener{
             // Handle "Interact" button click
         } else if (source == view.getPET_FOSTER_VIEW().getBatheBtn()) {
             // Handle "Bathe" button click
-        } else if (source == view.getPET_FOSTER_VIEW().getEscBtn()) {
+        } else if (source == view.getPET_FOSTER_VIEW().getPauseBtn()) {
             // Handle "Esc" button click
         }
 
