@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 public final class SignupAndLoginView {
 
     public JPanel signupAndLoginPanel;
-    public static boolean isLogin = false;
+    public boolean isLogin = false;
     private JLabel signUpAndLoginLabel;
     private JLabel introLabel;
     private JPanel signUpAndLoginForm;
@@ -172,5 +172,15 @@ public final class SignupAndLoginView {
     public GameButton getBackBtn()
     {
         return goBackBtn;
+    }
+    
+    public String getUsername()
+    {
+        return this.usernameField.getText();
+    }
+    
+    public String getPassword()
+    {
+        return this.passwordField.getText();
     }
 }

@@ -265,4 +265,9 @@ public class FosterView {
     public GameButton getCancelBtn() {
         return cancelBtn;
     }
+    
+    public String getPetName()
+    {
+        return petNameField.getText();
+    }
 }

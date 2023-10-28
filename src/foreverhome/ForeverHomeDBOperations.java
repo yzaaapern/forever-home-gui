@@ -106,6 +106,7 @@ public class ForeverHomeDBOperations
                 "petHunger INT," +
                 "petHygiene INT," +
                 "petHappiness INT," +
+                "isAdopted BOOLEAN," +
                 "userName VARCHAR(20)," +
                 "FOREIGN KEY (userName) REFERENCES user_data(userName)" +
                 ")";
@@ -220,7 +221,8 @@ public class ForeverHomeDBOperations
                     preparedStatement.setInt(6, petDataSample1.getPetHunger());
                     preparedStatement.setInt(7, petDataSample1.getPetHappiness());
                     preparedStatement.setInt(8, petDataSample1.getPetHygiene());
-                    preparedStatement.setString(9, petDataSample1.getUserName());
+                    preparedStatement.setBoolean(9, petDataSample1.getIsAdopted());
+                    preparedStatement.setString(10, petDataSample1.getUserName());
                 } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
                     // Example sample data for food_inventory table
                     preparedStatement.setString(1, foodInventoryDataSample1.getFoodInventoryID());
@@ -243,7 +245,7 @@ public class ForeverHomeDBOperations
         if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName)) {
             return "INSERT INTO user_data (userName, userPassword, userDabloons, userHasPet) VALUES (?, ?, ?, ?)";
         } else if (ForeverHomeDB.PET_TABLE.equals(tableName)) {
-            return "INSERT INTO pet (petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            return "INSERT INTO pet (petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, isAdopted, userName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
             return "INSERT INTO food_inventory (foodInventoryID, foodInventory, userName) VALUES (?, ?, ?)";
         }
@@ -268,7 +270,8 @@ public class ForeverHomeDBOperations
             preparedStatement.setInt(6, petData.getPetHunger());
             preparedStatement.setInt(7, petData.getPetHygiene());
             preparedStatement.setInt(8, petData.getPetHappiness());
-            preparedStatement.setString(9, petData.getUserName());
+            preparedStatement.setBoolean(9, petData.getIsAdopted());
+            preparedStatement.setString(10, petData.getUserName());
         } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
             FoodInventoryData foodInventoryData = (FoodInventoryData) data;
             preparedStatement.setString(1, foodInventoryData.getFoodInventoryID());
@@ -350,7 +353,7 @@ public class ForeverHomeDBOperations
         if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName)) {
             return "UPDATE user_data SET userPassword=?, userDabloons=?, userHasPet=? WHERE userName=?";
         } else if (ForeverHomeDB.PET_TABLE.equals(tableName)) {
-            return "UPDATE pet SET petName=?, petInstance=?, petLevel=?, petLevelXP=?, petHunger=?, petHygiene=?, petHappiness=? WHERE petID=?";
+            return "UPDATE pet SET petName=?, petInstance=?, petLevel=?, petLevelXP=?, petHunger=?, petHygiene=?, petHappiness=?, isAdopted=? WHERE petID=?";
         } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
             return "UPDATE food_inventory SET foodInventory=? WHERE foodInventoryID=?";
         }
@@ -376,7 +379,8 @@ public class ForeverHomeDBOperations
             preparedStatement.setInt(5, petData.getPetHunger());
             preparedStatement.setInt(6, petData.getPetHygiene());
             preparedStatement.setInt(7, petData.getPetHappiness());
-            preparedStatement.setString(8, petData.getPetID());
+            preparedStatement.setBoolean(8, petData.getIsAdopted());
+            preparedStatement.setString(9, petData.getPetID());
         } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
             FoodInventoryData foodInventoryData = (FoodInventoryData) data;
             preparedStatement.setString(1, foodInventoryData.getFoodInventory());
@@ -465,5 +469,11 @@ public class ForeverHomeDBOperations
             FoodInventoryData foodInventoryData = (FoodInventoryData) data;
             preparedStatement.setString(1, foodInventoryData.getFoodInventoryID());
         }
+    }
+    
+    public void quitGame(Player player, Animal pet, FoodInventory foodInventory){
+        this.updateData(ForeverHomeDB.USER_DATA_TABLE, player);
+        this.updateData(ForeverHomeDB.PET_TABLE, pet);
+        this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventory);
     }
 }

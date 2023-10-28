@@ -21,7 +21,6 @@ import javax.swing.SwingConstants;
  * @author yzape
  */
 public class PetFosterView {
-
     public JPanel petFosterPanel;
     private JPanel statBarsPanel;
     private JPanel buttonsPanel;
@@ -49,7 +48,7 @@ public class PetFosterView {
     private GameButton yesBtn;
     private GameButton noBtn;
 
-    public static boolean isPaused = true;
+    public boolean isPaused = false;
     private final String PAUSE_TITLE = "YOU PAUSED THE GAME!";
     private final String PAUSE_MESSAGE = "The game is currently paused. Do you want to resume playing?";
 
@@ -331,12 +330,22 @@ public class PetFosterView {
     
     public void addActionListener(ActionListener listener)
     {
+        backpackBtn.addActionListener(listener);
         feedBtn.addActionListener(listener);
         interactBtn.addActionListener(listener);
         batheBtn.addActionListener(listener);
         pauseBtn.addActionListener(listener);
+        goBackBtn.addActionListener(listener);
+        quitBtn.addActionListener(listener);
+        yesBtn.addActionListener(listener);
+        noBtn.addActionListener(listener);
     }
 
+    public GameButton getBackpackBtn()
+    {
+        return backpackBtn;
+    }
+    
     public GameButton getFeedBtn() {
         return feedBtn;
     }
@@ -353,4 +362,23 @@ public class PetFosterView {
         return pauseBtn;
     }
     
+    public GameButton getGoBackBtn()
+    {
+        return goBackBtn;
+    }
+    
+    public GameButton getQuitBtn()
+    {
+        return quitBtn;
+    }
+    
+    public GameButton getYesBtn()
+    {
+        return yesBtn;
+    }
+    
+    public GameButton getNoBtn()
+    {
+        return noBtn;
+    }
 }

@@ -499,22 +499,26 @@ public class FoodInventoryView {
 
     public void addActionListener(ActionListener listener)
     {
-        buyFoodForAll.addActionListener(listener);
-        buyRainbowTreat.addActionListener(listener);
-        buyKibble.addActionListener(listener);
-        buyCannedFood.addActionListener(listener);
-        buyVeggieMix.addActionListener(listener);
-        buySeeds.addActionListener(listener);
-        buyWater.addActionListener(listener);
-
-        feedWithFoodForAll.addActionListener(listener);
-        feedWithRainbowTreat.addActionListener(listener);
-        feedWithKibble.addActionListener(listener);
-        feedWithCannedFood.addActionListener(listener);
-        feedWithVeggieMix.addActionListener(listener);
-        feedWithSeeds.addActionListener(listener);
-        drinkWater.addActionListener(listener);
-
+        if(isFeed)
+        {
+            feedWithFoodForAll.addActionListener(listener);
+            feedWithRainbowTreat.addActionListener(listener);
+            feedWithKibble.addActionListener(listener);
+            feedWithCannedFood.addActionListener(listener);
+            feedWithVeggieMix.addActionListener(listener);
+            feedWithSeeds.addActionListener(listener);
+            drinkWater.addActionListener(listener);
+        }
+        else
+        {
+            buyFoodForAll.addActionListener(listener);
+            buyRainbowTreat.addActionListener(listener);
+            buyKibble.addActionListener(listener);
+            buyCannedFood.addActionListener(listener);
+            buyVeggieMix.addActionListener(listener);
+            buySeeds.addActionListener(listener);
+            buyWater.addActionListener(listener);
+        }
         goBackBtn.addActionListener(listener);
     }
     
