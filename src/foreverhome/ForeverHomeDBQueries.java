@@ -151,9 +151,10 @@ public class ForeverHomeDBQueries
                     int petHunger = rs.getInt("petHunger");
                     int petHygiene = rs.getInt("petHygiene");
                     int petHappiness = rs.getInt("petHappiness");
+                    boolean isAdopted = rs.getBoolean("isAdopted");
                     String userName = rs.getString("userName");
 
-                    PetData petData = new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName);
+                    PetData petData = new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, isAdopted, userName);
                     list.add(petData);
                 }
                 else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
@@ -262,9 +263,10 @@ public class ForeverHomeDBQueries
                 int petHunger = rs.getInt("petHunger");
                 int petHygiene = rs.getInt("petHygiene");
                 int petHappiness = rs.getInt("petHappiness");
+                boolean isAdopted = rs.getBoolean("isAdopted");
                 String userName = rs.getString("userName");
 
-                PetData p = new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName);
+                PetData p = new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, isAdopted, userName);
                 return p;
             }
         } catch (SQLException e) {
@@ -296,9 +298,46 @@ public class ForeverHomeDBQueries
                 int petHunger = rs.getInt("petHunger");
                 int petHygiene = rs.getInt("petHygiene");
                 int petHappiness = rs.getInt("petHappiness");
+                boolean isAdopted = rs.getBoolean("isAdopted");
 
                 // Create and return a PetData object with the retrieved data
-                return new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, userName);
+                return new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, isAdopted, userName);
+            }
+        } catch (SQLException e) {
+            handleSQLException(e);
+        }
+
+        return null;
+    }
+    
+    /* getPetByPetNameAndUserName method
+    
+    Parameters: String userName & String petName
+    Return: PetData object
+    Description: Returns pet's data for a specified user and petname
+    */
+    public PetData getPetByIsAdoptedAndUserName(String userName) {
+        try {
+            String query = "SELECT * FROM pet WHERE userName=? AND petName=?";
+            PreparedStatement preparedStatement = this.dbManager.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, userName);
+            preparedStatement.setBoolean(2, false);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                String petID = rs.getString("petID");
+                String petName = rs.getString("petName");
+                String petInstance = rs.getString("petInstance");
+                int petLevel = rs.getInt("petLevel");
+                int petLevelXP = rs.getInt("petLevelXP");
+                int petHunger = rs.getInt("petHunger");
+                int petHygiene = rs.getInt("petHygiene");
+                int petHappiness = rs.getInt("petHappiness");
+                boolean isAdopted = rs.getBoolean("isAdopted");
+
+                // Create and return a PetData object with the retrieved data
+                return new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, isAdopted, userName);
             }
         } catch (SQLException e) {
             handleSQLException(e);

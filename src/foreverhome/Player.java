@@ -77,6 +77,11 @@ public class Player
     public FoodInventory getFoodInventory(){
         return this.foodInventory;
     }
+    
+    public InteractionList getInteractionList()
+    {
+        return this.interactionList;
+    }
 
     // INC & DEC DABLOONS METHODS
     
@@ -109,151 +114,6 @@ public class Player
             this.setDabloons(dec_dabloons);
         }
         // the user's dabloons should never be negative
-    }
-    
-    /*  buyFood method
-    
-        Parameters: Food object for chosen food
-        Return: None
-        Description: User may buy food for their pet
-    */
-    public void buyFood(Food food)
-    {
-        if(this.getDabloons() >= food.getFoodCost()) // if the player can afford the food
-        {
-            food.incFoodCount(); // increase the amount of that food in their food inventory
-            this.decDabloons(food.getFoodCost()); // decrease the player's dabloons by the cost of that food
-        }
-        else // otherwise the player cannot afford the food
-        {
-            System.out.println("Insufficient Funds.\n"); // prints this message
-        }
-    }
-    
-    /*  feedPet method
-    
-        Parameters: Food object of chosen food
-        Return: None
-        Description: User may feed pet a chosen food
-    */
-    public void feedPet(Food food)
-    {
-        if(this.getFosterPet().getHunger() < Animal.DEFAULT_STAT) // if the pet is hungry
-        {
-            if(food.getFoodCount() <= 0) // if the player has none of that food
-            {
-                System.out.println("Insufficient supply.\n"); 
-            }
-            else // if the player has some of that food
-            {
-                this.getFosterPet().incHunger(food); // pet's hunger increases
-                food.decFoodCount(); // decrease the food count by 1
-                this.getFosterPet().incLevelXP(); // increase the foster pet's level xp 
-                this.levelUpReward(); // potential level up reward
-
-            }
-        }
-        else // if the pet already has max hunger stat, it will not eat
-        {
-            System.out.println(this.getFosterPet().getName() + " is already full!\n");
-        }
-    }
-    
-    /*  giveBath method
-    
-        Parameters: None
-        Return: None
-        Description: User may bathe their pet to increase pet's hygiene stat
-    */
-    
-    public void giveBath()
-    {
-        if(this.getFosterPet().getHygiene() < Animal.DEFAULT_STAT) // if the pet is not fully clean
-        {
-            this.getFosterPet().incHygiene(); // increase their hygiene
-            this.getFosterPet().incLevelXP(); // increase the pet's xp
-            this.levelUpReward(); // potential level up reward
-        }
-        else // pet is already clean, bathing has no effect on the pet or user
-        {
-            System.out.println(this.getFosterPet().getName() + " is already clean!\n");
-        }
-    }
-    
-    /*  interactWithPet method
-    
-        Parameters: Interaction object for chosen interaction   
-        Return: None
-        Description: User may interact with their pet as often as they like
-    */
-    
-    public void interactWithPet(Interaction interaction)
-    {
-        if(!this.isInteractUnlocked(interaction)) // if the interaction is not yet unlocked by the pet 
-        {
-            System.out.println("You cannot do this trick yet! " + this.getFosterPet().getName() + " has yet to reach Level " + interaction.getLevelUnlocked() + ".");
-        }
-        else // otherwise the interaction is unlocked 
-        {
-            if(interaction instanceof Play) // if it is a play interaction
-            {
-                this.getFosterPet().incHappiness(); // increase the happiness
-                this.getFosterPet().decHunger(); // decrease the hunger of the pet
-                this.getFosterPet().decHygiene(); // derease the hygiene stat of the pet
-            }
-            else if(interaction instanceof Trick) // if it is a trick interaction
-            {
-                this.getFosterPet().incHappiness(); // increase the pet's happiness
-            }
-            else if(interaction instanceof Health) // if it is a health interaction
-            {
-                this.getFosterPet().incHappiness(); // increase the pet's happiness
-                this.getFosterPet().incHygiene(); // increase the pet's hygiene
-            }
-            this.getFosterPet().incLevelXP(); // increase the pet's xp
-            this.levelUpReward(); // potential level up reward
-        }
-    }
-    
-    /* isInteractUnlocked method
-    
-        Parameters: Interaction object of chosen interaction
-        Return: boolean, true if it is unlocked, false if it is locked
-        Description: Checks the the foster pet has a high enough level for the interaction
-    */
-    
-    public boolean isInteractUnlocked(Interaction interaction)
-    {
-        if(this.getFosterPet().getLevel() >= interaction.getLevelUnlocked()) // if the foster pet's level is greater or equal to the level of the interaction, it is unlocked
-        {
-            return true;
-        }
-        return false;
-    }
-    
-    /*  levelUpReward
-    
-        Parameters: None
-        Return: None
-        Description: Checks if the pet is ready for a level up, increases level, gives a level up message, and gives player reward dabloons
-    */
-    public void levelUpReward()
-    {
-        if(this.getFosterPet().checkLevelForIncLevel()) // if pet is ready for level up
-        {
-            this.getFosterPet().incLevel(); // increase the pet's level
-            this.getFosterPet().levelUpMessage(); // display level up message
-            if(this.getFosterPet().getLevel() < Animal.MAX_LEVEL) // if the foster pet's leveled up level is not yet max
-            {
-                this.incDabloons(Player.INC_DABLOONS); // give them this amount of dabloons
-            }
-            else // if the foster pet's leveled up level is max
-            {
-                this.incDabloons(Player.REWARD_DABLOONS); // give them more this amount of dabloons
-            }
-            
-        }
-        
     }
     
     /* Override toString method

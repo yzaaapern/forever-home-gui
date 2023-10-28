@@ -90,12 +90,12 @@ public class StartGameView {
         };
     }
 
-//    public void addActionListener(ActionListener listener)
-//    {
-//        startButton.addActionListener(listener);
-//        continueButton.addActionListener(listener);
-//        exitButton.addActionListener(listener);
-//    }
+    public void addActionListener(ActionListener listener)
+    {
+        startButton.addActionListener(listener);
+        continueButton.addActionListener(listener);
+        exitButton.addActionListener(listener);
+    }
     
     public GameButton getStartButton() {
         return startButton;

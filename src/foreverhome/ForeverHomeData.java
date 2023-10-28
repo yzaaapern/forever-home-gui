@@ -13,9 +13,19 @@ package foreverhome;
 public class ForeverHomeData 
 {
     // Instance variables
+    boolean loginFlag = false;
+    boolean quitFlag = false;
     private UserData userData;
     private PetData petData;
     private FoodInventoryData foodInventoryData;
+    
+    // Default Constructor
+    public ForeverHomeData()
+    {
+        this.setUserData(null);
+        this.setPetData(null);
+        this.setFoodInventoryData(null);
+    }
     
     // Constructor
     public ForeverHomeData(UserData userData, PetData petData, FoodInventoryData foodInventoryData)

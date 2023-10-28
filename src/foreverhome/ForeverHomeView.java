@@ -167,14 +167,14 @@ public class ForeverHomeView {
         return ADOPTION_VIEW;  
     }
 
-//    public void addActionListeners(ActionListener listener)
-//    {
-//        LOGIN_VIEW.addActionListener(listener);
-//        STARTGAME_VIEW.addActionListener(listener);
-//        FOSTER_VIEW.addActionListener(listener);
-//        PET_FOSTER_VIEW.addActionListener(listener);
-//        FOOD_INVEN_VIEW.addActionListener(listener);
-//        INTERACTION_VIEW.addActionListener(listener);
-//        ADOPTION_VIEW.addActionListener(listener);
-//    }
+    public void addActionListeners(ActionListener listener)
+    {
+        LOGIN_VIEW.addActionListener(listener);
+        STARTGAME_VIEW.addActionListener(listener);
+        FOSTER_VIEW.addActionListener(listener);
+        PET_FOSTER_VIEW.addActionListener(listener);
+        FOOD_INVEN_VIEW.addActionListener(listener);
+        INTERACTION_VIEW.addActionListener(listener);
+        ADOPTION_VIEW.addActionListener(listener);
+    }
 }

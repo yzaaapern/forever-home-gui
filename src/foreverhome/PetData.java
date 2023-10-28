@@ -24,25 +24,12 @@ public class PetData
     private int petHunger;
     private int petHygiene;
     private int petHappiness;
+    private boolean isAdopted;
     private String userName; // FK
     
     
     // Constructor
     // New pet within the database (doesn't have it's own ID yet)
-    public PetData(String petName, String petInstance, int petLevel, int petLevelXP, int petHunger, int petHygiene, int petHappiness, String userName)
-    {
-        this.petID = generateRandomPetID();
-        this.setPetName(petName);
-        this.setPetInstance(petInstance);
-        this.setPetLevel(petLevel);
-        this.setPetLevelXP(petLevelXP);
-        this.setPetHunger(petHunger);
-        this.setPetHygiene(petHygiene);
-        this.setPetHappiness(petHappiness);
-        this.setUserName(userName);
-    }
-    
-    // New pet within the database
     public PetData(Animal pet, String userName)
     {
         this.petID = generateRandomPetID();
@@ -53,11 +40,12 @@ public class PetData
         this.setPetHunger(pet.getHunger());
         this.setPetHygiene(pet.getHygiene());
         this.setPetHappiness(pet.getHappiness());
+        this.setIsAdopted(false);
         this.setUserName(userName);
     }
     
     // Existing pet within the database
-    public PetData(String petID, String petName, String petInstance, int petLevel, int petLevelXP, int petHunger, int petHygiene, int petHappiness, String userName)
+    public PetData(String petID, String petName, String petInstance, int petLevel, int petLevelXP, int petHunger, int petHygiene, int petHappiness, boolean isAdopted, String userName)
     {
         this.petID = petID;
         this.setPetName(petName);
@@ -67,11 +55,12 @@ public class PetData
         this.setPetHunger(petHunger);
         this.setPetHygiene(petHygiene);
         this.setPetHappiness(petHappiness);
+        this.setIsAdopted(isAdopted);
         this.setUserName(userName);
     }
     
     // Existing pet within the database
-    public PetData(String petID, Animal pet, String userName)
+    public PetData(String petID, Animal pet, boolean isAdopted, String userName)
     {
         this.petID = petID;
         this.setPetName(pet.getName());
@@ -81,126 +70,86 @@ public class PetData
         this.setPetHunger(pet.getHunger());
         this.setPetHygiene(pet.getHygiene());
         this.setPetHappiness(pet.getHappiness());
+        this.setIsAdopted(isAdopted);
         this.setUserName(userName);
     }
     
     // GET & SET METHODS
     
-    /**
-     * @return the petID
-     */
     public String getPetID() {
         return petID;
     }
 
-    /**
-     * @return the petName
-     */
     public String getPetName() {
         return petName;
     }
 
-    /**
-     * @param petName the petName to set
-     */
     public void setPetName(String petName) {
         this.petName = petName;
     }
 
-    /**
-     * @return the petInstance
-     */
     public String getPetInstance() {
         return petInstance;
     }
 
-    /**
-     * @param petInstance the petInstance to set
-     */
     public void setPetInstance(String petInstance) {
         this.petInstance = petInstance;
     }
 
-    /**
-     * @return the petLevel
-     */
     public int getPetLevel() {
         return petLevel;
     }
 
-    /**
-     * @param petLevel the petLevel to set
-     */
     public void setPetLevel(int petLevel) {
         this.petLevel = petLevel;
     }
 
-    /**
-     * @return the petLevelXP
-     */
     public int getPetLevelXP() {
         return petLevelXP;
     }
 
-    /**
-     * @param petLevelXP the petLevelXP to set
-     */
     public void setPetLevelXP(int petLevelXP) {
         this.petLevelXP = petLevelXP;
     }
 
-    /**
-     * @return the petHunger
-     */
     public int getPetHunger() {
         return petHunger;
     }
 
-    /**
-     * @param petHunger the petHunger to set
-     */
     public void setPetHunger(int petHunger) {
         this.petHunger = petHunger;
     }
 
-    /**
-     * @return the petHygiene
-     */
     public int getPetHygiene() {
         return petHygiene;
     }
 
-    /**
-     * @param petHygiene the petHygiene to set
-     */
     public void setPetHygiene(int petHygiene) {
         this.petHygiene = petHygiene;
     }
 
-    /**
-     * @return the petHappiness
-     */
     public int getPetHappiness() {
         return petHappiness;
     }
 
-    /**
-     * @param petHappiness the petHappiness to set
-     */
     public void setPetHappiness(int petHappiness) {
         this.petHappiness = petHappiness;
     }
 
-    /**
-     * @return the userName
-     */
+    public boolean getIsAdopted()
+    {
+        return isAdopted;
+    }
+    
+    public void setIsAdopted(boolean adoptedStatus)
+    {
+        this.isAdopted = adoptedStatus;
+    }
+    
     public String getUserName() {
         return userName;
     }
 
-    /**
-     * @param userName the userName to set
-     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -245,5 +194,30 @@ public class PetData
                 ", petHappiness=" + getPetHappiness() +
                 ", userName='" + getUserName() + '\'' +
                 '}';
+    }
+    
+    // toAnimal method
+    public Animal toAnimal()
+    {
+        Animal pet = null;
+        if (this.petInstance.equalsIgnoreCase("dog")) {
+                pet = new Dog(petName);
+            } else if (this.petInstance.equalsIgnoreCase("cat")) {
+                pet = new Cat(petName);
+            } else if (this.petInstance.equalsIgnoreCase("rat")) {
+                pet = new Rat(petName);
+            } else if (this.petInstance.equalsIgnoreCase("parrot")) {
+                pet = new Parrot(petName);
+            } else if (this.petInstance.equalsIgnoreCase("chicken")) {
+                pet = new Chicken(petName);
+            }
+        pet.setLevel(petLevel);
+        pet.setLevelXP(petLevelXP);
+        pet.setHunger(petHunger);
+        pet.setHygiene(petHygiene);
+        pet.setHappiness(petHappiness);
+        pet.setIsAdopted(isAdopted);
+        
+        return pet;
     }
 }

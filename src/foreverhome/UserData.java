@@ -96,18 +96,22 @@ public class UserData
     
     // METHODS
     
+    public Player toPlayer()
+    {
+        Player player = new Player(userName);
+        player.setPassword(userPassword);
+        player.setDabloons(userDabloons);
+        player.hasFosterPet = userHasPet;
+
+        return player;
+    }
+    
     // Method to connect a pet with a user, and the food inventory with a user
     public void connectUserWithPetAndFoodInventory(UserData user, PetData pet, FoodInventoryData foodInventory) 
     {
         // Associate the user, pet, and food inventory.
         foodInventory.setUserName(user.getUserName());
         pet.setUserName(user.getUserName());
-    }
-    
-    // Checks if a given password matches the user's password
-    public boolean authenticateUser(String inputPassword)
-    {
-        return inputPassword.equals(this.getUserPassword());
     }
     
     // Override equals method

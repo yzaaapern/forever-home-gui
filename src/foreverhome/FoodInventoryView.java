@@ -549,32 +549,31 @@ public class FoodInventoryView {
         foodMenuPanel.setPreferredSize(new Dimension(1000, 700));
     }
 
-//    public void addActionListener(ActionListener listener)
-//    {
-//        buyFoodForAll.addActionListener(listener);
-//        buyRainbowTreat.addActionListener(listener);
-//        buyKibble.addActionListener(listener);
-//        buyCannedFood.addActionListener(listener);
-//        buyVeggieMix.addActionListener(listener);
-//        buySeeds.addActionListener(listener);
-//        buyWater.addActionListener(listener);
-//
-//        feedWithFoodForAll.addActionListener(listener);
-//        feedWithRainbowTreat.addActionListener(listener);
-//        feedWithKibble.addActionListener(listener);
-//        feedWithCannedFood.addActionListener(listener);
-//        feedWithVeggieMix.addActionListener(listener);
-//        feedWithSeeds.addActionListener(listener);
-//        drinkWater.addActionListener(listener);
-//
-//        goBackBtn.addActionListener(listener);
-//    }
-    /*
-        GAMEBUTTON METHODS
-    Parameters: None
-    Returns: Returns private GameButtons of FoodInventoryView
-    Description: Allows other classes to get private GameButtons of FoodInventoryView 
-    */
+    public void addActionListener(ActionListener listener)
+    {
+        if(isFeed)
+        {
+            feedWithFoodForAll.addActionListener(listener);
+            feedWithRainbowTreat.addActionListener(listener);
+            feedWithKibble.addActionListener(listener);
+            feedWithCannedFood.addActionListener(listener);
+            feedWithVeggieMix.addActionListener(listener);
+            feedWithSeeds.addActionListener(listener);
+            drinkWater.addActionListener(listener);
+        }
+        else
+        {
+            buyFoodForAll.addActionListener(listener);
+            buyRainbowTreat.addActionListener(listener);
+            buyKibble.addActionListener(listener);
+            buyCannedFood.addActionListener(listener);
+            buyVeggieMix.addActionListener(listener);
+            buySeeds.addActionListener(listener);
+            buyWater.addActionListener(listener);
+        }
+        goBackBtn.addActionListener(listener);
+    }
+    
     public GameButton getBuyFoodForAll() {
         return buyFoodForAll;
     }
