@@ -7,6 +7,8 @@ package foreverhome;
 /**
  *
  * @author yzape
+ * Name: Yza Pernia
+ * Student ID: 21137984
  */
 // Cat is an animal
 public class Cat extends Animal{

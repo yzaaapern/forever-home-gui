@@ -23,41 +23,21 @@ import javax.swing.Timer;
  */
 public class LoadingView {
 
-    private final JLabel titleLabel;
-    private final JLabel loadingTextLabel;
     public JPanel loadingPanel;
+    private JLabel titleLabel;
+    private JLabel loadingTextLabel;
 
+    public static boolean isShuttingDown = false;
+    private int loadingTextIndex;
     private final String imageFilePath = "./resources/images/backgrounds/bg.png";
     private final String gameTitle = "FOREVER HOME";
-    public final String loadingText = "LOADING...";
-    private int loadingTextIndex;
+    public final String loadingText = isShuttingDown ? "SHUTTING DOWN..." : "LOADING...";
 
     public LoadingView() {
-
-        loadingPanel = new JPanel(new GridBagLayout()) {
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                GameImage bgImage = new GameImage(imageFilePath);
-                g.drawImage(bgImage.getImage(), 0, 0, null);
-            }
-        };
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(0, 0, 40, 0);
-
-        Font titleFont = GameFont.getPixelFont(80, 1);
-        titleLabel = new JLabel(gameTitle);
-        titleLabel.setFont(titleFont);
-        titleLabel.setForeground(Color.white);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        loadingPanel.add(titleLabel, gbc);
-
-        Font loadingTextFont = GameFont.getPixelFont(40, 0);
-        loadingTextLabel = new JLabel("");
-        loadingTextLabel.setFont(loadingTextFont);
-        loadingTextLabel.setForeground(Color.white);
-        gbc.gridy = 1;
-        loadingPanel.add(loadingTextLabel, gbc);
+        initializePanel();
+        initializeLabels();
+        addComponents(gbc);
     }
 
     public void showLoadingTextAnimation() {
@@ -66,7 +46,7 @@ public class LoadingView {
         CardLayout cardLayout = (CardLayout) ForeverHomeView.frame.getContentPane().getLayout();
         cardLayout.show(ForeverHomeView.frame.getContentPane(), "loading");
 
-        Timer timer = new Timer(1000, new ActionListener() {
+        Timer timer = new Timer(1500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (loadingTextIndex <= loadingText.length()) {
@@ -74,10 +54,46 @@ public class LoadingView {
                     loadingTextIndex++;
                 } else {
                     ((Timer) e.getSource()).stop();
+                    if (isShuttingDown) {
+                        loadingTextLabel.setText("GAME OVER");
+                    }
                 }
             }
 
         });
         timer.start();
+    }
+
+    private void addComponents(GridBagConstraints gbc) {
+        gbc.insets = new Insets(0, 0, 40, 0);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        loadingPanel.add(titleLabel, gbc);
+
+        gbc.gridy = 1;
+        loadingPanel.add(loadingTextLabel, gbc);
+    }
+
+    private void initializeLabels() {
+        Font labelFont = GameFont.getPixelFont(80, 1);
+        titleLabel = new JLabel(gameTitle);
+        titleLabel.setFont(labelFont);
+        titleLabel.setForeground(Color.white);
+
+        labelFont = GameFont.getPixelFont(40, 0);
+        loadingTextLabel = new JLabel("");
+        loadingTextLabel.setFont(labelFont);
+        loadingTextLabel.setForeground(Color.white);
+    }
+
+    private void initializePanel() {
+        loadingPanel = new JPanel(new GridBagLayout()) {
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                GameImage bgImage = new GameImage(imageFilePath);
+                g.drawImage(bgImage.getImage(), 0, 0, null);
+            }
+        };
     }
 }

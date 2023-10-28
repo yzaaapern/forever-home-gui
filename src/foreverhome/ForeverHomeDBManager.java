@@ -8,6 +8,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
 
+/**
+ *
+ * @author AnnGa
+ * Name: Ann Del Rosario
+ * Student ID: 21143100
+ */
+
 public class ForeverHomeDBManager {
     // Instance variables
     private static final String DATABASE_URL = "jdbc:derby:ForeverHomeDatabase;create=true";

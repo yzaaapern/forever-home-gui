@@ -10,37 +10,61 @@ import java.awt.event.ActionListener;
 /**
  *
  * @author yzape
+ * Name: Yza Pernia
+ * Student ID: 21137984
  */
+
 public class ForeverHomeController implements ActionListener{
     private ForeverHomeModel model;
     private ForeverHomeView view;
     
+    /*
+        OBJECT CONSTRUCTOR
+    */
     public ForeverHomeController(ForeverHomeModel model, ForeverHomeView view){
         this.model = model;
         this.view = view;
-        this.view.addActionListeners(this);
+//        this.view.addActionListeners(this);
     }
     
+    /*
+        start method
+    Parameters: None
+    Returns: None
+    Description: Starts the program by simulating the loading screen and calling the startGamePanel
+    */
     public void start(){
 //        view.display();
 //        simulateLoading();
-//        view.showStartGamePanel();
+        view.showStartGamePanel();
 //        view.showLoginPanel();
 //        view.showFosterPanel();
 //        view.showPetFosterPanel();
-        view.showFoodInventoryPanel();
+//        view.showFoodInventoryPanel();
 //        view.showInteractionPanel();
 //        view.showAdoptionPanel();
     }
     
+    /*
+        simulateLoading method
+    Parameters: None
+    Returns: None
+    Description: Simulates the loading screen by putting the other views to sleep for a given number of time.
+    */
     private void simulateLoading(){
         try{
-            Thread.sleep(14000);
+            Thread.sleep(16000);
         } catch(InterruptedException e){
             e.printStackTrace();
         }
     }
 
+    /*
+        OVERRIDE actionPerformed method
+    Parameters: ActionEvent e
+    Returns: None
+    Description:
+    */
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource(); // Get source of the event
