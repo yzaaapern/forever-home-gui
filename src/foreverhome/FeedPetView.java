@@ -22,6 +22,8 @@ import javax.swing.JPanel;
  */
 public class FeedPetView {
 
+    FoodInventory foodInventory;
+    
     public JPanel foodInventoryPanel;
     private JPanel foodMenuPanel;
     private JLabel titleLabel;
@@ -59,13 +61,15 @@ public class FeedPetView {
     private GameButton goBackBtn;
 
     private final String BG_FILE_PATH = "./resources/images/backgrounds/foodInventory_bg.png";
-    private final String BTN_FILE_PATH = "./resources/images/buttons/mainButton.png";
-    private final String BTN_HOVER_FILE_PATH = "./resources/images/buttons/mainButton_hover.png";
+    private final String BTN_FILE_PATH = "./resources/images/buttons/mainButton_small.png";
+    private final String BTN_HOVER_FILE_PATH = "./resources/images/buttons/mainButton_hover_small.png";
     
     private final String TITLE = "FEED PET MENU";
     private final String INTRO = "Feed your pet something tasty!";
 
     public FeedPetView() {
+        foodInventory = new FoodInventory();
+        
         GridBagConstraints gbc = new GridBagConstraints();
         initializePanels();
         initializeLabels();
@@ -256,7 +260,7 @@ public class FeedPetView {
         foodForAllTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        foodForAllDesc = new JLabel("A basic but yummy food for any foster pet. Quantity: ");
+        foodForAllDesc = new JLabel("A basic but yummy food for any foster pet. Hunger points: " + foodInventory.foodForAll.getFoodValue() + ". Quantity: ");
         foodForAllDesc.setFont(labelFont);
         foodForAllDesc.setForeground(Color.white);
 
@@ -266,7 +270,7 @@ public class FeedPetView {
         rainbowTreatTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        rainbowTreatDesc = new JLabel("The tastiest treat of all! Quantity: ");
+        rainbowTreatDesc = new JLabel("The tastiest treat of all! Hunger points: " + foodInventory.rainbowTreat.getFoodValue() + ". Quantity: ");
         rainbowTreatDesc.setFont(labelFont);
         rainbowTreatDesc.setForeground(Color.white);
 
@@ -276,7 +280,7 @@ public class FeedPetView {
         kibbleTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        kibbleDesc = new JLabel("An essential for every dog and cat foster. Quantity: ");
+        kibbleDesc = new JLabel("An essential for every dog and cat foster. Hunger points: " + foodInventory.kibble.getFoodValue() + ".Quantity: ");
         kibbleDesc.setFont(labelFont);
         kibbleDesc.setForeground(Color.white);
 
@@ -286,7 +290,7 @@ public class FeedPetView {
         cannedFoodTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        cannedFoodDesc = new JLabel("A yummy food that's easy for dogs and cats to digest. Quantity: ");
+        cannedFoodDesc = new JLabel("A yummy food that's easy for dogs and cats to digest. Hunger points: " + foodInventory.cannedFood.getFoodValue() + ".Quantity: ");
         cannedFoodDesc.setFont(labelFont);
         cannedFoodDesc.setForeground(Color.white);
 
@@ -296,7 +300,7 @@ public class FeedPetView {
         veggieMixTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        veggieMixDesc = new JLabel("An essential for every rat, parrot, and chicken foster. Quantity: ");
+        veggieMixDesc = new JLabel("An essential for every rat, parrot, and chicken foster. Hunger points: " + foodInventory.veggieMix.getFoodValue() + ".Quantity: ");
         veggieMixDesc.setFont(labelFont);
         veggieMixDesc.setForeground(Color.white);
 
@@ -306,7 +310,7 @@ public class FeedPetView {
         seedsTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        seedsDesc = new JLabel("Seeds are always so so tasty! Quantity: ");
+        seedsDesc = new JLabel("Seeds are always so so tasty! Hunger points: " + foodInventory.seeds.getFoodValue() + ".Quantity: ");
         seedsDesc.setFont(labelFont);
         seedsDesc.setForeground(Color.white);
 
@@ -316,7 +320,7 @@ public class FeedPetView {
         waterTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        waterDesc = new JLabel("Can't let your foster pet go thirsty now! Quantity: ");
+        waterDesc = new JLabel("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ".Quantity: ");
         waterDesc.setFont(labelFont);
         waterDesc.setForeground(Color.white);
 
@@ -338,12 +342,12 @@ public class FeedPetView {
                 super.paintComponent(g);
                 Color transparentBG = new Color(209, 114, 114, 220);
                 g.setColor(transparentBG);
-                g.fillRect(foodInventoryPanel.getWidth() / 8, foodInventoryPanel.getHeight() / 6, 1000, 700);
+                g.fillRect(foodInventoryPanel.getWidth() / 12, foodInventoryPanel.getHeight() / 9, 1140, 790);
 
             }
         };
         foodMenuPanel.setOpaque(false);
-        foodMenuPanel.setPreferredSize(new Dimension(1000, 700));
+        foodMenuPanel.setPreferredSize(new Dimension(1200, 800));
     }
 
     public void addActionListener(ActionListener listener)

@@ -22,6 +22,8 @@ import javax.swing.JPanel;
  */
 public class BuyFoodView {
 
+    FoodInventory foodInventory;
+    
     public JPanel buyFoodPanel;
     private JPanel foodMenuPanel;
     private JLabel titleLabel;
@@ -66,13 +68,14 @@ public class BuyFoodView {
     private GameButton goBackBtn;
 
     private final String BG_FILE_PATH = "./resources/images/backgrounds/foodInventory_bg.png";
-    private final String BTN_FILE_PATH = "./resources/images/buttons/mainButton.png";
-    private final String BTN_HOVER_FILE_PATH = "./resources/images/buttons/mainButton_hover.png";
+    private final String BTN_FILE_PATH = "./resources/images/buttons/mainButton_small.png";
+    private final String BTN_HOVER_FILE_PATH = "./resources/images/buttons/mainButton_hover_small.png";
     
     private final String TITLE = "STORE MENU";
     private final String INTRO = "Buy more foods for your foster pet!";
 
     public BuyFoodView() {
+        foodInventory = new FoodInventory();
         GridBagConstraints gbc = new GridBagConstraints();
         initializePanels();
         initializeLabels();
@@ -262,7 +265,7 @@ public class BuyFoodView {
         foodForAllTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        foodForAllDesc = new JLabel("A basic but yummy food for any foster pet. Quantity: " + foodForAllCount);
+        foodForAllDesc = new JLabel("A basic but yummy food for any foster pet. Hunger points: " + foodInventory.foodForAll.getFoodValue() + ". Cost: " + foodInventory.foodForAll.getFoodCost() + ". Quantity: " + foodForAllCount);
         foodForAllDesc.setFont(labelFont);
         foodForAllDesc.setForeground(Color.white);
 
@@ -272,7 +275,7 @@ public class BuyFoodView {
         rainbowTreatTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        rainbowTreatDesc = new JLabel("The tastiest treat of all! Quantity: " + rainbowTreatCount);
+        rainbowTreatDesc = new JLabel("The tastiest treat of all! Hunger points: " + foodInventory.rainbowTreat.getFoodValue() + ". Cost: " + foodInventory.rainbowTreat.getFoodCost() + ". Quantity: " + rainbowTreatCount);
         rainbowTreatDesc.setFont(labelFont);
         rainbowTreatDesc.setForeground(Color.white);
 
@@ -282,7 +285,7 @@ public class BuyFoodView {
         kibbleTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        kibbleDesc = new JLabel("An essential for every dog and cat foster. Quantity: " + kibbleCount);
+        kibbleDesc = new JLabel("An essential for every dog and cat foster. Hunger points: " + foodInventory.kibble.getFoodValue() + ". Cost: " + foodInventory.kibble.getFoodCost() + ". Quantity: " + kibbleCount);
         kibbleDesc.setFont(labelFont);
         kibbleDesc.setForeground(Color.white);
 
@@ -292,7 +295,7 @@ public class BuyFoodView {
         cannedFoodTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        cannedFoodDesc = new JLabel("A yummy food that's easy for dogs and cats to digest. Quantity: " + cannedFoodCount);
+        cannedFoodDesc = new JLabel("A yummy food that's easy for dogs and cats to digest. Hunger points: " + foodInventory.cannedFood.getFoodValue() + ". Cost: " + foodInventory.cannedFood.getFoodCost() + ". Quantity: " + cannedFoodCount);
         cannedFoodDesc.setFont(labelFont);
         cannedFoodDesc.setForeground(Color.white);
 
@@ -302,7 +305,7 @@ public class BuyFoodView {
         veggieMixTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        veggieMixDesc = new JLabel("An essential for every rat, parrot, and chicken foster. Quantity: " + veggieMixCount);
+        veggieMixDesc = new JLabel("An essential for every rat, parrot, and chicken foster. Hunger points: " + foodInventory.veggieMix.getFoodValue() + ". Cost: " + foodInventory.veggieMix.getFoodCost() + ". Quantity: " + veggieMixCount);
         veggieMixDesc.setFont(labelFont);
         veggieMixDesc.setForeground(Color.white);
 
@@ -312,7 +315,7 @@ public class BuyFoodView {
         seedsTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        seedsDesc = new JLabel("Seeds are always so so tasty! Quantity: " + seedsCount);
+        seedsDesc = new JLabel("Seeds are always so so tasty! Hunger points: " + foodInventory.seeds.getFoodValue() + ". Cost: " + foodInventory.seeds.getFoodCost() + ". Quantity: " + seedsCount);
         seedsDesc.setFont(labelFont);
         seedsDesc.setForeground(Color.white);
 
@@ -322,7 +325,7 @@ public class BuyFoodView {
         waterTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        waterDesc = new JLabel("Can't let your foster pet go thirsty now! Quantity: " + waterCount);
+        waterDesc = new JLabel("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Cost: " + foodInventory.water.getFoodCost() + ". Quantity: " + waterCount);
         waterDesc.setFont(labelFont);
         waterDesc.setForeground(Color.white);
 
@@ -344,12 +347,12 @@ public class BuyFoodView {
                 super.paintComponent(g);
                 Color transparentBG = new Color(209, 114, 114, 220);
                 g.setColor(transparentBG);
-                g.fillRect(buyFoodPanel.getWidth() / 8, buyFoodPanel.getHeight() / 6, 1000, 700);
+                g.fillRect(buyFoodPanel.getWidth() / 12, buyFoodPanel.getHeight() / 9, 1140, 790);
 
             }
         };
         foodMenuPanel.setOpaque(false);
-        foodMenuPanel.setPreferredSize(new Dimension(1000, 700));
+        foodMenuPanel.setPreferredSize(new Dimension(1200, 800));
     }
 
     public void addActionListener(ActionListener listener)
