@@ -307,7 +307,9 @@ public class ForeverHomeController implements ActionListener{
         
         else if (source == view.getADOPTION_VIEW().getNoBtn()) 
         {
+            model.saveGame();
             view.showStartGamePanel();
+            
             
         } 
         else if (source == view.getADOPTION_VIEW().getYesBtn()) 
