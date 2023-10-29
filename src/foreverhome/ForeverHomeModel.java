@@ -47,8 +47,6 @@ public class ForeverHomeModel extends Observable {
         Player player = user.toPlayer();
         this.username = username;
         this.player = player;
-        System.out.println(this.player);
-        System.out.println(this.player.getFoodInventory());
         this.setFoodInventory();
         
         this.setChanged();
@@ -75,7 +73,6 @@ public class ForeverHomeModel extends Observable {
     {
         // get petdata from the database
         PetData petData = this.db.getDBQueries().getPetByIsAdoptedAndUserName(player.getName(), false);
-        System.out.println(petData);
         // instansiate Animal object with the petdata stats
         Animal pet = petData.toAnimal();
         // set the player's foster pet to the pet
@@ -88,40 +85,9 @@ public class ForeverHomeModel extends Observable {
     public void setFoodInventory()
     {
         FoodInventoryData fData = this.db.getDBQueries().getFoodInventoryByUserName(player.getName());
-        System.out.println(fData);
         
         FoodInventory f = fData.toFoodInventory();
         player.setFoodInventory(f);
-        
-        this.setChanged();
-        this.notifyObservers(this.data);
-    }
-    
-    /*
-        checkName method:
-        Parameters: String username, String password
-        Description: Checks the user's name to see if they exist in the database or not
-                     Regardless of whether the player exists in the database or not,
-                     a login flag is set to true when the new player is added into the database or if they previously exist
-                     
-                     When this flag is set to true, petFoster() is called.
-    */
-    public void checkName(String username, String password){
-        this.username = username;
-        this.data.setUserData(this.db.getDBQueries().getUserByUserName(username));
-        
-        if(data.loginFlag)
-        {
-            this.newGame();
-        }
-        this.setChanged();
-        
-        
-        // change later!!
-        /*
-            idea is to have a data login flag and 
-            if that login flag is true then it calls the newGame function
-        */
         
         this.setChanged();
         this.notifyObservers(this.data);
@@ -147,7 +113,7 @@ public class ForeverHomeModel extends Observable {
     public boolean authenticateUser(String username, String passwordAttempt)
     {
         UserData user = this.db.getDBQueries().getUserByUserName(username);
-        if(user.getUserPassword().equals(passwordAttempt))
+         if(user.getUserPassword().equals(passwordAttempt))
         {
             this.setChanged();
             this.notifyObservers(this.data);
@@ -156,13 +122,6 @@ public class ForeverHomeModel extends Observable {
         this.setChanged();
         this.notifyObservers(this.data);
         return false;
-    }
-    
-    
-    
-    public void newGame()
-    {
-        
     }
     
     // FOSTER
@@ -257,7 +216,7 @@ public class ForeverHomeModel extends Observable {
         Return: boolean, true if it is unlocked, false if it is locked
         Description: Checks the the foster pet has a high enough level for the interaction
     */
-    private boolean isInteractUnlocked(Interaction interaction)
+    public boolean isInteractUnlocked(Interaction interaction)
     {
         if(this.player.getFosterPet().getLevel() >= interaction.getLevelUnlocked()) // if the foster pet's level is greater or equal to the level of the interaction, it is unlocked
         {
@@ -389,10 +348,8 @@ public class ForeverHomeModel extends Observable {
     
     public void quitGame()
     {
-
+        
         this.saveGame();
-        
-        
         this.db.getDBManager().closeConnection();
 //        this.data.quitFlag = true;
         this.setChanged();

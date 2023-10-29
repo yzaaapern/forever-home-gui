@@ -22,8 +22,15 @@ import javax.swing.JPanel;
  */
 public final class SignupAndLoginView {
 
-    public JPanel signupAndLoginPanel;
     public boolean isLogin = false;
+    public boolean userExists = true;
+    public boolean isPasswordCorrect = true;
+
+    private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
+    private String title = "WHY HELLO, NEW PLAYER! PLEASE SIGN UP.";
+    public String intro = "Please fill in the form below.";
+    
+    public JPanel signupAndLoginPanel;
     private JLabel signUpAndLoginLabel;
     private JLabel introLabel;
     private JPanel signUpAndLoginForm;
@@ -33,10 +40,6 @@ public final class SignupAndLoginView {
     private GameTextField passwordField;
     private GameButton continueBtn;
     private GameButton goBackBtn;
-
-    private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
-    private final String TITLE = isLogin ? "WELCOME BACK, PLAYER! PLEASE LOGIN." : "WHY HELLO, NEW PLAYER! PLEASE SIGN UP.";
-    public String intro = isLogin ? "Please make sure to enter your correct information." : "Please fill in the form below.";
 
     public SignupAndLoginView() {
         GridBagConstraints gbc = new GridBagConstraints();
@@ -100,7 +103,7 @@ public final class SignupAndLoginView {
 
     private void initializeLabels() {
         Font labelFont = GameFont.getPixelFont(30, 1);
-        signUpAndLoginLabel = new JLabel(TITLE);
+        signUpAndLoginLabel = new JLabel(title);
         signUpAndLoginLabel.setFont(labelFont);
         signUpAndLoginLabel.setForeground(Color.white);
 
@@ -162,6 +165,71 @@ public final class SignupAndLoginView {
     {
         continueBtn.addActionListener(listener);
         goBackBtn.addActionListener(listener);
+    }
+    
+    public void updateText() {
+        if (isLogin) {
+            title = "WELCOME BACK, PLAYER! PLEASE LOGIN.";
+            intro = "Please make sure to enter your correct information.";
+            if (!userExists) {
+                title = "We cannot seem to find your account.";
+                intro = "Please make sure your username is correct or sign up again.";
+            }
+            else if (userExists && !isPasswordCorrect){
+                intro = "The password is incorrect. Please try again.";
+            }
+        } else {
+            if (userExists) {
+                title = "The username is taken!";
+                intro = "Please use a separate username or go to our login form.";
+            } else {
+                title = "WHY HELLO, NEW PLAYER! PLEASE SIGN UP.";
+                intro = "Please fill in the form below.";
+            }
+        }
+
+        signUpAndLoginLabel.setText(title);
+        introLabel.setText(intro);
+        usernameField.setText("");
+        passwordField.setText("");
+        signupAndLoginPanel.revalidate();
+        signupAndLoginPanel.repaint();
+    }
+
+    public void updateText(String messageTitleText, String messageIntroText) {
+        signUpAndLoginLabel.setText(messageTitleText);
+        signUpAndLoginLabel.setText(messageIntroText);
+        usernameField.setText("");
+        passwordField.setText("");
+        signupAndLoginPanel.revalidate();
+        signupAndLoginPanel.repaint();
+    }
+
+    public void updateIsLogin() {
+        if (!isLogin) {
+            isLogin = true;
+        } else {
+            isLogin = false;
+        }
+        updateText();
+    }
+
+    public void updateUserExists() {
+        if (!userExists) {
+            userExists = true;
+        } else {
+            userExists = false;
+        }
+        updateText();
+    }
+
+    public void updateIsPasswordCorrect() {
+        if (!isPasswordCorrect) {
+            isPasswordCorrect = true;
+        } else {
+            isPasswordCorrect = false;
+        }
+        updateText();
     }
     
     public GameButton getContinueBtn()

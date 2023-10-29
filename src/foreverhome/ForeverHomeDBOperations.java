@@ -476,8 +476,20 @@ public class ForeverHomeDBOperations
     }
     
     public void saveData(Player player, Animal pet, FoodInventory foodInventory){
-        this.updateData(ForeverHomeDB.USER_DATA_TABLE, player.toUserData());
-        this.updateData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
-        this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventory.toFoodInventoryData(player));
+        if(player != null && pet != null && foodInventory != null)
+        {
+            this.updateData(ForeverHomeDB.USER_DATA_TABLE, player.toUserData());
+            this.updateData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
+            this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventory.toFoodInventoryData(player));
+        }
+        else if(pet == null)
+        {
+            this.updateData(ForeverHomeDB.USER_DATA_TABLE, player.toUserData());
+            this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventory.toFoodInventoryData(player));
+        }
+        else
+        {
+            
+        }
     }
 }
