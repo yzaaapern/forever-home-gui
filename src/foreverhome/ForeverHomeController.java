@@ -228,12 +228,12 @@ public class ForeverHomeController implements ActionListener{
         // PET FOSTER VIEW
         
         else if (source == view.getPET_FOSTER_VIEW().getBackpackBtn()) {
-            view.showFoodInventoryPanel();
+            view.showBuyFoodPanel();
         }
         
         else if (source == view.getPET_FOSTER_VIEW().getFeedBtn()) 
         {
-            view.showFoodInventoryPanel();
+            view.showFeedPetPanel();
         } else if (source == view.getPET_FOSTER_VIEW().getInteractBtn()) {
             view.getINTERACTION_VIEW().refreshText();
             view.showInteractionPanel();
@@ -340,55 +340,61 @@ public class ForeverHomeController implements ActionListener{
             view.showPetFosterPanel();
         } 
         
-        // FOOD INVENTORY
+        // BUY FOOD VIEW
         
-        else if (source == view.getFOOD_INVEN_VIEW().getBuyFoodForAll()) 
+        else if (source == view.getBUYFOOD_VIEW().getBuyFoodForAll()) 
         {
             model.buyFood(model.player.getFoodInventory().foodForAll);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getBuyRainbowTreat()) {
+        } else if (source == view.getBUYFOOD_VIEW().getBuyRainbowTreat()) {
             model.buyFood(model.player.getFoodInventory().rainbowTreat);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getBuyKibble()) {
+        } else if (source == view.getBUYFOOD_VIEW().getBuyKibble()) {
             model.buyFood(model.player.getFoodInventory().kibble);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getBuyCannedFood()) {
+        } else if (source == view.getBUYFOOD_VIEW().getBuyCannedFood()) {
             model.buyFood(model.player.getFoodInventory().cannedFood);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getBuyVeggieMix()) {
+        } else if (source == view.getBUYFOOD_VIEW().getBuyVeggieMix()) {
             model.buyFood(model.player.getFoodInventory().veggieMix);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getBuySeeds()) {
+        } else if (source == view.getBUYFOOD_VIEW().getBuySeeds()) {
             model.buyFood(model.player.getFoodInventory().seeds);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getBuyWater()) {
+        } else if (source == view.getBUYFOOD_VIEW().getBuyWater()) {
             model.buyFood(model.player.getFoodInventory().water);
             view.showPetFosterPanel();
         } 
+        else if(source == view.getBUYFOOD_VIEW().getGoBackBtn())
+        {
+            view.showPetFosterPanel();
+        }
         
-        else if (source == view.getFOOD_INVEN_VIEW().getFeedWithFoodForAll()) {
+        // FEED PET VIEW
+        
+        else if (source == view.getFEEDPET_VIEW().getFeedWithFoodForAll()) {
             model.feedPet(model.player.getFoodInventory().foodForAll);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getFeedWithRainbowTreat()) {
+        } else if (source == view.getFEEDPET_VIEW().getFeedWithRainbowTreat()) {
             model.feedPet(model.player.getFoodInventory().rainbowTreat);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getFeedWithKibble()) {
+        } else if (source == view.getFEEDPET_VIEW().getFeedWithKibble()) {
             model.feedPet(model.player.getFoodInventory().kibble);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getFeedWithCannedFood()) {
+        } else if (source == view.getFEEDPET_VIEW().getFeedWithCannedFood()) {
             model.feedPet(model.player.getFoodInventory().cannedFood);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getFeedWithVeggieMix()) {
+        } else if (source == view.getFEEDPET_VIEW().getFeedWithVeggieMix()) {
             model.feedPet(model.player.getFoodInventory().veggieMix);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getFeedWithSeeds()) {
+        } else if (source == view.getFEEDPET_VIEW().getFeedWithSeeds()) {
             model.feedPet(model.player.getFoodInventory().seeds);
             view.showPetFosterPanel();
-        } else if (source == view.getFOOD_INVEN_VIEW().getDrinkWater()) {
+        } else if (source == view.getFEEDPET_VIEW().getDrinkWater()) {
             model.feedPet(model.player.getFoodInventory().water);
             view.showPetFosterPanel();
         } 
-        else if (source == view.getFOOD_INVEN_VIEW().getGoBackBtn()) {
+        else if (source == view.getFEEDPET_VIEW().getGoBackBtn()) {
             view.showPetFosterPanel();
         } 
         
