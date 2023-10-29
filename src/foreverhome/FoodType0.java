@@ -7,10 +7,14 @@ package foreverhome;
 /**
  *
  * @author annga
+ * Name: Ann Del Rosario
+ * Student ID: 21143100
  */
 public class FoodType0 extends Food
 {    
-    // Constructor
+    /*
+        OBJECT CONSTRUCTOR
+    */
     public FoodType0(String foodName, int foodValue, int foodCost, int foodCount)
     {
         super(foodName, foodValue, foodCost, foodCount);

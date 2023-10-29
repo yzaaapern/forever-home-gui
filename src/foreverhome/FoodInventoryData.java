@@ -10,15 +10,21 @@ import java.util.UUID;
 /**
  *
  * @author AnnGa
+ * Name: Ann Del Rosario
+ * Student ID: 21143100
  */
 public class FoodInventoryData 
 {
-    // INSTANCE VARIABLES
+    /*
+        INSTANCE VARIABLES
+    */
     private String foodInventoryID; // PK
     private String foodInventory; // Attribute
     private String userName; // FK
     
-    // CONSTRUCTORS
+    /*
+        OBJECT CONSTRUCTORS
+    */
     
     // new FoodInventoryData in the database (doesn't have an ID yet)
     public FoodInventoryData(FoodInventory foodInventory, String userName)

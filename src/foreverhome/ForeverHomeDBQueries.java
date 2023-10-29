@@ -13,7 +13,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author annga
+ * @author AnnGa
+ * Name: Ann Del Rosario
+ * Student ID: 21143100
  */
 public class ForeverHomeDBQueries 
 {    
