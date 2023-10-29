@@ -101,7 +101,7 @@ public class ForeverHomeModel extends Observable {
     public boolean authenticateUser(String username, String passwordAttempt)
     {
         UserData user = this.db.getDBQueries().getUserByUserName(username);
-        if(user.getUserPassword().equals(passwordAttempt))
+         if(user.getUserPassword().equals(passwordAttempt))
         {
             this.setChanged();
             this.notifyObservers(this.data);

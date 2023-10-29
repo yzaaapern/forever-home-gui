@@ -18,15 +18,13 @@ import javax.swing.SwingConstants;
 
 /**
  *
- * @author yzape
- * Name: Yza Pernia
- * Student ID: 21137984
+ * @author yzape Name: Yza Pernia Student ID: 21137984
  */
 public class FosterView {
 
     /*
         INSTANCE AND CONSTANT VARIABLES
-    */
+     */
     // GUI Components
     public JPanel fosterPanel;
     private JPanel petsMenuPanel;
@@ -68,11 +66,14 @@ public class FosterView {
     private final String TITLE = "FOSTER MENU";
     private final String INTRO = "Pick an animal you would like to foster!";
 
+    public boolean showPopUpPanel = false;
+    private GridBagConstraints gbc = new GridBagConstraints(); // Used for formating GUI components
+
     /*
         OBJECT CONSTRUCTOR
-    */
+     */
     public FosterView() {
-        GridBagConstraints gbc = new GridBagConstraints(); // Used for formating GUI components
+         
         initializePanels();
         initializeLabels();
         initializeButtons();
@@ -85,7 +86,7 @@ public class FosterView {
     Parameter: GridBagConstraints gbc
     Returns: None
     Description: Adds all initialized components and formats them according to GridBagConstraints
-     */    
+     */
     private void addComponents(GridBagConstraints gbc) {
         gbc.insets = new Insets(100, 0, 5, 0);
         gbc.gridwidth = 5;
@@ -120,43 +121,8 @@ public class FosterView {
         gbc.gridy = 2;
         petsMenuPanel.add(chickenBtn, gbc);
 
-        gbc.insets = new Insets(0, 0, 0, 0);
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.gridwidth = 5;
-        gbc.gridx = 0;
-        gbc.gridy++;
-        petsMenuPanel.add(popUpPanel, gbc);
-
         petsMenuPanel.revalidate();
         petsMenuPanel.repaint();
-
-        gbc.insets = new Insets(220, 50, 10, 20);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0;
-        gbc.gridx = 0;
-        gbc.gridy++;
-        popUpPanel.add(popUpLabel, gbc);
-
-        gbc.insets = new Insets(20, 50, 20, 20);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridy++;
-        popUpPanel.add(petNameField, gbc);
-
-        gbc.insets = new Insets(10, 30, 0, 20);
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.gridx = 0;
-        gbc.gridy++;
-        popUpPanel.add(cancelBtn, gbc);
-
-        gbc.insets = new Insets(10, 20, 0, 20);
-        gbc.anchor = GridBagConstraints.EAST;
-        gbc.gridx = 5;
-        gbc.gridy = 6;
-        popUpPanel.add(continueBtn, gbc);
 
         fosterPanel.add(petsMenuPanel, BorderLayout.CENTER);
     }
@@ -208,7 +174,7 @@ public class FosterView {
     Parameters: None
     Returns: None
     Description: Initialises all of the FosterView's labels 
-     */    
+     */
     private void initializeLabels() {
         Font labelFont = GameFont.getPixelFont(35, 1);
         titleLabel = new JLabel(TITLE);
@@ -221,7 +187,7 @@ public class FosterView {
         introLabel.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(15, 0);
-        popUpLabel = new JLabel("Would you like to give them a name?");
+        popUpLabel = new JLabel();
         popUpLabel.setFont(labelFont);
         popUpLabel.setForeground(Color.white);
     }
@@ -231,7 +197,7 @@ public class FosterView {
     Parameters: None
     Returns: None
     Description: Initialises all of the FosterView's GameTextFields 
-     */    
+     */
     private void initializeTextField() {
         petNameField = new GameTextField(15);
     }
@@ -241,7 +207,7 @@ public class FosterView {
     Parameters: None
     Returns: None
     Description: Initialises all of the FosterView's JPanels
-     */    
+     */
     private void initializePanels() {
         fosterPanel = new JPanel(new BorderLayout()) {
             @Override
@@ -266,15 +232,14 @@ public class FosterView {
         };
         popUpPanel.setOpaque(false);
     }
-    
+
     /*
         addActionListener method
     Parameters: ActionListener listener
     Returns: None
     Description: Adds an ActionListener to all the buttons of FosterView
-     */    
-    public void addActionListener(ActionListener listener)
-    {
+     */
+    public void addActionListener(ActionListener listener) {
         dogBtn.addActionListener(listener);
         catBtn.addActionListener(listener);
         ratBtn.addActionListener(listener);
@@ -283,13 +248,74 @@ public class FosterView {
         continueBtn.addActionListener(listener);
         cancelBtn.addActionListener(listener);
     }
-    
+
+    public void updateFosterView() {
+        if (showPopUpPanel) {
+            gbc.insets = new Insets(0, 0, 0, 0);
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.anchor = GridBagConstraints.SOUTH;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            gbc.gridwidth = 5;
+            gbc.gridx = 0;
+            gbc.gridy++;
+            petsMenuPanel.add(popUpPanel, gbc);
+
+            petsMenuPanel.revalidate();
+            petsMenuPanel.repaint();
+
+            gbc.insets = new Insets(220, 50, 10, 20);
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.weightx = 1.0;
+            gbc.weighty = 0;
+            gbc.gridx = 0;
+            gbc.gridy++;
+            popUpPanel.add(popUpLabel, gbc);
+
+            gbc.insets = new Insets(20, 50, 20, 20);
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.gridy++;
+            popUpPanel.add(petNameField, gbc);
+
+            gbc.insets = new Insets(10, 30, 0, 20);
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.gridx = 0;
+            gbc.gridy++;
+            popUpPanel.add(cancelBtn, gbc);
+
+            gbc.insets = new Insets(10, 20, 0, 20);
+            gbc.anchor = GridBagConstraints.EAST;
+            gbc.gridx = 5;
+            gbc.gridy = 6;
+            popUpPanel.add(continueBtn, gbc);
+        } else {
+            petsMenuPanel.remove(popUpPanel);
+            petsMenuPanel.revalidate();
+            petsMenuPanel.repaint();
+        }
+    }
+
+    public void updatePopUpLabel(String popUpText) {
+        popUpLabel.setText(popUpText);
+    }
+
+    public void updateShowPopUpPanel() {
+        if (!showPopUpPanel) {
+            showPopUpPanel = true;
+        } else {
+            showPopUpPanel = false;
+        }
+        updateFosterView();
+
+    }
+
     /*
         GETBTN methods
     Parameters: None
     Returns: GameButtons of FosterView
     Description: Returns the GameButtons of FosterView, allowing other classes to access it.
-    */
+     */
     public GameButton getDogBtn() {
         return dogBtn;
     }
@@ -317,9 +343,8 @@ public class FosterView {
     public GameButton getCancelBtn() {
         return cancelBtn;
     }
-    
-    public String getPetName()
-    {
+
+    public String getPetName() {
         return petNameField.getText();
     }
 }

@@ -37,7 +37,7 @@ public class ForeverHomeController implements ActionListener {
 //        view.showStartGamePanel();
 //        view.showLoginPanel();
 //        view.showFosterPanel();
-//        view.showPetFosterPanel();
+        view.showPetFosterPanel();
 //        view.showFoodInventoryPanel();
 //        view.showInteractionPanel();
 //        view.showAdoptionPanel();
@@ -107,9 +107,9 @@ public class ForeverHomeController implements ActionListener {
 //                    view.getLOGIN_VIEW().updateUserExists();
 //                }
 //            }
-//            if (!view.getLOGIN_VIEW().isPasswordCorrect) {
-//                view.getLOGIN_VIEW().updateIsPasswordCorrect();
-//            }
+            if (!view.getLOGIN_VIEW().isPasswordCorrect) {
+                view.getLOGIN_VIEW().updateIsPasswordCorrect();
+            }
 
         } else if (source == view.getLOGIN_VIEW().getContinueBtn()) {
             boolean validUsernameAndPassword = false;
@@ -197,15 +197,35 @@ public class ForeverHomeController implements ActionListener {
         } // FOSTER VIEW
         else if (source == view.getFOSTER_VIEW().getDogBtn()) {
             model.chosenAnimalType = "dog";
+            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
             System.out.println("dog selected");
+            if (!view.getFOSTER_VIEW().showPopUpPanel) {
+                view.getFOSTER_VIEW().updateShowPopUpPanel();
+            }
         } else if (source == view.getFOSTER_VIEW().getCatBtn()) {
             model.chosenAnimalType = "cat";
+            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
+            if (!view.getFOSTER_VIEW().showPopUpPanel) {
+                view.getFOSTER_VIEW().updateShowPopUpPanel();
+            }
         } else if (source == view.getFOSTER_VIEW().getRatBtn()) {
             model.chosenAnimalType = "rat";
+            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
+            if (!view.getFOSTER_VIEW().showPopUpPanel) {
+                view.getFOSTER_VIEW().updateShowPopUpPanel();
+            }
         } else if (source == view.getFOSTER_VIEW().getParrotBtn()) {
             model.chosenAnimalType = "parrot";
+            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
+            if (!view.getFOSTER_VIEW().showPopUpPanel) {
+                view.getFOSTER_VIEW().updateShowPopUpPanel();
+            }
         } else if (source == view.getFOSTER_VIEW().getChickenBtn()) {
             model.chosenAnimalType = "chicken";
+            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
+            if (!view.getFOSTER_VIEW().showPopUpPanel) {
+                view.getFOSTER_VIEW().updateShowPopUpPanel();
+            }
         } else if (source == view.getFOSTER_VIEW().getContinueBtn()) {
             String petName = view.getFOSTER_VIEW().getPetName();
             if (model.chosenAnimalType == null) {
@@ -216,12 +236,12 @@ public class ForeverHomeController implements ActionListener {
                     view.showPetFosterPanel();
                 } else {
                     System.out.println("no name");
-                    // error message pop up
+                    view.getFOSTER_VIEW().updatePopUpLabel("Please give your " + model.chosenAnimalType + " a name!");
                 }
             }
-
         } else if (source == view.getFOSTER_VIEW().getCancelBtn()) {
-            view.showStartGamePanel();
+            view.getFOSTER_VIEW().updateShowPopUpPanel();
+            System.out.println(view.getFOSTER_VIEW().showPopUpPanel);
         } // PET FOSTER VIEW
         else if (source == view.getPET_FOSTER_VIEW().getBackpackBtn()) {
             view.showFoodInventoryPanel();
@@ -233,12 +253,11 @@ public class ForeverHomeController implements ActionListener {
             model.bathePet();
         } else if (source == view.getPET_FOSTER_VIEW().getPauseBtn()) {
             // pause game
-            view.getPET_FOSTER_VIEW().isPaused = true;
-            view.showPetFosterPanel();
+            view.getPET_FOSTER_VIEW().updateIsPaused();
         } else if (source == view.getPET_FOSTER_VIEW().getGoBackBtn()) {
             // model: save player's stats
-            view.getPET_FOSTER_VIEW().isPaused = false;
-            view.showPetFosterPanel();
+            view.getPET_FOSTER_VIEW().updateIsPaused();
+
         } else if (source == view.getPET_FOSTER_VIEW().getQuitBtn()) {
             // model: save player's stats
             model.quitGame();

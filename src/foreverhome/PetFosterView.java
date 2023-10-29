@@ -4,6 +4,7 @@
  */
 package foreverhome;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -21,11 +22,14 @@ import javax.swing.SwingConstants;
  * @author yzape
  */
 public class PetFosterView {
+
     public JPanel petFosterPanel;
+    private CardLayout cardLayout = new CardLayout();
     private JPanel statBarsPanel;
     private JPanel buttonsPanel;
     private JPanel petSpritePanel;
-    private JPanel pauseGamePanel;
+    private JPanel notPausedGamePanel;
+    private JPanel pausedGamePanel;
     private JPanel popupPanel;
     private JLabel dabloonsLabel;
     private JLabel popupLabel;
@@ -90,8 +94,9 @@ public class PetFosterView {
     private final String INTERACT_FILE_PATH = "./resources/images/buttons/interact_icon.png";
     private final String INTERACT_HOVER_FILE_PATH = "./resources/images/buttons/interact_icon_hover.png";
 
+    private GridBagConstraints gbc = new GridBagConstraints();
+
     public PetFosterView() {
-        GridBagConstraints gbc = new GridBagConstraints();
         initializePanels();
         initializeLabels();
         initializeProgressBars();
@@ -100,45 +105,41 @@ public class PetFosterView {
     }
 
     private void addComponents(GridBagConstraints gbc) {
-        if (isPaused) {
-            isPausedComponents(gbc);
-        } else {
-            isNotPausedComponents(gbc);
-        }
+        isNotPausedComponents();
     }
 
-    private void isPausedComponents(GridBagConstraints gbc) {
-        gbc.insets = new Insets(0, 0, 10, 60);
+    private void isPausedComponents() {
+        gbc.insets = new Insets(0, 0, 10, 160);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridwidth = 2;
         gbc.gridy = 0;
-        pauseGamePanel.add(pauseTitleLabel, gbc);
+        pausedGamePanel.add(pauseTitleLabel, gbc);
 
-        gbc.insets = new Insets(10, 0, 20, 60);
+        gbc.insets = new Insets(10, 0, 10, 60);
         gbc.gridy++;
-        pauseGamePanel.add(pauseMessageLabel, gbc);
+        pausedGamePanel.add(pauseMessageLabel, gbc);
 
-        gbc.insets = new Insets(100, 0, 0, 60);
+        gbc.insets = new Insets(50, 0, 0, 60);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy++;
-        pauseGamePanel.add(goBackBtn, gbc);
+        pausedGamePanel.add(goBackBtn, gbc);
 
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridx++;
         gbc.gridy = 2;
-        pauseGamePanel.add(quitBtn, gbc);
+        pausedGamePanel.add(quitBtn, gbc);
 
         gbc.insets = new Insets(0, 100, 0, 0);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.anchor = GridBagConstraints.EAST;
-        petFosterPanel.add(pauseGamePanel, gbc);
+        gbc.anchor = GridBagConstraints.CENTER;
+        petFosterPanel.add(pausedGamePanel, gbc);
     }
 
-    private void isNotPausedComponents(GridBagConstraints gbc) {
+    private void isNotPausedComponents() {
         addStatBarsComponents(gbc);
 
         gbc.insets = new Insets(0, 10, 0, 0);
@@ -146,10 +147,10 @@ public class PetFosterView {
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        petFosterPanel.add(statBarsPanel, gbc);
+        notPausedGamePanel.add(statBarsPanel, gbc);
 
         addButtonsComponents(gbc);
-        
+
         gbc.insets = new Insets(10, 25, 10, 10);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.CENTER;
@@ -158,13 +159,15 @@ public class PetFosterView {
         gbc.weighty = 1.0;
         gbc.gridx = 0;
         gbc.gridy++;
-        petFosterPanel.add(buttonsPanel, gbc);
+        notPausedGamePanel.add(buttonsPanel, gbc);
 
         gbc.insets = new Insets(0, 700, 450, 0);
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridx++;
         gbc.gridy = 0;
-        petFosterPanel.add(pauseBtn, gbc);
+        notPausedGamePanel.add(pauseBtn, gbc);
+
+        petFosterPanel.add(notPausedGamePanel);
     }
 
     private void addStatBarsComponents(GridBagConstraints gbc) {
@@ -304,7 +307,10 @@ public class PetFosterView {
         petSpritePanel.setOpaque(false);
         petSpritePanel.setPreferredSize(new Dimension(280, 280));
 
-        pauseGamePanel = new JPanel(new GridBagLayout()) {
+        notPausedGamePanel = new JPanel(new GridBagLayout());
+        notPausedGamePanel.setOpaque(false);
+
+        pausedGamePanel = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -313,8 +319,8 @@ public class PetFosterView {
                 g.fillRect(petFosterPanel.getWidth() / 7, petFosterPanel.getHeight() / 5, 800, 550);
             }
         };
-        pauseGamePanel.setOpaque(false);
-        pauseGamePanel.setPreferredSize(new Dimension(800, 400));
+        pausedGamePanel.setOpaque(false);
+        pausedGamePanel.setPreferredSize(new Dimension(800, 400));
 
         popupPanel = new JPanel(new GridBagLayout()) {
             @Override
@@ -327,9 +333,8 @@ public class PetFosterView {
         };
         popupPanel.setOpaque(false);
     }
-    
-    public void addActionListener(ActionListener listener)
-    {
+
+    public void addActionListener(ActionListener listener) {
         backpackBtn.addActionListener(listener);
         feedBtn.addActionListener(listener);
         interactBtn.addActionListener(listener);
@@ -341,11 +346,26 @@ public class PetFosterView {
         noBtn.addActionListener(listener);
     }
 
-    public GameButton getBackpackBtn()
-    {
+    public void updateIsPaused() {
+        if (!isPaused) {
+            isPaused = true;
+            petFosterPanel.remove(notPausedGamePanel);
+            petFosterPanel.revalidate();
+            petFosterPanel.repaint();
+            isPausedComponents();
+        } else {
+            isPaused = false;
+            petFosterPanel.remove(pausedGamePanel);
+            petFosterPanel.revalidate();
+            petFosterPanel.repaint();
+            isNotPausedComponents();
+        }
+    }
+
+    public GameButton getBackpackBtn() {
         return backpackBtn;
     }
-    
+
     public GameButton getFeedBtn() {
         return feedBtn;
     }
@@ -361,24 +381,20 @@ public class PetFosterView {
     public GameButton getPauseBtn() {
         return pauseBtn;
     }
-    
-    public GameButton getGoBackBtn()
-    {
+
+    public GameButton getGoBackBtn() {
         return goBackBtn;
     }
-    
-    public GameButton getQuitBtn()
-    {
+
+    public GameButton getQuitBtn() {
         return quitBtn;
     }
-    
-    public GameButton getYesBtn()
-    {
+
+    public GameButton getYesBtn() {
         return yesBtn;
     }
-    
-    public GameButton getNoBtn()
-    {
+
+    public GameButton getNoBtn() {
         return noBtn;
     }
 }
