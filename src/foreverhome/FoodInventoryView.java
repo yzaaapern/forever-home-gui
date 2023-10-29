@@ -66,7 +66,7 @@ public class FoodInventoryView {
 
     private GameButton goBackBtn;
 
-    public static boolean isFeed = true;
+    public static boolean isFeed = false;
     private final String BG_FILE_PATH = "./resources/images/backgrounds/foodInventory_bg.png";
     private final String BTN_FILE_PATH = "./resources/images/buttons/mainButton.png";
     private final String BTN_HOVER_FILE_PATH = "./resources/images/buttons/mainButton_hover.png";

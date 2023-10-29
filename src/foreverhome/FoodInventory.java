@@ -109,6 +109,11 @@ public class FoodInventory {
         return output;
     }
     
-    
+    public FoodInventoryData toFoodInventoryData(String username)
+    {
+        FoodInventoryData f = new FoodInventoryData(this, username);
+        return f;
+    }
+            
     
 }

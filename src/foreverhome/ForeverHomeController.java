@@ -62,6 +62,7 @@ public class ForeverHomeController implements ActionListener{
         else if (source == view.getLOGIN_VIEW().getBackBtn()){
             view.showStartGamePanel();
         } else if (source == view.getLOGIN_VIEW().getContinueBtn()){ 
+            boolean validUsernameAndPassword = false;
             boolean userExists = false;
             boolean passwordCorrect = false;
             
@@ -71,6 +72,8 @@ public class ForeverHomeController implements ActionListener{
             }
             else // if username and password is valid
             {
+                validUsernameAndPassword = true;
+                
                 if(view.getLOGIN_VIEW().isLogin) // if LOGIN MENU
                 {
                     // check if user exists
@@ -93,6 +96,7 @@ public class ForeverHomeController implements ActionListener{
                     // - message: user does not exist, please create new user
                     {
                         model.newUser(view.getLOGIN_VIEW().getUsername(), view.getLOGIN_VIEW().getPassword());
+                        userExists = true;
                     }
                 }
                 else // if SIGNUP MENU
@@ -117,30 +121,28 @@ public class ForeverHomeController implements ActionListener{
                     // - message: user does not exist, please create new user
                     {
                         model.newUser(view.getLOGIN_VIEW().getUsername(), view.getLOGIN_VIEW().getPassword());
+                        userExists = true;
                     }
                 }
             }
             
             // check if player has a foster pet
 
-            // if the player has a fosterpet
-            if(model.player.fosterPet != null)
+            if(validUsernameAndPassword && userExists)
             {
-                // get petdata from the database
-                PetData petData = model.db.getDBQueries().getPetByIsAdoptedAndUserName(model.player.getName());
-                
-                // instansiate Animal object with the petdata stats
-                Animal pet = petData.toAnimal();
-                
-                // set the player's moster pet to the pet
-                model.player.setFosterPet(pet);
-                
-                // show pet foster
-                view.showPetFosterPanel();
-            }
-            else // if the player does not have a fosterpet
-            {
-                view.showFosterPanel();
+                // if the player does not have a fosterpet
+                if(model.player.hasFosterPet == true)
+                {
+                    this.model.setPet();
+
+                    // show pet foster
+                    view.showPetFosterPanel();
+                    
+                }
+                else // if the player has a fosterpet
+                {
+                    view.showFosterPanel();
+                }
             }
         } 
         
@@ -148,20 +150,24 @@ public class ForeverHomeController implements ActionListener{
         
         else if (source == view.getFOSTER_VIEW().getDogBtn()) {
             model.chosenAnimalType = "dog";
-            System.out.println("dog selected");
+            System.out.println("Dog selected");
         } else if (source == view.getFOSTER_VIEW().getCatBtn()) {
             model.chosenAnimalType = "cat";
+            System.out.println("Cat selected");
         } else if (source == view.getFOSTER_VIEW().getRatBtn()) {
             model.chosenAnimalType = "rat";
+            System.out.println("Rat selected");
         } else if (source == view.getFOSTER_VIEW().getParrotBtn()) {
             model.chosenAnimalType = "parrot";
+            System.out.println("Parrot selected");
         } else if (source == view.getFOSTER_VIEW().getChickenBtn()) {
             model.chosenAnimalType = "chicken";
+            System.out.println("Chicken selected");
         } else if (source == view.getFOSTER_VIEW().getContinueBtn()) {
             String petName = view.getFOSTER_VIEW().getPetName();
             if(model.chosenAnimalType == null)
             {
-                System.out.println("choose an animal");
+                System.out.println("No animal selected - please choose an animal");
             }
             else
             {
@@ -170,7 +176,7 @@ public class ForeverHomeController implements ActionListener{
                 view.showPetFosterPanel();
                 } 
                 else {
-                    System.out.println("no name");
+                    System.out.println("Give your foster pet a name");
                     // error message pop up
                 }
             }
@@ -195,6 +201,7 @@ public class ForeverHomeController implements ActionListener{
             model.bathePet();
         } else if (source == view.getPET_FOSTER_VIEW().getPauseBtn()) {
             // pause game
+            model.saveGame();
             view.getPET_FOSTER_VIEW().isPaused = true;
             view.showPetFosterPanel();
         } else if (source == view.getPET_FOSTER_VIEW().getGoBackBtn()) {
@@ -217,28 +224,28 @@ public class ForeverHomeController implements ActionListener{
         // INTERACTION VIEW
         
         else if (source == view.getINTERACTION_VIEW().getPatBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getInteractions()[0]);
+            model.interactWithPet(model.player.getInteractionList().getGivePat());
             view.showPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getPlayBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getInteractions()[1]);
+            model.interactWithPet(model.player.getInteractionList().getPlayWithFoster());
             view.showPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getPottyBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getInteractions()[2]);
+            model.interactWithPet(model.player.getInteractionList().getGoPotty());
             view.showPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getBowBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getInteractions()[3]);
+            model.interactWithPet(model.player.getInteractionList().getBow());
             view.showPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getHandshakeBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getInteractions()[4]);
+            model.interactWithPet(model.player.getInteractionList().getShakeHands());
             view.showPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getSpinBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getInteractions()[5]);
+            model.interactWithPet(model.player.getInteractionList().getSpin());
             view.showPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getPlayDeadBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getInteractions()[6]);
+            model.interactWithPet(model.player.getInteractionList().getPlayDead());
             view.showPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getFetchBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getInteractions()[7]);
+            model.interactWithPet(model.player.getInteractionList().getFetch());
             view.showPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getGoBackBtn()) {
             view.showPetFosterPanel();
@@ -270,8 +277,7 @@ public class ForeverHomeController implements ActionListener{
             view.showPetFosterPanel();
         } 
         
-        else if (source == view.getFOOD_INVEN_VIEW().getFeedWithFoodForAll()) 
-        {
+        else if (source == view.getFOOD_INVEN_VIEW().getFeedWithFoodForAll()) {
             model.feedPet(model.player.getFoodInventory().foodForAll);
             view.showPetFosterPanel();
         } else if (source == view.getFOOD_INVEN_VIEW().getFeedWithRainbowTreat()) {

@@ -45,7 +45,35 @@ public class ForeverHomeModel extends Observable {
     {
         UserData user = this.db.getDBQueries().getUserByUserName(username);
         Player player = user.toPlayer();
+        this.username = username;
         this.player = player;
+        
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
+    
+    public void newUser(String username, String password)
+    {
+        Player player = new Player(username);
+        player.setPassword(password);
+        UserData u = new UserData(player);
+        
+        this.db.getDBOperations().insertData(ForeverHomeDB.USER_DATA_TABLE, u);
+        this.setPlayer(username);
+        
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
+    
+    public void setPet()
+    {
+        // get petdata from the database
+        PetData petData = this.db.getDBQueries().getPetByIsAdoptedAndUserName(player.getName(), false);
+        System.out.println(petData);
+        // instansiate Animal object with the petdata stats
+        Animal pet = petData.toAnimal();
+        // set the player's foster pet to the pet
+        player.setFosterPet(pet);
         
         this.setChanged();
         this.notifyObservers(this.data);
@@ -112,15 +140,7 @@ public class ForeverHomeModel extends Observable {
         return false;
     }
     
-    public void newUser(String username, String password)
-    {
-        this.username = username;
-        this.player = new Player(username);
-        this.player.setPassword(password);
-        
-        this.setChanged();
-        this.notifyObservers(this.data);
-    }
+    
     
     public void newGame()
     {
@@ -157,6 +177,7 @@ public class ForeverHomeModel extends Observable {
             
             // Set the player's fostered pet
             player.setFosterPet(pet);
+            this.db.getDBOperations().insertData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
             this.player.hasFosterPet = true;
         }
             this.setChanged();
@@ -173,7 +194,7 @@ public class ForeverHomeModel extends Observable {
             fosterMenu is called when player has no then and then returns back to petFosterMenu
         */
         this.player.fosterPet.setName("");
-        this.notifyObservers();
+        this.notifyObservers(this.data);
     }
     /*  interactWithPet method
     
@@ -202,14 +223,14 @@ public class ForeverHomeModel extends Observable {
             }
             this.player.getFosterPet().incLevelXP(); // increase the pet's xp
             this.levelUpReward(); // potential level up reward
-            
+            this.setChanged();
+            this.notifyObservers(this.data);
         }
         else // otherwise the interaction is locked 
         {
             System.out.println("You cannot do this trick yet! " + this.player.getFosterPet().getName() + " has yet to reach Level " + interaction.getLevelUnlocked() + ".");
+            this.notifyObservers(this.data);
         }
-        this.setChanged();
-        this.notifyObservers();
     }
     
     /* isInteractUnlocked method
@@ -303,6 +324,7 @@ public class ForeverHomeModel extends Observable {
                 food.decFoodCount(); // decrease the food count by 1
                 this.player.getFosterPet().incLevelXP(); // increase the foster pet's level xp 
                 this.levelUpReward(); // potential level up reward
+                System.out.println("Pet has been fed");
 
             }
         }
@@ -330,17 +352,31 @@ public class ForeverHomeModel extends Observable {
         }
         else // pet is already clean, bathing has no effect on the pet or user
         {
-            System.out.println(this.player.getFosterPet().getName() + " is already clean!\n");
+            System.out.println(this.player.getFosterPet().getName() + " is already clean!");
         }
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
+    
+    public void saveGame()
+    {
+        Player player = this.player;
+        Animal pet = this.player.getFosterPet();
+        FoodInventory foodInventory = this.player.getFoodInventory();
+        this.db.getDBOperations().saveData(player, pet, foodInventory);
+        
         this.setChanged();
         this.notifyObservers(this.data);
     }
     
     public void quitGame()
     {
-//        this.db.getDBOperations().quitGame(player, player.getFosterPet(), player.getFoodInventory());
+
+        this.saveGame();
+        
+        
         this.db.getDBManager().closeConnection();
-        this.data.quitFlag = true;
+//        this.data.quitFlag = true;
         this.setChanged();
         this.notifyObservers(this.data);
     }

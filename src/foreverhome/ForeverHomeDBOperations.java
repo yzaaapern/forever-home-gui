@@ -351,11 +351,11 @@ public class ForeverHomeDBOperations
         // Create the SQL statement for updating data in the specified table
         // Adapt this part to your specific use case
         if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName)) {
-            return "UPDATE user_data SET userPassword=?, userDabloons=?, userHasPet=? WHERE userName=?";
+            return "UPDATE user_data SET userDabloons=?, userHasPet=? WHERE userName=?";
         } else if (ForeverHomeDB.PET_TABLE.equals(tableName)) {
-            return "UPDATE pet SET petName=?, petInstance=?, petLevel=?, petLevelXP=?, petHunger=?, petHygiene=?, petHappiness=?, isAdopted=? WHERE petID=?";
+            return "UPDATE pet SET petLevel=?, petLevelXP=?, petHunger=?, petHygiene=?, petHappiness=?, isAdopted=? WHERE userName=? AND isAdopted=?";
         } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName)) {
-            return "UPDATE food_inventory SET foodInventory=? WHERE foodInventoryID=?";
+            return "UPDATE food_inventory SET foodInventory=? WHERE userName=?";
         }
         return "";
     }
@@ -366,25 +366,23 @@ public class ForeverHomeDBOperations
         // Adapt this part to your specific use case
         if (ForeverHomeDB.USER_DATA_TABLE.equals(tableName) && data instanceof UserData) {
             UserData userData = (UserData) data;
-            preparedStatement.setString(1, userData.getUserPassword());
-            preparedStatement.setInt(2, userData.getUserDabloons());
-            preparedStatement.setBoolean(3, userData.isUserHasPet());
-            preparedStatement.setString(4, userData.getUserName());
+            preparedStatement.setInt(1, userData.getUserDabloons());
+            preparedStatement.setBoolean(2, userData.isUserHasPet());
+            preparedStatement.setString(3, userData.getUserName());
         } else if (ForeverHomeDB.PET_TABLE.equals(tableName) && data instanceof PetData) {
             PetData petData = (PetData) data;
-            preparedStatement.setString(1, petData.getPetName());
-            preparedStatement.setString(2, petData.getPetInstance());
-            preparedStatement.setInt(3, petData.getPetLevel());
-            preparedStatement.setInt(4, petData.getPetLevelXP());
-            preparedStatement.setInt(5, petData.getPetHunger());
-            preparedStatement.setInt(6, petData.getPetHygiene());
-            preparedStatement.setInt(7, petData.getPetHappiness());
-            preparedStatement.setBoolean(8, petData.getIsAdopted());
-            preparedStatement.setString(9, petData.getPetID());
+            preparedStatement.setInt(1, petData.getPetLevel());
+            preparedStatement.setInt(2, petData.getPetLevelXP());
+            preparedStatement.setInt(3, petData.getPetHunger());
+            preparedStatement.setInt(4, petData.getPetHygiene());
+            preparedStatement.setInt(5, petData.getPetHappiness());
+            preparedStatement.setBoolean(6, petData.getIsAdopted());
+            preparedStatement.setString(7, petData.getUserName());
+            preparedStatement.setBoolean(8, false);
         } else if (ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName) && data instanceof FoodInventoryData) {
             FoodInventoryData foodInventoryData = (FoodInventoryData) data;
             preparedStatement.setString(1, foodInventoryData.getFoodInventory());
-            preparedStatement.setString(2, foodInventoryData.getFoodInventoryID());
+            preparedStatement.setString(2, foodInventoryData.getUserName());
         }
     }
     
@@ -471,9 +469,9 @@ public class ForeverHomeDBOperations
         }
     }
     
-    public void quitGame(Player player, Animal pet, FoodInventory foodInventory){
-        this.updateData(ForeverHomeDB.USER_DATA_TABLE, player);
-        this.updateData(ForeverHomeDB.PET_TABLE, pet);
-        this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventory);
+    public void saveData(Player player, Animal pet, FoodInventory foodInventory){
+        this.updateData(ForeverHomeDB.USER_DATA_TABLE, player.toUserData());
+        this.updateData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
+        this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventory.toFoodInventoryData(player.getName()));
     }
 }

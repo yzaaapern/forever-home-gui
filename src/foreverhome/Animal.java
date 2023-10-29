@@ -439,4 +439,10 @@ public abstract class Animal implements Level {
         return animalType;
 
     }
+    
+    public PetData toPetData(String username)
+    {
+        PetData p = new PetData(this, username);
+        return p;
+    }
 }
