@@ -34,10 +34,10 @@ public class ForeverHomeController implements ActionListener {
     public void start() {
 //        view.display();
 //        simulateLoading();
-//        view.showStartGamePanel();
+        view.showStartGamePanel();
 //        view.showLoginPanel();
 //        view.showFosterPanel();
-        view.showNotPausedPetFosterPanel();
+//        view.showNotPausedPetFosterPanel();
 //        view.showFoodInventoryPanel();
 //        view.showInteractionPanel();
 //        view.showAdoptionPanel();
@@ -89,7 +89,7 @@ public class ForeverHomeController implements ActionListener {
             view.showLoginPanel();
         } else if (source == view.getSTARTGAME_VIEW().getExitButton()) {
             model.quitGame();
-            view.getLOADING_VIEW().isShuttingDown = true;
+            view.getLOADING_VIEW().updateIsShuttingDown();
             view.showLoadingPanel();
 //            System.exit(0);
             // Handle exit game (close views)
