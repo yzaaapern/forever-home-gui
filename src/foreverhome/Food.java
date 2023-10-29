@@ -7,8 +7,6 @@ package foreverhome;
 /**
  *
  * @author annga
- * Name: Ann Del Rosario
- * Student ID: 21143100
  */
 public abstract class Food 
 {

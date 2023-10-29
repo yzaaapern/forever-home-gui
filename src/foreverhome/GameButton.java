@@ -15,37 +15,25 @@ import javax.swing.JButton;
 /**
  *
  * @author yzape
- * Name: Yza Pernia
- * Student ID: 21137984
  */
 public class GameButton extends JButton {
 
-    /*
-        INSTANCE VARIABLES
-    */
     private GameImage normalImage;
     private GameImage hoverImage;
     private String text;
     private boolean isHovered = false;
 
-    /*
-        OBJECT CONSTRUCTORS
-    */
-    
-    // 1st Constructor only takes the input text and makes a plain button
     public GameButton(String text) {
         super.setText(text);
         initializeButton();
     }
 
-    // 2nd Constructor takes the file paths of the button's images for its normal and hover state and makes a button with an icon but no text
     public GameButton(String normalImageFilePath, String hoverImageFilePath) {
         normalImage = new GameImage(normalImageFilePath);
         hoverImage = new GameImage(hoverImageFilePath);
         initializeButton();
     }
 
-    // 3rd Constructor takes the input text and file paths for the button's images and makes a button with an icon and text
     public GameButton(String text, String normalImageFilePath, String hoverImageFilePath) {
         normalImage = new GameImage(normalImageFilePath, true);
         hoverImage = new GameImage(hoverImageFilePath, true);
@@ -53,12 +41,6 @@ public class GameButton extends JButton {
         initializeButton();
     }
 
-    /*
-        initializeButton method
-    Parameters: None
-    Returns: None
-    Description: Initialises the GameButton object to manually build the custom GameButton and its appearance
-    */
     private void initializeButton() {
         if (!isFilePathNull()) {
             this.setIcon(normalImage.getImageIcon());
@@ -66,14 +48,14 @@ public class GameButton extends JButton {
         this.setBorderPainted(false);
         this.setFocusPainted(false);
         this.setContentAreaFilled(false);
-        this.setForeground(Color.white); // Sets the text color to white
+        this.setForeground(Color.white);
 
-        addMouseListener(new MouseAdapter() { 
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) { // Checks if the mouse is hovering over the button
+            public void mouseEntered(MouseEvent e) {
                 isHovered = true;
-                if (isFilePathNull()) { // If the file path is null, do nothing
-                } else { // If the file path is not null, change the image icon of the button to the hover image
+                if (isFilePathNull()) {
+                } else {
                     setIcon(hoverImage.getImageIcon());
                 }
 
@@ -81,10 +63,10 @@ public class GameButton extends JButton {
             }
 
             @Override
-            public void mouseExited(MouseEvent e) { // Checks if the mouse is not hovering over the button
+            public void mouseExited(MouseEvent e) {
                 isHovered = false;
-                if (isFilePathNull()) { // If the file path is null, do nothing
-                } else { // If the file path is not null, change the image icon of the button to the normal image
+                if (isFilePathNull()) {
+                } else {
                     setIcon(normalImage.getImageIcon());
                 }
                 repaint();
@@ -92,21 +74,10 @@ public class GameButton extends JButton {
         });
     }
 
-    /*
-        isFilePathNull method
-    Parameters: None
-    Returns: True if hoverImage or normalImage are null
-    */
     private boolean isFilePathNull() {
         return (hoverImage == null || normalImage == null);
     }
 
-    /*
-        OVERRIDE paintComponent method
-    Parameters: Graphics g
-    Returns: None
-    Description: Paints the button text bold and draws a line underneath the text if the button doesn't have any icons
-    */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

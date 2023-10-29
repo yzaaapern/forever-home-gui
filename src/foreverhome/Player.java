@@ -30,7 +30,7 @@ public class Player
         this.setFosterPet(null);
         this.hasFosterPet = false;
         this.dabloons = 20;
-        this.foodInventory = new FoodInventory();
+        this.setFoodInventory(new FoodInventory());
         this.interactionList = new InteractionList();
     }
     
@@ -77,6 +77,10 @@ public class Player
     
     public FoodInventory getFoodInventory(){
         return this.foodInventory;
+    }
+    
+    public void setFoodInventory(FoodInventory foodInventory){
+        this.foodInventory = foodInventory;
     }
     
     public InteractionList getInteractionList()

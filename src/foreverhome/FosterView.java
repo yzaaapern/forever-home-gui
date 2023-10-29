@@ -19,15 +19,9 @@ import javax.swing.SwingConstants;
 /**
  *
  * @author yzape
- * Name: Yza Pernia
- * Student ID: 21137984
  */
 public class FosterView {
 
-    /*
-        INSTANCE AND CONSTANT VARIABLES
-    */
-    // GUI Components
     public JPanel fosterPanel;
     private JPanel petsMenuPanel;
     private JPanel popUpPanel;
@@ -45,7 +39,6 @@ public class FosterView {
     private GameButton continueBtn;
     private GameButton cancelBtn;
 
-    // File Paths
     private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
     private final String POPUP_FILE_PATH = "./resources/images/misc/popup_box.png";
 
@@ -64,15 +57,12 @@ public class FosterView {
     private final String CHICKEN_FILE_PATH = "./resources/images/animals/chicken.png";
     private final String CHICKEN_HOVER_FILE_PATH = "./resources/images/animals/chicken_hover.png";
 
-    // Label Texts
     private final String TITLE = "FOSTER MENU";
     private final String INTRO = "Pick an animal you would like to foster!";
 
-    /*
-        OBJECT CONSTRUCTOR
-    */
     public FosterView() {
-        GridBagConstraints gbc = new GridBagConstraints(); // Used for formating GUI components
+        GridBagConstraints gbc = new GridBagConstraints();
+        
         initializePanels();
         initializeLabels();
         initializeButtons();
@@ -80,12 +70,6 @@ public class FosterView {
         addComponents(gbc);
     }
 
-    /*
-        addComponents method
-    Parameter: GridBagConstraints gbc
-    Returns: None
-    Description: Adds all initialized components and formats them according to GridBagConstraints
-     */    
     private void addComponents(GridBagConstraints gbc) {
         gbc.insets = new Insets(100, 0, 5, 0);
         gbc.gridwidth = 5;
@@ -161,12 +145,6 @@ public class FosterView {
         fosterPanel.add(petsMenuPanel, BorderLayout.CENTER);
     }
 
-    /*
-        initializeButton method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of FosterView's GameButtons 
-     */
     private void initializeButtons() {
         Font buttonFont = GameFont.getPixelFont(20, 0);
 
@@ -203,12 +181,6 @@ public class FosterView {
         cancelBtn.setFont(buttonFont);
     }
 
-    /*
-        initializeLabels  method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the FosterView's labels 
-     */    
     private void initializeLabels() {
         Font labelFont = GameFont.getPixelFont(35, 1);
         titleLabel = new JLabel(TITLE);
@@ -226,22 +198,10 @@ public class FosterView {
         popUpLabel.setForeground(Color.white);
     }
 
-    /*
-        initializeTextField  method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the FosterView's GameTextFields 
-     */    
     private void initializeTextField() {
         petNameField = new GameTextField(15);
     }
 
-    /*
-        initializePanels method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the FosterView's JPanels
-     */    
     private void initializePanels() {
         fosterPanel = new JPanel(new BorderLayout()) {
             @Override
@@ -267,12 +227,6 @@ public class FosterView {
         popUpPanel.setOpaque(false);
     }
     
-    /*
-        addActionListener method
-    Parameters: ActionListener listener
-    Returns: None
-    Description: Adds an ActionListener to all the buttons of FosterView
-     */    
     public void addActionListener(ActionListener listener)
     {
         dogBtn.addActionListener(listener);
@@ -284,12 +238,6 @@ public class FosterView {
         cancelBtn.addActionListener(listener);
     }
     
-    /*
-        GETBTN methods
-    Parameters: None
-    Returns: GameButtons of FosterView
-    Description: Returns the GameButtons of FosterView, allowing other classes to access it.
-    */
     public GameButton getDogBtn() {
         return dogBtn;
     }

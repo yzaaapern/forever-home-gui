@@ -11,15 +11,9 @@ import javax.swing.JFrame;
 /**
  *
  * @author yzape
- * Name: Yza Pernia
- * Student ID: 21137984
  */
 public class ForeverHomeView {
 
-    /*
-        INSTANCE AND CONSTANT VARIABLES
-    */
-    // GUI Components
     public static JFrame frame;
     private final LoadingView LOADING_VIEW;
     private final StartGameView STARTGAME_VIEW;
@@ -30,13 +24,9 @@ public class ForeverHomeView {
     private final InteractionView INTERACTION_VIEW;
     private final AdoptionView ADOPTION_VIEW;
 
-    // Frame Size
     private final int WIDTH = 1400;
-    private final int HEIGHT = 1050;
+    private final int HEIGHT = 1040;
 
-    /*
-        OBJECT CONSTRUCTOR
-    */
     public ForeverHomeView() {
         frame = new JFrame("Forever Home Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,32 +57,15 @@ public class ForeverHomeView {
         frame.setVisible(true);
     }
 
-    /*
-        display method
-    Parameters: None
-    Returns: None
-    Description: Calls the showloadingPanel function
-    */
     public void display() {
+        frame.setVisible(true);
         showLoadingPanel();
     }
 
-    /*
-        showLoadingPanel method
-    Parameters: None
-    Returns: None
-    Description: Displays the loadingTextAnimation of the loadingView
-    */
     public void showLoadingPanel() {
         getLOADING_VIEW().showLoadingTextAnimation();
     }
 
-    /*
-        SHOWPANELS methods 
-    Parameters: None
-    Returns: None
-    Description: Displays every subview's main panel using CardLayout
-    */
     public void showStartGamePanel() {
         CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
         cardLayout.show(frame.getContentPane(), "start");
@@ -128,12 +101,7 @@ public class ForeverHomeView {
         cardLayout.show(frame.getContentPane(), "adoption");
     }
 
-    /*
-        GETVIEW methods
-    Parameters: None
-    Returns: private subviews of ForeverHomeView
-    Description: Returns the private subviews of ForeverHomeView 
-    */
+    // GET VIEW METHODS
     
     public LoadingView getLOADING_VIEW() {
         return LOADING_VIEW;

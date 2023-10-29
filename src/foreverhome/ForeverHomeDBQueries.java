@@ -13,9 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author AnnGa
- * Name: Ann Del Rosario
- * Student ID: 21143100
+ * @author annga
  */
 public class ForeverHomeDBQueries 
 {    
@@ -364,9 +362,7 @@ public class ForeverHomeDBQueries
             if (rs.next()) {
                 String foodInventoryID = rs.getString("foodInventoryID");
                 String foodInventory = rs.getString("foodInventory");
-                String userName = rs.getString("userName");
-
-                return new FoodInventoryData(foodInventoryID, foodInventory, userName);
+                return new FoodInventoryData(foodInventoryID, foodInventory, name);
             }
         } catch (SQLException e) {
             this.handleSQLException(e);

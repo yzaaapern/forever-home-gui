@@ -6,9 +6,7 @@ package foreverhome;
 
 /**
  *
- * @author yzape 
- * Name: Yza Pernia 
- * Student ID: 21137984
+ * @author yzape Name: Yza Pernia Student ID: 21137984
  */
 public abstract class Animal implements Level {
 

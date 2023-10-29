@@ -47,6 +47,9 @@ public class ForeverHomeModel extends Observable {
         Player player = user.toPlayer();
         this.username = username;
         this.player = player;
+        System.out.println(this.player);
+        System.out.println(this.player.getFoodInventory());
+        this.setFoodInventory();
         
         this.setChanged();
         this.notifyObservers(this.data);
@@ -57,9 +60,12 @@ public class ForeverHomeModel extends Observable {
         Player player = new Player(username);
         player.setPassword(password);
         UserData u = new UserData(player);
+        FoodInventoryData f = new FoodInventoryData(player.getFoodInventory(), player);
         
         this.db.getDBOperations().insertData(ForeverHomeDB.USER_DATA_TABLE, u);
+        this.db.getDBOperations().insertData(ForeverHomeDB.FOOD_INVENTORY_TABLE, f);
         this.setPlayer(username);
+        this.setFoodInventory();
         
         this.setChanged();
         this.notifyObservers(this.data);
@@ -74,6 +80,18 @@ public class ForeverHomeModel extends Observable {
         Animal pet = petData.toAnimal();
         // set the player's foster pet to the pet
         player.setFosterPet(pet);
+        
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
+    
+    public void setFoodInventory()
+    {
+        FoodInventoryData fData = this.db.getDBQueries().getFoodInventoryByUserName(player.getName());
+        System.out.println(fData);
+        
+        FoodInventory f = fData.toFoodInventory();
+        player.setFoodInventory(f);
         
         this.setChanged();
         this.notifyObservers(this.data);
@@ -118,11 +136,11 @@ public class ForeverHomeModel extends Observable {
             this.notifyObservers(this.data);
             return true;
             
-        } else {
-            this.setChanged();
-            this.notifyObservers(this.data);
-            return false;
         }
+        this.setChanged();
+        this.notifyObservers(this.data);
+        return false;
+        
         
     }
     

@@ -18,16 +18,10 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author yzape 
- * Name: Yza Pernia 
- * Student ID: 21137984
+ * @author yzape
  */
 public class FoodInventoryView {
 
-    /*
-        INSTANCE AND CONSTANT VARIABLES
-     */
-    // GUI Components
     public JPanel foodInventoryPanel;
     private JPanel foodMenuPanel;
     private JLabel titleLabel;
@@ -72,36 +66,22 @@ public class FoodInventoryView {
 
     private GameButton goBackBtn;
 
-    // Determines if the view changes for the Eat Menu
-    public static boolean isFeed = true;
-
-    // File Paths
+    public static boolean isFeed = false;
     private final String BG_FILE_PATH = "./resources/images/backgrounds/foodInventory_bg.png";
     private final String BTN_FILE_PATH = "./resources/images/buttons/mainButton.png";
     private final String BTN_HOVER_FILE_PATH = "./resources/images/buttons/mainButton_hover.png";
-
-    // Label Texts
+    
     private final String TITLE = "FOOD INVENTORY MENU";
     private final String INTRO = isFeed ? "Feed your pet something tasty!" : "Buy more foods for your foster pet!";
 
-    /*
-        OBJECT CONSTRUCTOR
-     */
     public FoodInventoryView() {
-        GridBagConstraints gbc = new GridBagConstraints(); // Used for formating GUI components
+        GridBagConstraints gbc = new GridBagConstraints();
         initializePanels();
         initializeLabels();
         initializeButtons();
         addComponents(gbc);
     }
 
-    /*
-        addComponents method
-    Parameter: GridBagConstraints gbc
-    Returns: None
-    Description: Adds all initialized components depending if the view is supposed to show the food inventory
-                 or show the foods the fosterPet can eat and formats them according to GridBagConstraints
-     */
     private void addComponents(GridBagConstraints gbc) {
         gbc.insets = new Insets(30, 20, 0, 20);
         gbc.gridwidth = 3;
@@ -127,13 +107,6 @@ public class FoodInventoryView {
         foodInventoryPanel.add(foodMenuPanel, BorderLayout.CENTER);
     }
 
-    /*
-        isFeedComponents method
-    Parameters: GridBagConstraints gbc
-    Returns: None
-    Description: Adds the isFeed components to the FoodInventoryVIew which will be displayed if the isFeed boolean is set to true.
-                 This view will show what foods the animal can eat depending on its instance type.
-     */
     private void isFeedComponents(GridBagConstraints gbc) {
         gbc.insets = new Insets(30, 20, 0, 50);
         gbc.anchor = GridBagConstraints.WEST;
@@ -250,13 +223,6 @@ public class FoodInventoryView {
         foodMenuPanel.add(drinkWater, gbc);
     }
 
-    /*
-        isNotFeedComponents method
-    Parameters: GridBagConstraints gbc
-    Returns: None
-    Description: Adds the isNotFeed components to the FoodInventoryVIew which will be displayed if the isFeed boolean is set to false.
-                 This view will show the foods the player can buy.
-     */
     private void isNotFeedComponents(GridBagConstraints gbc) {
         gbc.insets = new Insets(30, 20, 0, 50);
         gbc.anchor = GridBagConstraints.WEST;
@@ -373,12 +339,6 @@ public class FoodInventoryView {
         foodMenuPanel.add(buyWater, gbc);
     }
 
-    /*
-        initializeButton method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the FoodInventoryView's buttons 
-     */
     private void initializeButtons() {
         Font buttonFont = GameFont.getPixelFont(13, 0);
         if (isFeed) {
@@ -429,12 +389,6 @@ public class FoodInventoryView {
         goBackBtn.setFont(buttonFont);
     }
 
-    /*
-        initializeLabels  method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the FoodInventoryView's labels 
-     */
     private void initializeLabels() {
         Font labelFont = GameFont.getPixelFont(30, 1);
 
@@ -518,13 +472,7 @@ public class FoodInventoryView {
         waterDesc.setForeground(Color.white);
 
     }
-    
-    /*
-        initializePanels method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the AdoptionView's JPanels
-     */
+
     private void initializePanels() {
         foodInventoryPanel = new JPanel(new BorderLayout()) {
             @Override
@@ -633,5 +581,5 @@ public class FoodInventoryView {
     public GameButton getGoBackBtn() {
         return goBackBtn;
     }
-
+    
 }

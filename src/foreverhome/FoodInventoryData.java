@@ -10,28 +10,22 @@ import java.util.UUID;
 /**
  *
  * @author AnnGa
- * Name: Ann Del Rosario
- * Student ID: 21143100
  */
 public class FoodInventoryData 
 {
-    /*
-        INSTANCE VARIABLES
-    */
+    // INSTANCE VARIABLES
     private String foodInventoryID; // PK
     private String foodInventory; // Attribute
     private String userName; // FK
     
-    /*
-        OBJECT CONSTRUCTORS
-    */
+    // CONSTRUCTORS
     
     // new FoodInventoryData in the database (doesn't have an ID yet)
-    public FoodInventoryData(FoodInventory foodInventory, String userName)
+    public FoodInventoryData(FoodInventory foodInventory, Player player)
     {
         this.foodInventoryID = this.generateRandomFoodInventoryID();
-        this.setFoodInventory(this.dbFoodInventoryToDBString(foodInventory));
-        this.userName = userName;
+        this.setFoodInventory(this.foodInventoryToDBString(player.getFoodInventory()));
+        this.userName = player.getName();
     }
     
     // 2-Parameter Constructor: new FoodInventoryData in the database (doesn't have an ID yet)
@@ -46,7 +40,7 @@ public class FoodInventoryData
     public FoodInventoryData(String foodInventoryID, FoodInventory foodInventory, String userName)
     {
         this.foodInventoryID = foodInventoryID;
-        this.setFoodInventory(this.dbFoodInventoryToDBString(foodInventory));
+        this.setFoodInventory(this.foodInventoryToDBString(foodInventory));
         this.setUserName(userName);
     }
     
@@ -60,37 +54,22 @@ public class FoodInventoryData
     
     
     // GET & SET METHODS
-    /**
-     * @return the foodInventoryID
-     */
     public String getFoodInventoryID() {
         return foodInventoryID;
     }
 
-    /**
-     * @return the foodInventory
-     */
     public String getFoodInventory() {
         return foodInventory;
     }
 
-    /**
-     * @param foodInventory the foodInventory to set
-     */
     public void setFoodInventory(String foodInventory) {
         this.foodInventory = foodInventory;
     }
 
-    /**
-     * @return the userName
-     */
     public String getUserName() {
         return userName;
     }
 
-    /**
-     * @param userName the userName to set
-     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -103,8 +82,8 @@ public class FoodInventoryData
         return UUID.randomUUID().toString();
     }
     
-    // Converts FoodInventory String to a readable string for the database
-    public String dbFoodInventoryToDBString(FoodInventory foodInventory)
+    // Converts FoodInventory to a readable string for the database
+    public String foodInventoryToDBString(FoodInventory foodInventory)
     {
         String output = "";
         
@@ -120,17 +99,33 @@ public class FoodInventoryData
         return output;
     }
     
-    // Converts dbFoodInventory to foodInventory
-    public FoodInventory dbFoodInventoryToFoodInventory(String foodInventoryString)
-    {
+    // Converts FoodInventoryData to foodInventory
+    public FoodInventory toFoodInventory() {
         FoodInventory foodInventory = new FoodInventory();
-        for(int i = 0; i < FoodInventory.NUM_OF_FOODS; i++)
-        {
-            int foodCount = Integer.parseInt(foodInventoryString.split("^")[i].split(":")[0]);
-            foodInventory.getFoods()[i].setFoodCount(foodCount);
+        String[] foodInventoryData = this.getFoodInventory().split("^");
+
+        if (foodInventoryData.length >= FoodInventory.NUM_OF_FOODS) {
+            for (int i = 0; i < FoodInventory.NUM_OF_FOODS; i++) {
+                String[] parts = foodInventoryData[i].split(":");
+                if (parts.length >= 2) {
+                    try {
+                        int foodCount = Integer.parseInt(parts[1]);
+                        foodInventory.getFoods()[i].setFoodCount(foodCount);
+                    } catch (NumberFormatException e) {
+                        // Handle the case where the string is not a valid integer
+                        // You can log an error message or take appropriate action here.
+                    }
+                } else {
+                    // Handle the case where the input data format is not as expected.
+                }
+            }
+        } else {
+            // Handle the case where the input data does not have enough elements.
         }
+
         return foodInventory;
     }
+
     
     // Override equals method
     @Override
