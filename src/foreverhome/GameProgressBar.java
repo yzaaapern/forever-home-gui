@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package foreverhome;
 
 import java.awt.Color;
@@ -14,8 +10,7 @@ import javax.swing.JProgressBar;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
 /**
- *
- * @author yzape
+ * Custom progress bar with added features.
  */
 public class GameProgressBar extends JProgressBar {
 
@@ -23,6 +18,7 @@ public class GameProgressBar extends JProgressBar {
     private final Color BAR_COLOR;
     private final int BAR_OFFSETX = 40;
     private final int BAR_OFFSETY = 15;
+    private int maxValue = Level.DEFAULT_LEVELXP_CAP; // Set the maximum value for the progress bar
 
     public GameProgressBar(String progressBarImageFilePath, String progressBarColor) {
         BORDER_IMAGE = new GameImage(progressBarImageFilePath);
@@ -30,33 +26,44 @@ public class GameProgressBar extends JProgressBar {
         setUI(new GameProgressBarUI());
         setOpaque(false);
         setBorderPainted(false);
-        setPreferredSize(new Dimension(490,70));
+        setPreferredSize(new Dimension(490, 70));
     }
 
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         int width = getWidth();
         int height = getHeight();
         g2d.drawImage(BORDER_IMAGE.getImage(), 0, 0, width, height, null);
     }
-    
-    private class GameProgressBarUI extends BasicProgressBarUI{
+
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public int getMaxValue() {
+        return maxValue;
+    }
+
+    private class GameProgressBarUI extends BasicProgressBarUI {
         @Override
-        protected void paintDeterminate(Graphics g, JComponent c){
-            if(progressBar != null){
+        protected void paintDeterminate(Graphics g, JComponent c) {
+            if (progressBar != null) {
                 Graphics2D g2d = (Graphics2D) g;
                 int width = progressBar.getWidth();
-                
+
                 int heightDiff = 30;
                 int height = progressBar.getHeight() - heightDiff;
-                
+
                 int progressWidth = (int) (width * getPercentComplete());
-                
+                if (progressWidth > width) {
+                    progressWidth = width; // Ensure the progress bar doesn't go over the border
+                }
+
                 RoundRectangle2D progressBarShape = new RoundRectangle2D.Double(BAR_OFFSETX, BAR_OFFSETY,
-                                                        progressWidth, height, height, height);
-                
+                        progressWidth, height, height, height);
+
                 g2d.setClip(progressBarShape);
                 g2d.setColor(BAR_COLOR);
                 g2d.fill(progressBarShape);

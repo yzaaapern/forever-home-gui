@@ -37,6 +37,11 @@ public class NotPausedPetFosterView {
     private GameProgressBar hygieneBar;
     private GameProgressBar happinessBar;
 
+    private int maxXPValue = 100; // Set the maximum value for XP
+    private int maxHappinessValue = 100; // Set the maximum value for happiness
+    private int maxHungerValue = 100; // Set the maximum value for hunger
+    private int maxHygieneValue = 100; // Set the maximum value for hygiene
+    
     private GameButton backpackBtn;
     private GameButton feedBtn;
     private GameButton interactBtn;
@@ -201,10 +206,15 @@ public class NotPausedPetFosterView {
 
     private void initializeProgressBars() {
         levelBar = new GameProgressBar(LEVEL_BAR_FILE_PATH, LEVEL_BAR_COLOR);
+        levelBar.setMaxValue(Level.MAX_LEVEL);
         xpBar = new GameProgressBar(XP_BAR_FILE_PATH, XP_BAR_COLOR);
+        xpBar.setMaxValue(this.maxXPValue);
         hungerBar = new GameProgressBar(HUNGER_BAR_FILE_PATH, HUNGER_BAR_COLOR);
+        hungerBar.setMaxValue(this.maxHungerValue);
         hygieneBar = new GameProgressBar(HYGIENE_BAR_FILE_PATH, HYGIENE_BAR_COLOR);
+        hygieneBar.setMaxValue(this.maxHygieneValue);
         happinessBar = new GameProgressBar(HAPPINESS_BAR_FILE_PATH, HAPPINESS_BAR_COLOR);
+        happinessBar.setMaxValue(this.maxHappinessValue);
     }
 
     private void initializeLabels() {
@@ -291,4 +301,49 @@ public class NotPausedPetFosterView {
     public GameButton getNoBtn() {
         return noBtn;
     }
+    
+    public void updateBarValue(int level, int xp, int happiness, int hunger, int hygiene, int dabloons, int newBarCap)
+    {
+        this.setLevelBarValue(level);
+        this.setXPBarValue(xp);
+        xpBar.setMaxValue(newBarCap);
+        this.setHappinessBarValue(happiness);
+        happinessBar.setMaxValue(newBarCap);
+        this.setHungerBarValue(hunger);
+        hungerBar.setMaxValue(newBarCap);
+        this.setHygieneBarValue(hygiene);
+        hygieneBar.setMaxValue(newBarCap);
+        this.setDabloonsLabel(dabloons);
+        
+    }
+            
+    
+    public void setLevelBarValue(int value) {
+        levelBar.setValue(value);
+        this.levelBar.repaint();
+    }
+
+    public void setXPBarValue(int value) {
+        xpBar.setValue(value);
+        this.xpBar.repaint();
+    }
+
+    public void setHappinessBarValue(int value) {
+        happinessBar.setValue(value);
+        this.happinessBar.repaint();
+    }
+    
+    public void setHungerBarValue(int value) {
+        hungerBar.setValue(value);
+        this.hungerBar.repaint();
+    }
+
+    public void setHygieneBarValue(int value) {
+        hygieneBar.setValue(value);
+        this.hygieneBar.repaint();
+    }
+    
+    public void setDabloonsLabel(int value) {
+    dabloonsLabel.setText(Integer.toString(value));
+    }   
 }
