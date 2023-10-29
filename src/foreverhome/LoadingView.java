@@ -27,7 +27,7 @@ public class LoadingView {
     private JLabel titleLabel;
     private JLabel loadingTextLabel;
 
-    public static boolean isShuttingDown = false;
+    public boolean isShuttingDown = false;
     private int loadingTextIndex;
     private final String imageFilePath = "./resources/images/backgrounds/bg.png";
     private final String gameTitle = "FOREVER HOME";

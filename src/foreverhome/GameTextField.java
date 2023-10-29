@@ -29,7 +29,7 @@ public class GameTextField extends JTextField {
         OBJECT CONSTRUCTORS
     */
     public GameTextField() {
-        super();
+        super("");
         FIELD_IMAGE = new GameImage(TEXT_FIELD_FILE_PATH);
         initializeField();
     }
@@ -37,6 +37,7 @@ public class GameTextField extends JTextField {
     // Takes max field length
     public GameTextField(int length) {
         super(length);
+        this.setText("");
         FIELD_IMAGE = new GameImage(TEXT_FIELD_FILE_PATH);
         initializeField();
     }

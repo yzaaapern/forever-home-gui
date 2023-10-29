@@ -90,11 +90,11 @@ public class ForeverHomeModel extends Observable {
             this.notifyObservers(this.data);
             return true;
             
+        } else {
+            this.setChanged();
+            this.notifyObservers(this.data);
+            return false;
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
-        return false;
-        
         
     }
     
