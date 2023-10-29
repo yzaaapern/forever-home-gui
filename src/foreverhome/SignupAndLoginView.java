@@ -21,14 +21,6 @@ import javax.swing.JPanel;
  * @author yzape Name: Yza Pernia Student ID: 21137984
  */
 public final class SignupAndLoginView {
-
-    public boolean isLogin = false;
-    public boolean userExists = true;
-    public boolean isPasswordCorrect = true;
-
-    private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
-    private String title = "WHY HELLO, NEW PLAYER! PLEASE SIGN UP.";
-    public String intro = "Please fill in the form below.";
     
     public JPanel signupAndLoginPanel;
     private JLabel signUpAndLoginLabel;
@@ -40,6 +32,16 @@ public final class SignupAndLoginView {
     private GameTextField passwordField;
     private GameButton continueBtn;
     private GameButton goBackBtn;
+
+    public boolean isLogin = false;
+    public boolean userExists = true;
+    public boolean isPasswordCorrect = true;
+
+    private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
+    private String title = "WHY HELLO, NEW PLAYER! PLEASE SIGN UP.";
+    public String intro = "Please fill in the form below.";
+
+    ;
 
     public SignupAndLoginView() {
         GridBagConstraints gbc = new GridBagConstraints();

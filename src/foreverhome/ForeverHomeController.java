@@ -155,16 +155,16 @@ public class ForeverHomeController implements ActionListener{
 
             if(playerIsPlaying)
             {
-                // if the player does not have a fosterpet
+                // if the player has a fosterpet
                 if(model.player.hasFosterPet == true)
                 {
                     this.model.setPet();
 
                     // show pet foster menu
-                    view.showPetFosterPanel();
+                    view.showNotPausedPetFosterPanel();
                     
                 }
-                else // if the player has a fosterpet
+                else // if the player does not have a fosterpet
                 {
                     view.showFosterPanel();
                 }
@@ -214,7 +214,7 @@ public class ForeverHomeController implements ActionListener{
             {
                 if (!petName.isEmpty()) {
                     model.newPetFoster(petName);
-                    view.showPetFosterPanel();
+                    view.showNotPausedPetFosterPanel();
                 } else {
                     System.out.println("no name");
                     view.getFOSTER_VIEW().updatePopUpLabel("Please give your " + model.chosenAnimalType + " a name!");
@@ -225,56 +225,57 @@ public class ForeverHomeController implements ActionListener{
             System.out.println(view.getFOSTER_VIEW().showPopUpPanel);
         } 
 
-        // PET FOSTER VIEW
+        // NOT PAUSED PET FOSTER VIEW
         
-        else if (source == view.getPET_FOSTER_VIEW().getBackpackBtn()) {
+        else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getBackpackBtn()) {
             view.showBuyFoodPanel();
-        }
-        
-        else if (source == view.getPET_FOSTER_VIEW().getFeedBtn()) 
-        {
+        }else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getFeedBtn()) {
             view.showFeedPetPanel();
-        } else if (source == view.getPET_FOSTER_VIEW().getInteractBtn()) {
+        } else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getInteractBtn()) {
             view.getINTERACTION_VIEW().refreshText();
             view.showInteractionPanel();
-        } else if (source == view.getPET_FOSTER_VIEW().getBatheBtn()) {
+        } else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getBatheBtn()) {
             model.bathePet();
-        } else if (source == view.getPET_FOSTER_VIEW().getPauseBtn()) {
+        } else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getPauseBtn()) {
             // pause game
-            view.getPET_FOSTER_VIEW().updateIsPaused();
-            model.saveGame();
-            view.getPET_FOSTER_VIEW().isPaused = true;
-            view.showPetFosterPanel();
-        } else if (source == view.getPET_FOSTER_VIEW().getGoBackBtn()) {
-            // model: save player's stats
-            view.getPET_FOSTER_VIEW().updateIsPaused();
-
-        } else if (source == view.getPET_FOSTER_VIEW().getQuitBtn()) {
-            // model: save player's stats
-            model.quitGame();
-            // view: close
-        } else if (source == view.getPET_FOSTER_VIEW().getYesBtn()) {
+            model.saveGame();  
+            view.showPausedPetFosterPanel();
+        }  else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getYesBtn()) {
             view.showAdoptionPanel();
             model.player.fosterPet.setIsAdopted(true);
             model.player.hasFosterPet = false;
             model.player.fosterPet = null;
-        } else if (source == view.getPET_FOSTER_VIEW().getNoBtn()) {
+        } else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getNoBtn()) {
             view.showFosterPanel();
+        }
+        
+        // PAUSED PET FOSTER VIEW
+        
+        else if (source == view.getPAUSED_PET_FOSTER_VIEW().getGoBackBtn()) {
+            view.showNotPausedPetFosterPanel();
+        } else if (source == view.getPAUSED_PET_FOSTER_VIEW().getQuitBtn()) {
+            // model: save player's stats
+            model.quitGame();
+            // view: close
         }
         
         // INTERACTION VIEW
         
         else if (source == view.getINTERACTION_VIEW().getPatBtn()) {
             model.interactWithPet(model.player.getInteractionList().getGivePat());   
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
+            model.interactWithPet(model.player.getInteractionList().getInteractions()[0]);
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getPlayBtn()) {
             model.interactWithPet(model.player.getInteractionList().getPlayWithFoster());
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
+            model.interactWithPet(model.player.getInteractionList().getInteractions()[1]);
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getINTERACTION_VIEW().getPottyBtn()) {
             model.interactWithPet(model.player.getInteractionList().getGoPotty());
             if(model.isInteractUnlocked(model.player.getInteractionList().getGoPotty()))
             {
-                view.showPetFosterPanel();
+                view.showNotPausedPetFosterPanel();
             }
             else
             {
@@ -285,7 +286,7 @@ public class ForeverHomeController implements ActionListener{
             model.interactWithPet(model.player.getInteractionList().getBow());
                         if(model.isInteractUnlocked(model.player.getInteractionList().getBow()))
             {
-                view.showPetFosterPanel();
+                view.showNotPausedPetFosterPanel();
             }
             else
             {
@@ -296,7 +297,7 @@ public class ForeverHomeController implements ActionListener{
             model.interactWithPet(model.player.getInteractionList().getShakeHands());
                         if(model.isInteractUnlocked(model.player.getInteractionList().getShakeHands()))
             {
-                view.showPetFosterPanel();
+                view.showNotPausedPetFosterPanel();
             }
             else
             {
@@ -307,7 +308,7 @@ public class ForeverHomeController implements ActionListener{
             model.interactWithPet(model.player.getInteractionList().getSpin());
                         if(model.isInteractUnlocked(model.player.getInteractionList().getSpin()))
             {
-                view.showPetFosterPanel();
+                view.showNotPausedPetFosterPanel();
             }
             else
             {
@@ -318,7 +319,7 @@ public class ForeverHomeController implements ActionListener{
             model.interactWithPet(model.player.getInteractionList().getPlayDead());
                         if(model.isInteractUnlocked(model.player.getInteractionList().getPlayDead()))
             {
-                view.showPetFosterPanel();
+                view.showNotPausedPetFosterPanel();
             }
             else
             {
@@ -329,7 +330,7 @@ public class ForeverHomeController implements ActionListener{
             model.interactWithPet(model.player.getInteractionList().getFetch());
                         if(model.isInteractUnlocked(model.player.getInteractionList().getFetch()))
             {
-                view.showPetFosterPanel();
+                view.showNotPausedPetFosterPanel();
             }
             else
             {
@@ -337,81 +338,83 @@ public class ForeverHomeController implements ActionListener{
                 view.getINTERACTION_VIEW().updateText(model.player.getInteractionList().getFetch());
             }
         } else if (source == view.getINTERACTION_VIEW().getGoBackBtn()) {
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } 
         
         // BUY FOOD VIEW
         
         else if (source == view.getBUYFOOD_VIEW().getBuyFoodForAll()) 
         {
+            view.showNotPausedPetFosterPanel();
+        } // FOOD INVENTORY
+        else if (source == view.getBUYFOOD_VIEW().getBuyFoodForAll()) {
             model.buyFood(model.player.getFoodInventory().foodForAll);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getBUYFOOD_VIEW().getBuyRainbowTreat()) {
             model.buyFood(model.player.getFoodInventory().rainbowTreat);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getBUYFOOD_VIEW().getBuyKibble()) {
             model.buyFood(model.player.getFoodInventory().kibble);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getBUYFOOD_VIEW().getBuyCannedFood()) {
             model.buyFood(model.player.getFoodInventory().cannedFood);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getBUYFOOD_VIEW().getBuyVeggieMix()) {
             model.buyFood(model.player.getFoodInventory().veggieMix);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getBUYFOOD_VIEW().getBuySeeds()) {
             model.buyFood(model.player.getFoodInventory().seeds);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getBUYFOOD_VIEW().getBuyWater()) {
             model.buyFood(model.player.getFoodInventory().water);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } 
         else if(source == view.getBUYFOOD_VIEW().getGoBackBtn())
         {
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         }
         
         // FEED PET VIEW
         
         else if (source == view.getFEEDPET_VIEW().getFeedWithFoodForAll()) {
+            view.showNotPausedPetFosterPanel();
+        } else if (source == view.getFEEDPET_VIEW().getFeedWithFoodForAll()) {
             model.feedPet(model.player.getFoodInventory().foodForAll);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getFEEDPET_VIEW().getFeedWithRainbowTreat()) {
             model.feedPet(model.player.getFoodInventory().rainbowTreat);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getFEEDPET_VIEW().getFeedWithKibble()) {
             model.feedPet(model.player.getFoodInventory().kibble);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getFEEDPET_VIEW().getFeedWithCannedFood()) {
             model.feedPet(model.player.getFoodInventory().cannedFood);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getFEEDPET_VIEW().getFeedWithVeggieMix()) {
             model.feedPet(model.player.getFoodInventory().veggieMix);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getFEEDPET_VIEW().getFeedWithSeeds()) {
             model.feedPet(model.player.getFoodInventory().seeds);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } else if (source == view.getFEEDPET_VIEW().getDrinkWater()) {
             model.feedPet(model.player.getFoodInventory().water);
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } 
         else if (source == view.getFEEDPET_VIEW().getGoBackBtn()) {
-            view.showPetFosterPanel();
+            view.showNotPausedPetFosterPanel();
         } 
         
         // ADOPTION VIEW
         
-        else if (source == view.getADOPTION_VIEW().getNoBtn()) 
-        {
-            model.saveGame();
-            view.showStartGamePanel();
-            
-            
-        } 
         else if (source == view.getADOPTION_VIEW().getYesBtn()) 
         {
+            model.saveGame();
             view.showFosterPanel();
+        } // ADOPTION VIEW
+        else if (source == view.getADOPTION_VIEW().getNoBtn()) {
+            model.saveGame();
+            view.showStartGamePanel();
         } 
 
-//        model.db.getDBManager().closeConnection();
     }
 }
