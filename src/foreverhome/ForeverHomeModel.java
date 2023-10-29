@@ -21,7 +21,7 @@ public class ForeverHomeModel extends Observable {
 //    public Database db;
     public ForeverHomeDB db;
     public ForeverHomeData data;
-    public DecrementStatsRunnable dsr;
+//    public DecrementStatsRunnable dsr;
     public Thread petDecrementStatsThread;
     public InteractionList interactionList;
     public Player player;
@@ -354,6 +354,13 @@ public class ForeverHomeModel extends Observable {
 //        this.data.quitFlag = true;
         this.setChanged();
         this.notifyObservers(this.data);
+    }
+    
+    public void resetGame()
+    {
+        this.player = null;
+        this.username = null;
+        this.chosenAnimalType = null;
     }
     
     public boolean isValid(String input)

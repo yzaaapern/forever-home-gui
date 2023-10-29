@@ -28,6 +28,7 @@ public class PausedPetFosterView {
     private JLabel pauseMessageLabel;
     
     private GameButton goBackBtn;
+    private GameButton mainMenuBtn;
     private GameButton quitBtn;
 
     public boolean isPaused = false;
@@ -47,7 +48,7 @@ public class PausedPetFosterView {
     private void addComponents(GridBagConstraints gbc) {
         gbc.insets = new Insets(0, 0, 10, 60);
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.gridy = 0;
         pauseGamePanel.add(pauseTitleLabel, gbc);
 
@@ -62,6 +63,14 @@ public class PausedPetFosterView {
         gbc.gridy++;
         pauseGamePanel.add(goBackBtn, gbc);
 
+        gbc.insets = new Insets(100, 60, 0, 0);
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridwidth = 1;
+        gbc.gridx++;
+        gbc.gridy = 2;
+        pauseGamePanel.add(mainMenuBtn, gbc);
+        
+        gbc.insets = new Insets(100,0,0,60);
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridx++;
         gbc.gridy = 2;
@@ -79,9 +88,12 @@ public class PausedPetFosterView {
         Font buttonFont = GameFont.getPixelFont(15, 1);
 
         buttonFont = GameFont.getPixelFont(15, 0);
-        goBackBtn = new GameButton("Go Back");
+        goBackBtn = new GameButton("Resume");
         goBackBtn.setFont(buttonFont);
 
+        mainMenuBtn = new GameButton("Main Menu");
+        mainMenuBtn.setFont(buttonFont);
+        
         quitBtn = new GameButton("Quit");
         quitBtn.setFont(buttonFont);
     }
@@ -124,6 +136,7 @@ public class PausedPetFosterView {
 
     public void addActionListener(ActionListener listener) {
         goBackBtn.addActionListener(listener);
+        mainMenuBtn.addActionListener(listener);
         quitBtn.addActionListener(listener);
     }
 
@@ -131,6 +144,10 @@ public class PausedPetFosterView {
         return goBackBtn;
     }
 
+    public GameButton getMainMenuBtn(){
+        return mainMenuBtn;
+    }
+    
     public GameButton getQuitBtn() {
         return quitBtn;
     }

@@ -32,10 +32,13 @@ public class GameProgressBar extends JProgressBar {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        int width = getWidth();
-        int height = getHeight();
-        g2d.drawImage(BORDER_IMAGE.getImage(), 0, 0, width, height, null);
+        if(BORDER_IMAGE != null)
+        {
+            Graphics2D g2d = (Graphics2D) g;
+            int width = getWidth();
+            int height = getHeight();
+            g2d.drawImage(BORDER_IMAGE.getImage(), 0, 0, width, height, null);
+        }
     }
 
     public void setMaxValue(int maxValue) {
@@ -47,28 +50,28 @@ public class GameProgressBar extends JProgressBar {
     }
 
     private class GameProgressBarUI extends BasicProgressBarUI {
-        @Override
-        protected void paintDeterminate(Graphics g, JComponent c) {
-            if (progressBar != null) {
-                Graphics2D g2d = (Graphics2D) g;
-                int width = progressBar.getWidth();
+    @Override
+    protected void paintDeterminate(Graphics g, JComponent c) {
+        if (progressBar != null) {
+            Graphics2D g2d = (Graphics2D) g;
+            int width = progressBar.getWidth() - 50;
+            int heightDiff = 30;
+            int height = progressBar.getHeight() - heightDiff;
 
-                int heightDiff = 30;
-                int height = progressBar.getHeight() - heightDiff;
+            int progressWidth = (int) (width * ((double) progressBar.getValue() / progressBar.getMaximum()));
 
-                int progressWidth = (int) (width * getPercentComplete());
-                if (progressWidth > width) {
-                    progressWidth = width; // Ensure the progress bar doesn't go over the border
-                }
-
-                RoundRectangle2D progressBarShape = new RoundRectangle2D.Double(BAR_OFFSETX, BAR_OFFSETY,
-                        progressWidth, height, height, height);
-
-                g2d.setClip(progressBarShape);
-                g2d.setColor(BAR_COLOR);
-                g2d.fill(progressBarShape);
-                g2d.setClip(null);
+            if (progressWidth > width) {
+                progressWidth = width; // Ensure the progress bar doesn't go over the border
             }
+
+            RoundRectangle2D progressBarShape = new RoundRectangle2D.Double(BAR_OFFSETX, BAR_OFFSETY,
+                    progressWidth, height, height, height);
+
+            g2d.setClip(progressBarShape);
+            g2d.setColor(BAR_COLOR);
+            g2d.fill(progressBarShape);
+            g2d.setClip(null);
         }
     }
+}
 }

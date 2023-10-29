@@ -37,10 +37,10 @@ public class NotPausedPetFosterView {
     private GameProgressBar hygieneBar;
     private GameProgressBar happinessBar;
 
-    private int maxXPValue = 100; // Set the maximum value for XP
-    private int maxHappinessValue = 100; // Set the maximum value for happiness
-    private int maxHungerValue = 100; // Set the maximum value for hunger
-    private int maxHygieneValue = 100; // Set the maximum value for hygiene
+    private int maxXPValue = Level.DEFAULT_LEVELXP_CAP; // Set the maximum value for XP
+    private int maxHappinessValue = Level.DEFAULT_LEVELXP_CAP; // Set the maximum value for happiness
+    private int maxHungerValue = Level.DEFAULT_LEVELXP_CAP; // Set the maximum value for hunger
+    private int maxHygieneValue = Level.DEFAULT_LEVELXP_CAP; // Set the maximum value for hygiene
     
     private GameButton backpackBtn;
     private GameButton feedBtn;
