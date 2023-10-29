@@ -5,6 +5,7 @@
 package foreverhome;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -27,6 +28,7 @@ public class FosterView {
      */
     // GUI Components
     public JPanel fosterPanel;
+    private CardLayout cardLayout;
     private JPanel petsMenuPanel;
     private JPanel popUpPanel;
     private JLabel titleLabel;
@@ -267,6 +269,7 @@ public class FosterView {
             gbc.insets = new Insets(220, 50, 10, 20);
             gbc.anchor = GridBagConstraints.WEST;
             gbc.fill = GridBagConstraints.NONE;
+            gbc.gridwidth = 5;
             gbc.weightx = 1.0;
             gbc.weighty = 0;
             gbc.gridx = 0;
@@ -280,13 +283,14 @@ public class FosterView {
 
             gbc.insets = new Insets(10, 30, 0, 20);
             gbc.fill = GridBagConstraints.NONE;
+            gbc.gridwidth = 1;
             gbc.gridx = 0;
             gbc.gridy++;
             popUpPanel.add(cancelBtn, gbc);
 
             gbc.insets = new Insets(10, 20, 0, 20);
-            gbc.anchor = GridBagConstraints.EAST;
-            gbc.gridx = 5;
+            gbc.anchor = GridBagConstraints.SOUTHEAST;
+            gbc.gridx = 1;
             gbc.gridy = 6;
             popUpPanel.add(continueBtn, gbc);
         } else {

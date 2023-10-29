@@ -39,7 +39,6 @@ public final class SignupAndLoginView {
 
     private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
     private String title = "WHY HELLO, NEW PLAYER! PLEASE SIGN UP.";
-    ;
     public String intro = "Please fill in the form below.";
 
     ;
