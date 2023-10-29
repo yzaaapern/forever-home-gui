@@ -28,6 +28,14 @@ public class FoodInventoryData
         this.userName = player.getName();
     }
     
+    // new FoodInventoryData in the database (doesn't have an ID yet)
+    public FoodInventoryData(FoodInventory foodInventory, String username)
+    {
+        this.foodInventoryID = this.generateRandomFoodInventoryID();
+        this.setFoodInventory(this.foodInventoryToDBString(foodInventory));
+        this.userName = username;
+    }
+    
     // 2-Parameter Constructor: new FoodInventoryData in the database (doesn't have an ID yet)
     public FoodInventoryData(String foodInventory, String userName)
     {
@@ -102,7 +110,7 @@ public class FoodInventoryData
     // Converts FoodInventoryData to foodInventory
     public FoodInventory toFoodInventory() {
         FoodInventory foodInventory = new FoodInventory();
-        String[] foodInventoryData = this.getFoodInventory().split("^");
+        String[] foodInventoryData = this.getFoodInventory().split("\\^");
 
         if (foodInventoryData.length >= FoodInventory.NUM_OF_FOODS) {
             for (int i = 0; i < FoodInventory.NUM_OF_FOODS; i++) {

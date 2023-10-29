@@ -44,25 +44,6 @@ public class ForeverHomeDBOperations
         dbOperations.createTable(ForeverHomeDB.USER_DATA_TABLE);
         dbOperations.createTable(ForeverHomeDB.PET_TABLE);
         dbOperations.createTable(ForeverHomeDB.FOOD_INVENTORY_TABLE);
-        
-        Player user1 = new Player("anny");
-        user1.setDabloons(1000);
-        UserData userData1 = new UserData(user1);
-        dbOperations.insertData(ForeverHomeDB.USER_DATA_TABLE, userData1);
-        
-        FoodInventoryData foodInventoryData1 = new FoodInventoryData(user1.getFoodInventory(), user1);
-        dbOperations.insertData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventoryData1);
-        
-        Animal pet1 = new Cat("catty");
-        PetData petData1 = new PetData(pet1, "anny");
-        dbOperations.insertData(ForeverHomeDB.PET_TABLE, petData1);
-
-        
-
-        
-        
-        // Closing connection
-        dbOperations.dbManager.closeConnection();
     }
     
     /* createTable method
@@ -206,7 +187,7 @@ public class ForeverHomeDBOperations
         PetData petDataSample1 = new PetData(petSample1, playerSample1.getName());
         
         // sample foodInventory
-        FoodInventoryData foodInventoryDataSample1 = new FoodInventoryData(playerSample1.getFoodInventory(), playerSample1);
+        FoodInventoryData foodInventoryDataSample1 = new FoodInventoryData(playerSample1.getFoodInventory(), playerSample1.getName());
         
         try (PreparedStatement preparedStatement = dbManager.getConnection().prepareStatement(sqlInsert)) {
             if (tableExists(dbManager.getConnection(), tableName)) {
@@ -475,21 +456,18 @@ public class ForeverHomeDBOperations
         }
     }
     
-    public void saveData(Player player, Animal pet, FoodInventory foodInventory){
-        if(player != null && pet != null && foodInventory != null)
+    public void saveData(UserData playerData, PetData petData, FoodInventoryData foodInventoryData){
+        if(playerData!= null)
         {
-            this.updateData(ForeverHomeDB.USER_DATA_TABLE, player.toUserData());
-            this.updateData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
-            this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventory.toFoodInventoryData(player));
+            this.updateData(ForeverHomeDB.USER_DATA_TABLE, playerData);
         }
-        else if(pet == null)
+        if(petData!= null)
         {
-            this.updateData(ForeverHomeDB.USER_DATA_TABLE, player.toUserData());
-            this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventory.toFoodInventoryData(player));
+            this.updateData(ForeverHomeDB.PET_TABLE, petData);
         }
-        else
+        if(foodInventoryData != null)
         {
-            
+            this.updateData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventoryData);
         }
     }
 }

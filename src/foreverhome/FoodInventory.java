@@ -109,9 +109,16 @@ public class FoodInventory {
         return output;
     }
     
-    public FoodInventoryData toFoodInventoryData(Player player)
+    
+//    public FoodInventoryData toFoodInventoryData(Player player)
+//    {
+//        FoodInventoryData f = new FoodInventoryData(this, player);
+//        return f;
+//    }
+    
+    public FoodInventoryData toFoodInventoryData(String username)
     {
-        FoodInventoryData f = new FoodInventoryData(this, player);
+        FoodInventoryData f = new FoodInventoryData(this, username);
         return f;
     }
             

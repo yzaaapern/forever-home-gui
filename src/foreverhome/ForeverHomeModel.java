@@ -58,7 +58,7 @@ public class ForeverHomeModel extends Observable {
         Player player = new Player(username);
         player.setPassword(password);
         UserData u = new UserData(player);
-        FoodInventoryData f = new FoodInventoryData(player.getFoodInventory(), player);
+        FoodInventoryData f = new FoodInventoryData(player.getFoodInventory(), player.getName());
         
         this.db.getDBOperations().insertData(ForeverHomeDB.USER_DATA_TABLE, u);
         this.db.getDBOperations().insertData(ForeverHomeDB.FOOD_INVENTORY_TABLE, f);
@@ -159,19 +159,6 @@ public class ForeverHomeModel extends Observable {
         }
             this.setChanged();
             this.notifyObservers(this.data);
-    }
-
-    
-    
-    public void petFoster(){
-        /*
-            grab the user, pet, and food inventory data from the data class
-            and instantiate objects accordingly
-        
-            fosterMenu is called when player has no then and then returns back to petFosterMenu
-        */
-        this.player.fosterPet.setName("");
-        this.notifyObservers(this.data);
     }
     /*  interactWithPet method
     
@@ -337,10 +324,10 @@ public class ForeverHomeModel extends Observable {
     
     public void saveGame()
     {
-        Player player = this.player;
-        Animal pet = this.player.getFosterPet();
-        FoodInventory foodInventory = this.player.getFoodInventory();
-        this.db.getDBOperations().saveData(player, pet, foodInventory);
+        UserData playerData = this.player.toUserData();
+        PetData petData = this.player.getFosterPet().toPetData(this.player.getName());
+        FoodInventoryData foodInventoryData = this.player.getFoodInventory().toFoodInventoryData(this.player.getName());
+        this.db.getDBOperations().saveData(playerData, petData, foodInventoryData);
         
         this.setChanged();
         this.notifyObservers(this.data);
@@ -351,7 +338,6 @@ public class ForeverHomeModel extends Observable {
         
         this.saveGame();
         this.db.getDBManager().closeConnection();
-//        this.data.quitFlag = true;
         this.setChanged();
         this.notifyObservers(this.data);
     }
