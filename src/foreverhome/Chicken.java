@@ -7,6 +7,8 @@ package foreverhome;
 /**
  *
  * @author yzape
+ * Name: Yza Pernia
+ * Student ID: 21137984
  */
 // Chicken is an animal
 public class Chicken extends Animal{

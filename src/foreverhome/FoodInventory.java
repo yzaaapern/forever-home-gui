@@ -9,10 +9,14 @@ import java.util.Scanner;
 /**
  *
  * @author yzape
+ * Name: Yza Pernia
+ * Student ID: 21137984
  */
 public class FoodInventory {
     
-    // Instance variables & Constants
+    /*
+        INSTANCE AND CONSTANT VARIABLES
+    */
     public static final int NUM_OF_FOODS = 7;
     
     public Food foodForAll;

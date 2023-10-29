@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 
 /**
  *
- * @author annga
+ * @author AnnGa
+ * Name: Ann Del Rosario
+ * Student ID: 21143100
  */
 public class ForeverHomeDBOperations 
 {    
