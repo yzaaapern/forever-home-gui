@@ -149,14 +149,14 @@ public class ForeverHomeDBOperations
             {
                 // Check if the primary key exists in the table
                 if (primaryKeyExists(tableName, data)) {
-                    System.out.println("Record with the specified primary key already exists in table '" + tableName + "'.");
+//                    System.out.println("Record with the specified primary key already exists in table '" + tableName + "'.");
                     return;
                 }
                 else
                 {
                     setInsertDataParameters(preparedStatement, tableName, data);
                     preparedStatement.executeUpdate();
-                    System.out.println("Data inserted into table '" + tableName + "' successfully.");
+//                    System.out.println("Data inserted into table '" + tableName + "' successfully.");
                 }
             } 
             else 
@@ -321,12 +321,12 @@ public class ForeverHomeDBOperations
                 setUpdateDataParameters(preparedStatement, tableName, data);
                 int rowCount = preparedStatement.executeUpdate();
                 if (rowCount > 0) {
-                    System.out.println("Data updated in table '" + tableName + "' successfully.");
+//                    System.out.println("Data updated in table '" + tableName + "' successfully.");
                 } else {
-                    System.out.println("No records were updated.");
+//                    System.out.println("No records were updated.");
                 }
             } else {
-                System.out.println("Table '" + tableName + "' does not exist.");
+//                System.out.println("Table '" + tableName + "' does not exist.");
             }
         } catch (SQLException e) {
             handleSQLException(e);

@@ -132,6 +132,7 @@ public class ForeverHomeController implements ActionListener {
                             model.setPlayer(view.getLOGIN_VIEW().getUsername());
                             model.username = view.getLOGIN_VIEW().getUsername();
                             playerIsPlaying = true;
+                            
                             view.getBUYFOOD_VIEW().updateFoodCounts(model.player.getFoodInventory());
                             view.getFEEDPET_VIEW().updateFoodCounts(model.player.getFoodInventory());
                         } else {// if password incorrect
@@ -178,6 +179,7 @@ public class ForeverHomeController implements ActionListener {
                     Animal a = model.getPet();
                     view.getNOT_PAUSED_PET_FOSTER_VIEW().setAnimalSprite(a);
                     // show pet foster menu
+                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateCanBatheText();
                     view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
                     view.showNotPausedPetFosterPanel();
 
@@ -403,6 +405,7 @@ public class ForeverHomeController implements ActionListener {
         if (model.canBathe()) {
             model.bathePet();
             view.getNOT_PAUSED_PET_FOSTER_VIEW().checkIsReadyForAdoption();
+            this.handleAdoptionReady();
             view.getNOT_PAUSED_PET_FOSTER_VIEW().getAnimalSprite().toggleIsIdleAnimation();
             view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
 
@@ -425,6 +428,7 @@ public class ForeverHomeController implements ActionListener {
             view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
             view.showNotPausedPetFosterPanel();
             view.getNOT_PAUSED_PET_FOSTER_VIEW().checkIsReadyForAdoption();
+            this.handleAdoptionReady();
             view.getNOT_PAUSED_PET_FOSTER_VIEW().getAnimalSprite().toggleIsIdleAnimation();
         } else {
             view.getINTERACTION_VIEW().isInteractionUnlocked = false;
@@ -452,6 +456,7 @@ public class ForeverHomeController implements ActionListener {
                     view.showNotPausedPetFosterPanel();
                     view.getFEEDPET_VIEW().updateFoodCount(chosenFood);
                     view.getNOT_PAUSED_PET_FOSTER_VIEW().checkIsReadyForAdoption();
+                    this.handleAdoptionReady();
                     view.getNOT_PAUSED_PET_FOSTER_VIEW().getAnimalSprite().toggleIsIdleAnimation();
                 } else {
                     view.getFEEDPET_VIEW().sufficientSupply = false;
@@ -472,5 +477,13 @@ public class ForeverHomeController implements ActionListener {
         model.player.fosterPet.setIsAdopted(true);
         model.player.hasFosterPet = false;
         model.player.fosterPet = null;
+    }
+    
+    public void handleAdoptionReady()
+    {
+        if(model.player.getFosterPet().getLevel() == Level.MAX_LEVEL)
+        {
+            this.view.getPAUSED_PET_FOSTER_VIEW().updatePausedGamePanel();
+        }
     }
 }
