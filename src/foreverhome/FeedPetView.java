@@ -25,6 +25,7 @@ public class FeedPetView {
     private FoodInventory foodInventory;
     public boolean compatibleFood = false;
     public boolean sufficientSupply = false;
+    public boolean petFull = false;
     
     public JPanel foodInventoryPanel;
     private JPanel foodMenuPanel;
@@ -447,6 +448,17 @@ public class FeedPetView {
             this.introLabel.setText(INTRO);
         } else {
             this.introLabel.setText("You cannot feed your pet with " + food.getFoodName() + "! Insufficient supply. ");
+        }
+        this.foodMenuPanel.revalidate();
+        this.foodMenuPanel.repaint();
+    }
+    
+    public void updatePetFullText() 
+    {
+        if (!petFull) {
+            this.introLabel.setText(INTRO);
+        } else {
+            this.introLabel.setText("Your pet is already full! ");
         }
         this.foodMenuPanel.revalidate();
         this.foodMenuPanel.repaint();

@@ -468,157 +468,214 @@ public class ForeverHomeController implements ActionListener{
         else if (source == view.getFEEDPET_VIEW().getFeedWithFoodForAll()) {
             Food chosenFood = model.player.getFoodInventory().foodForAll;
             
-            if(model.compatibleFood(chosenFood))
+            if(!model.petFull())
             {
-                if(model.sufficientSupply(chosenFood))
+                if(model.compatibleFood(chosenFood))
                 {
-                    model.feedPet(chosenFood);
-                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-                    view.showNotPausedPetFosterPanel();
-                    view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    if(model.sufficientSupply(chosenFood))
+                    {
+                        model.feedPet(chosenFood);
+                        view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                        view.showNotPausedPetFosterPanel();
+                        view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    }
+                    else
+                    {
+                        view.getFEEDPET_VIEW().sufficientSupply = false;
+                        view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    }
                 }
                 else
                 {
-                    view.getFEEDPET_VIEW().sufficientSupply = false;
-                    view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    view.getFEEDPET_VIEW().compatibleFood = false;
+                    view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
                 }
             }
             else
             {
-                view.getFEEDPET_VIEW().compatibleFood = false;
-                view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
+                view.getFEEDPET_VIEW().petFull = true;
+                view.getFEEDPET_VIEW().updatePetFullText();
             }
+            
         } else if (source == view.getFEEDPET_VIEW().getFeedWithRainbowTreat()) {
             Food chosenFood = model.player.getFoodInventory().rainbowTreat;
-            if(model.compatibleFood(chosenFood))
+            if(!model.petFull())
             {
-                if(model.sufficientSupply(chosenFood))
+                if(model.compatibleFood(chosenFood))
                 {
-                    model.feedPet(chosenFood);
-                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-                    view.showNotPausedPetFosterPanel();
-                    view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    if(model.sufficientSupply(chosenFood))
+                    {
+                        model.feedPet(chosenFood);
+                        view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                        view.showNotPausedPetFosterPanel();
+                        view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    }
+                    else
+                    {
+                        view.getFEEDPET_VIEW().sufficientSupply = false;
+                        view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    }
                 }
                 else
                 {
-                    view.getFEEDPET_VIEW().sufficientSupply = false;
-                    view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    view.getFEEDPET_VIEW().compatibleFood = false;
+                    view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
                 }
             }
             else
             {
-                view.getFEEDPET_VIEW().compatibleFood = false;
-                view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
+                view.getFEEDPET_VIEW().petFull = true;
+                view.getFEEDPET_VIEW().updatePetFullText();
             }
         } else if (source == view.getFEEDPET_VIEW().getFeedWithKibble()) {
             Food chosenFood = model.player.getFoodInventory().kibble;
-            if(model.compatibleFood(chosenFood))
+            if(!model.petFull())
             {
-                if(model.sufficientSupply(chosenFood))
+                if(model.compatibleFood(chosenFood))
                 {
-                    model.feedPet(chosenFood);
-                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-                    view.showNotPausedPetFosterPanel();
-                    view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    if(model.sufficientSupply(chosenFood))
+                    {
+                        model.feedPet(chosenFood);
+                        view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                        view.showNotPausedPetFosterPanel();
+                        view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    }
+                    else
+                    {
+                        view.getFEEDPET_VIEW().sufficientSupply = false;
+                        view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    }
                 }
                 else
                 {
-                    view.getFEEDPET_VIEW().sufficientSupply = false;
-                    view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    view.getFEEDPET_VIEW().compatibleFood = false;
+                    view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
                 }
             }
             else
             {
-                view.getFEEDPET_VIEW().compatibleFood = false;
-                view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
+                view.getFEEDPET_VIEW().petFull = true;
+                view.getFEEDPET_VIEW().updatePetFullText();
             }
         } else if (source == view.getFEEDPET_VIEW().getFeedWithCannedFood()) {
             Food chosenFood = model.player.getFoodInventory().cannedFood;
-            if(model.compatibleFood(chosenFood))
+            if(!model.petFull())
             {
-                if(model.sufficientSupply(chosenFood))
+                if(model.compatibleFood(chosenFood))
                 {
-                    model.feedPet(chosenFood);
-                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-                    view.showNotPausedPetFosterPanel();
-                    view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    if(model.sufficientSupply(chosenFood))
+                    {
+                        model.feedPet(chosenFood);
+                        view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                        view.showNotPausedPetFosterPanel();
+                        view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    }
+                    else
+                    {
+                        view.getFEEDPET_VIEW().sufficientSupply = false;
+                        view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    }
                 }
                 else
                 {
-                    view.getFEEDPET_VIEW().sufficientSupply = false;
-                    view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    view.getFEEDPET_VIEW().compatibleFood = false;
+                    view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
                 }
             }
             else
             {
-                view.getFEEDPET_VIEW().compatibleFood = false;
-                view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
+                view.getFEEDPET_VIEW().petFull = true;
+                view.getFEEDPET_VIEW().updatePetFullText();
             }
         } else if (source == view.getFEEDPET_VIEW().getFeedWithVeggieMix()) {
             Food chosenFood = model.player.getFoodInventory().veggieMix;
-            if(model.compatibleFood(chosenFood))
+            if(!model.petFull())
             {
-                if(model.sufficientSupply(chosenFood))
+                if(model.compatibleFood(chosenFood))
                 {
-                    model.feedPet(chosenFood);
-                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-                    view.showNotPausedPetFosterPanel();
-                    view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    if(model.sufficientSupply(chosenFood))
+                    {
+                        model.feedPet(chosenFood);
+                        view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                        view.showNotPausedPetFosterPanel();
+                        view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    }
+                    else
+                    {
+                        view.getFEEDPET_VIEW().sufficientSupply = false;
+                        view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    }
                 }
                 else
                 {
-                    view.getFEEDPET_VIEW().sufficientSupply = false;
-                    view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    view.getFEEDPET_VIEW().compatibleFood = false;
+                    view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
                 }
             }
             else
             {
-                view.getFEEDPET_VIEW().compatibleFood = false;
-                view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
+                view.getFEEDPET_VIEW().petFull = true;
+                view.getFEEDPET_VIEW().updatePetFullText();
             }
         } else if (source == view.getFEEDPET_VIEW().getFeedWithSeeds()) {
             Food chosenFood = model.player.getFoodInventory().seeds;
-            if(model.compatibleFood(chosenFood))
+            if(!model.petFull())
             {
-                if(model.sufficientSupply(chosenFood))
+                if(model.compatibleFood(chosenFood))
                 {
-                    model.feedPet(chosenFood);
-                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-                    view.showNotPausedPetFosterPanel();
-                    view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    if(model.sufficientSupply(chosenFood))
+                    {
+                        model.feedPet(chosenFood);
+                        view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                        view.showNotPausedPetFosterPanel();
+                        view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    }
+                    else
+                    {
+                        view.getFEEDPET_VIEW().sufficientSupply = false;
+                        view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    }
                 }
                 else
                 {
-                    view.getFEEDPET_VIEW().sufficientSupply = false;
-                    view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    view.getFEEDPET_VIEW().compatibleFood = false;
+                    view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
                 }
             }
             else
             {
-                view.getFEEDPET_VIEW().compatibleFood = false;
-                view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
+                view.getFEEDPET_VIEW().petFull = true;
+                view.getFEEDPET_VIEW().updatePetFullText();
             }
         } else if (source == view.getFEEDPET_VIEW().getDrinkWater()) {
             Food chosenFood = model.player.getFoodInventory().water;
-            if(model.compatibleFood(chosenFood))
+            if(!model.petFull())
             {
-                if(model.sufficientSupply(chosenFood))
+                if(model.compatibleFood(chosenFood))
                 {
-                    model.feedPet(chosenFood);
-                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-                    view.showNotPausedPetFosterPanel();
-                    view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    if(model.sufficientSupply(chosenFood))
+                    {
+                        model.feedPet(chosenFood);
+                        view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                        view.showNotPausedPetFosterPanel();
+                        view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    }
+                    else
+                    {
+                        view.getFEEDPET_VIEW().sufficientSupply = false;
+                        view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    }
                 }
                 else
                 {
-                    view.getFEEDPET_VIEW().sufficientSupply = false;
-                    view.getFEEDPET_VIEW().updateSufficientSupplyText(chosenFood);
+                    view.getFEEDPET_VIEW().compatibleFood = false;
+                    view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
                 }
             }
             else
             {
-                view.getFEEDPET_VIEW().compatibleFood = false;
-                view.getFEEDPET_VIEW().updateCompatibleFoodText(chosenFood);
+                view.getFEEDPET_VIEW().petFull = true;
+                view.getFEEDPET_VIEW().updatePetFullText();
             }
         } 
         else if (source == view.getFEEDPET_VIEW().getGoBackBtn()) {
