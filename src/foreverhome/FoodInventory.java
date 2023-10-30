@@ -67,6 +67,11 @@ public class FoodInventory {
         return this.foods;
     }
     
+    public void setFoods(Food[] newFoods)
+    {
+        this.foods = newFoods;
+    }
+    
     /*  OVERRIDE toString method
     
         Parameters: None

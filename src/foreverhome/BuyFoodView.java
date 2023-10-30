@@ -31,31 +31,31 @@ public class BuyFoodView {
 
     private JLabel foodForAllTitle;
     private JLabel foodForAllDesc;
-    public int foodForAllCount;
+//    public int foodForAllCount;
 
     private JLabel rainbowTreatTitle;
     private JLabel rainbowTreatDesc;
-    public int rainbowTreatCount;
+//    public int rainbowTreatCount;
 
     private JLabel kibbleTitle;
     private JLabel kibbleDesc;
-    public int kibbleCount;
+//    public int kibbleCount;
 
     private JLabel cannedFoodTitle;
     private JLabel cannedFoodDesc;
-    public int cannedFoodCount;
+//    public int cannedFoodCount;
 
     private JLabel veggieMixTitle;
     private JLabel veggieMixDesc;
-    public int veggieMixCount;
+//    public int veggieMixCount;
 
     private JLabel seedsTitle;
     private JLabel seedsDesc;
-    public int seedsCount;
+//    public int seedsCount;
 
     private JLabel waterTitle;
     private JLabel waterDesc;
-    public int waterCount;
+//    public int waterCount;
 
     private GameButton buyFoodForAll;
     private GameButton buyRainbowTreat;
@@ -265,7 +265,7 @@ public class BuyFoodView {
         foodForAllTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        foodForAllDesc = new JLabel("A basic but yummy food for any foster pet. Hunger points: " + foodInventory.foodForAll.getFoodValue() + ". Cost: " + foodInventory.foodForAll.getFoodCost() + ". Quantity: " + foodForAllCount);
+        foodForAllDesc = new JLabel("A basic but yummy food for any foster pet. Hunger points: " + foodInventory.foodForAll.getFoodValue() + ". Cost: " + foodInventory.foodForAll.getFoodCost() + ". Quantity: " + foodInventory.foodForAll.getFoodCount());
         foodForAllDesc.setFont(labelFont);
         foodForAllDesc.setForeground(Color.white);
 
@@ -275,7 +275,7 @@ public class BuyFoodView {
         rainbowTreatTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        rainbowTreatDesc = new JLabel("The tastiest treat of all! Hunger points: " + foodInventory.rainbowTreat.getFoodValue() + ". Cost: " + foodInventory.rainbowTreat.getFoodCost() + ". Quantity: " + rainbowTreatCount);
+        rainbowTreatDesc = new JLabel("The tastiest treat of all! Hunger points: " + foodInventory.rainbowTreat.getFoodValue() + ". Cost: " + foodInventory.rainbowTreat.getFoodCost() + ". Quantity: " + foodInventory.rainbowTreat.getFoodCount());
         rainbowTreatDesc.setFont(labelFont);
         rainbowTreatDesc.setForeground(Color.white);
 
@@ -285,7 +285,7 @@ public class BuyFoodView {
         kibbleTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        kibbleDesc = new JLabel("An essential for every dog and cat foster. Hunger points: " + foodInventory.kibble.getFoodValue() + ". Cost: " + foodInventory.kibble.getFoodCost() + ". Quantity: " + kibbleCount);
+        kibbleDesc = new JLabel("An essential for every dog and cat foster. Hunger points: " + foodInventory.kibble.getFoodValue() + ". Cost: " + foodInventory.kibble.getFoodCost() + ". Quantity: " + foodInventory.kibble.getFoodCount());
         kibbleDesc.setFont(labelFont);
         kibbleDesc.setForeground(Color.white);
 
@@ -295,7 +295,7 @@ public class BuyFoodView {
         cannedFoodTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        cannedFoodDesc = new JLabel("A yummy food that's easy for dogs and cats to digest. Hunger points: " + foodInventory.cannedFood.getFoodValue() + ". Cost: " + foodInventory.cannedFood.getFoodCost() + ". Quantity: " + cannedFoodCount);
+        cannedFoodDesc = new JLabel("A yummy food that's easy for dogs and cats to digest. Hunger points: " + foodInventory.cannedFood.getFoodValue() + ". Cost: " + foodInventory.cannedFood.getFoodCost() + ". Quantity: " + foodInventory.cannedFood.getFoodCount());
         cannedFoodDesc.setFont(labelFont);
         cannedFoodDesc.setForeground(Color.white);
 
@@ -305,7 +305,7 @@ public class BuyFoodView {
         veggieMixTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        veggieMixDesc = new JLabel("An essential for every rat, parrot, and chicken foster. Hunger points: " + foodInventory.veggieMix.getFoodValue() + ". Cost: " + foodInventory.veggieMix.getFoodCost() + ". Quantity: " + veggieMixCount);
+        veggieMixDesc = new JLabel("An essential for every rat, parrot, and chicken foster. Hunger points: " + foodInventory.veggieMix.getFoodValue() + ". Cost: " + foodInventory.veggieMix.getFoodCost() + ". Quantity: " + foodInventory.veggieMix.getFoodCount());
         veggieMixDesc.setFont(labelFont);
         veggieMixDesc.setForeground(Color.white);
 
@@ -315,7 +315,7 @@ public class BuyFoodView {
         seedsTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        seedsDesc = new JLabel("Seeds are always so so tasty! Hunger points: " + foodInventory.seeds.getFoodValue() + ". Cost: " + foodInventory.seeds.getFoodCost() + ". Quantity: " + seedsCount);
+        seedsDesc = new JLabel("Seeds are always so so tasty! Hunger points: " + foodInventory.seeds.getFoodValue() + ". Cost: " + foodInventory.seeds.getFoodCost() + ". Quantity: " + foodInventory.seeds.getFoodCount());
         seedsDesc.setFont(labelFont);
         seedsDesc.setForeground(Color.white);
 
@@ -325,7 +325,7 @@ public class BuyFoodView {
         waterTitle.setForeground(Color.white);
 
         labelFont = GameFont.getPixelFont(12, 0);
-        waterDesc = new JLabel("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Cost: " + foodInventory.water.getFoodCost() + ". Quantity: " + waterCount);
+        waterDesc = new JLabel("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Cost: " + foodInventory.water.getFoodCost() + ". Quantity: " + foodInventory.water.getFoodCount());
         waterDesc.setFont(labelFont);
         waterDesc.setForeground(Color.white);
 
@@ -367,25 +367,7 @@ public class BuyFoodView {
         
         goBackBtn.addActionListener(listener);
     }
-    
-//    public void refreshText(Food food)
-//    {
-//        this.introLabel.setText(INTRO);
-//        this.interactionMenuPanel.revalidate();
-//        this.interactionMenuPanel.repaint();
-//    }
-//    
-//    public void updateText(Interaction interaction) 
-//    {
-//        if (isInteractionUnlocked) {
-//            this.introLabel.setText(INTRO);
-//        } else {
-//            this.introLabel.setText("You cannot " + interaction.getInteractionDesc() + " yet! Your pet has yet to reach Level " + interaction.getLevelUnlocked());
-//        }
-//        this.interactionMenuPanel.revalidate();
-//        this.interactionMenuPanel.repaint();
-//    }
-//    
+
     public GameButton getBuyFoodForAll() {
         return buyFoodForAll;
     }
@@ -417,5 +399,44 @@ public class BuyFoodView {
     public GameButton getGoBackBtn() {
         return goBackBtn;
     }
+    
+    public void updateFoodCounts(FoodInventory userFoodInventory)
+    {
+        Food[] foods = userFoodInventory.getFoods();
+        this.foodInventory.setFoods(foods);
         
+        this.refreshText();
+    }
+    
+    public void updateFoodCount(Food userFood)
+    {
+        for(Food f : foodInventory.getFoods())
+        {
+            if(f.getFoodName().equals(userFood.getFoodName()))
+            {
+                f.setFoodCount(userFood.getFoodCount());
+            }
+        }
+        
+        this.refreshText();
+    }
+        
+    public void updateFoodTexts()
+    {
+        this.foodForAllDesc.setText("A basic but yummy food for any foster pet. Hunger points: " + foodInventory.foodForAll.getFoodValue() + ". Cost: " + foodInventory.foodForAll.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[0].getFoodCount());
+        this.kibbleDesc.setText("An essential for every dog and cat foster. Hunger points: " + foodInventory.kibble.getFoodValue() + ". Cost: " + foodInventory.kibble.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[1].getFoodCount());
+        this.cannedFoodDesc.setText("A yummy food that's easy for dogs and cats to digest. Hunger points: " + foodInventory.cannedFood.getFoodValue() + ". Cost: " + foodInventory.cannedFood.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[2].getFoodCount());
+        this.veggieMixDesc.setText("An essential for every rat, parrot, and chicken foster. Hunger points: " + foodInventory.veggieMix.getFoodValue() + ". Cost: " + foodInventory.veggieMix.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[3].getFoodCount());
+        this.seedsDesc.setText("Seeds are always so so tasty! Hunger points: " + foodInventory.seeds.getFoodValue() + ". Cost: " + foodInventory.seeds.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[4].getFoodCount());
+        this.rainbowTreatDesc.setText("The tastiest treat of all! Hunger points: " + foodInventory.rainbowTreat.getFoodValue() + ". Cost: " + foodInventory.rainbowTreat.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[5].getFoodCount());
+        this.waterDesc.setText("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Cost: " + foodInventory.water.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[6].getFoodCount());
+    }
+    
+    public void refreshText()
+    {
+        this.updateFoodTexts();
+        this.foodMenuPanel.revalidate();
+        this.foodMenuPanel.repaint();
+    }
+    
 }
