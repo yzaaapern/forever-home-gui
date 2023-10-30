@@ -309,6 +309,9 @@ public class ForeverHomeModel extends Observable {
     public boolean petFull()
     {
         boolean petFull = (this.player.getFosterPet().getHunger() >= this.player.getFosterPet().getLevelXPBar()) ? true : false;
+        this.setChanged();
+        this.notifyObservers(this.data);
+        
         return petFull;
     }
     
@@ -316,22 +319,22 @@ public class ForeverHomeModel extends Observable {
     {
         if(food.getFoodType() == 0 || this.player.getFosterPet().getAnimalFoodType() == food.getFoodType())
         {
+            this.setChanged();
+            this.notifyObservers(this.data);
             return true;
         }
+        
+        this.setChanged();
+        this.notifyObservers(this.data);
         return false;
     }
     
     public boolean sufficientSupply(Food food)
     {
-//        boolean sufficientSupply = false;
-//        for(Food userFood : this.player.getFoodInventory().getFoods())
-//        {
-//            if(userFood.getFoodName().equals(food.getFoodName()))
-//            {
-//                userFood.getFoodCount()
-//            }
-//        }
         boolean sufficientSupply = (food.getFoodCount() > 0) ? true : false;
+        this.setChanged();
+        this.notifyObservers(this.data);
+        
         return sufficientSupply;
     }
     
@@ -359,10 +362,27 @@ public class ForeverHomeModel extends Observable {
     
     public void saveGame()
     {
-        UserData playerData = this.player.toUserData();
-        PetData petData = this.player.getFosterPet().toPetData(this.player.getName());
-        FoodInventoryData foodInventoryData = this.player.getFoodInventory().toFoodInventoryData(this.player.getName());
-        this.db.getDBOperations().saveData(playerData, petData, foodInventoryData);
+        Player player = this.player;
+        Animal pet = this.player.getFosterPet();
+        FoodInventory foodInventory = this.player.getFoodInventory();
+        UserData userData = null;
+        PetData petData = null;
+        FoodInventoryData foodInventoryData = null;
+        
+        if(player != null)
+        {
+            userData = player.toUserData();
+            if(pet != null)
+            {
+                petData = pet.toPetData(player.getName());
+            }
+            if(foodInventory != null)
+            {
+                foodInventoryData = foodInventory.toFoodInventoryData(player.getName());
+            }
+        }
+        
+        this.db.getDBOperations().saveData(userData, petData, foodInventoryData);
         
         this.setChanged();
         this.notifyObservers(this.data);

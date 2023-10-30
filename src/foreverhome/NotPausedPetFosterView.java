@@ -220,7 +220,7 @@ public class NotPausedPetFosterView {
     private void initializeLabels() {
         Font labelFont = GameFont.getPixelFont(20, 1);
         GameImage labelImage = new GameImage(DABLOONS_FILE_PATH);
-        dabloonsLabel = new JLabel("test", labelImage.getImageIcon(), JLabel.LEFT);
+        dabloonsLabel = new JLabel("20", labelImage.getImageIcon(), JLabel.LEFT);
         dabloonsLabel.setFont(labelFont);
         dabloonsLabel.setForeground(Color.white);
 

@@ -185,55 +185,42 @@ public class ForeverHomeController implements ActionListener{
         // FOSTER VIEW
         
         else if (source == view.getFOSTER_VIEW().getDogBtn()) {
-            model.chosenAnimalType = "dog";
-            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
-            System.out.println("dog selected");
-            if (!view.getFOSTER_VIEW().showPopUpPanel) {
-                view.getFOSTER_VIEW().updateShowPopUpPanel();
-            }
+            String chosenAnimalType = "dog";
+            this.selectFosterPetAction(chosenAnimalType);
         } else if (source == view.getFOSTER_VIEW().getCatBtn()) {
-            model.chosenAnimalType = "cat";
-            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
-            if (!view.getFOSTER_VIEW().showPopUpPanel) {
-                view.getFOSTER_VIEW().updateShowPopUpPanel();
-            }
+            String chosenAnimalType = "cat";
+            this.selectFosterPetAction(chosenAnimalType);   
         } else if (source == view.getFOSTER_VIEW().getRatBtn()) {
-            model.chosenAnimalType = "rat";
-            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
-            if (!view.getFOSTER_VIEW().showPopUpPanel) {
-                view.getFOSTER_VIEW().updateShowPopUpPanel();
-            }
+            String chosenAnimalType = "rat";
+            this.selectFosterPetAction(chosenAnimalType);
         } else if (source == view.getFOSTER_VIEW().getParrotBtn()) {
-            model.chosenAnimalType = "parrot";
-            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
-            if (!view.getFOSTER_VIEW().showPopUpPanel) {
-                view.getFOSTER_VIEW().updateShowPopUpPanel();
-            }
+            String chosenAnimalType = "parrot";
+            this.selectFosterPetAction(chosenAnimalType);
         } else if (source == view.getFOSTER_VIEW().getChickenBtn()) {
-            model.chosenAnimalType = "chicken";
-            view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
-            if (!view.getFOSTER_VIEW().showPopUpPanel) {
-                view.getFOSTER_VIEW().updateShowPopUpPanel();
-            }
+            String chosenAnimalType = "chicken";
+            this.selectFosterPetAction(chosenAnimalType);
         } else if (source == view.getFOSTER_VIEW().getContinueBtn()) {
             String petName = view.getFOSTER_VIEW().getPetName();
-            if(model.chosenAnimalType == null)
+            if(model.chosenAnimalType == null) // if the player's chosenAnimalType is null present an error message
             {
-                System.out.println("No animal selected - please choose an animal");
+                view.getFOSTER_VIEW().updatePopUpLabel("No animal selected - please choose an animal");
             }
-            else
+            else // if the player has selected an animal type
             {
-                if (!petName.isEmpty()) {
-                    model.newPetFoster(petName);
-                    view.showNotPausedPetFosterPanel();
-                } else {
-                    System.out.println("no name");
-                    view.getFOSTER_VIEW().updatePopUpLabel("Please give your " + model.chosenAnimalType + " a name!");
+                if (!petName.isEmpty()) { // if they haven't given it a name
+                    model.newPetFoster(petName); // make new petfoster with that name
+                    view.showNotPausedPetFosterPanel(); // proceed
+                } else { // if they haven't given their pet a name
+                    view.getFOSTER_VIEW().updatePopUpLabel("Please give your " + model.chosenAnimalType + " a name!"); // game asks user to give their pet a name
                 }
             }
-        } else if (source == view.getFOSTER_VIEW().getCancelBtn()) {
-            view.getFOSTER_VIEW().updateShowPopUpPanel();
-            System.out.println(view.getFOSTER_VIEW().showPopUpPanel);
+        } else if (source == view.getFOSTER_VIEW().getCancelBtn()) { 
+            model.saveGame();
+            model.resetGame();
+            view.showStartGamePanel();
+            
+//            view.getFOSTER_VIEW().updateShowPopUpPanel(); 
+//            System.out.println(view.getFOSTER_VIEW().showPopUpPanel);
         } 
 
         // NOT PAUSED PET FOSTER VIEW
@@ -374,6 +361,15 @@ public class ForeverHomeController implements ActionListener{
             view.showStartGamePanel();
         } 
 
+    }
+    
+    private void selectFosterPetAction(String chosenAnimalType)
+    {
+        model.chosenAnimalType = chosenAnimalType;
+        view.getFOSTER_VIEW().updatePopUpLabel("You chose a " + model.chosenAnimalType + ". Would you like to give it a name?");
+        if (!view.getFOSTER_VIEW().showPopUpPanel) {
+            view.getFOSTER_VIEW().updateShowPopUpPanel();
+        }
     }
     
     private void interactWithPetAction(Interaction chosenInteraction)
