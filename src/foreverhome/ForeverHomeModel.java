@@ -224,7 +224,7 @@ public class ForeverHomeModel extends Observable {
     */
     public void buyFood(Food food)
     {
-        if(this.player.getDabloons() >= food.getFoodCost()) // if the player can afford the food
+        if(this.canAfford(food)) // if the player can afford the food
         {
             food.incFoodCount(); // increase the amount of that food in their food inventory
             this.player.decDabloons(food.getFoodCost()); // decrease the player's dabloons by the cost of that food
@@ -235,6 +235,12 @@ public class ForeverHomeModel extends Observable {
         }
         this.setChanged();
         this.notifyObservers(this.data);
+    }
+    
+    public boolean canAfford(Food food)
+    {
+        boolean canAfford = (this.player.getDabloons() >= food.getFoodCost()) ? true : false;
+        return canAfford;
     }
     
     /*  levelUpReward

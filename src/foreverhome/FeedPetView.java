@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  */
 public class FeedPetView {
 
-    FoodInventory foodInventory;
+    private FoodInventory foodInventory;
     
     public JPanel foodInventoryPanel;
     private JPanel foodMenuPanel;

@@ -367,45 +367,97 @@ public class ForeverHomeController implements ActionListener{
         
         // BUY FOOD VIEW
         
-        else if (source == view.getBUYFOOD_VIEW().getBuyFoodForAll()) 
-        {
-            view.showNotPausedPetFosterPanel();
-        } // FOOD INVENTORY
         else if (source == view.getBUYFOOD_VIEW().getBuyFoodForAll()) {
-            model.buyFood(model.player.getFoodInventory().foodForAll);
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
-            view.showNotPausedPetFosterPanel();
-            view.getBUYFOOD_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+            Food chosenFood = model.player.getFoodInventory().foodForAll;
+            if(model.canAfford(chosenFood))
+            {
+                model.buyFood(chosenFood);
+                view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
+                view.getBUYFOOD_VIEW().updateFoodCount(chosenFood);
+            }
+            else
+            {
+                view.getBUYFOOD_VIEW().canAfford = false;
+                view.getBUYFOOD_VIEW().updateText(chosenFood);
+            }
         } else if (source == view.getBUYFOOD_VIEW().getBuyRainbowTreat()) {
-            model.buyFood(model.player.getFoodInventory().rainbowTreat);
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
-            view.showNotPausedPetFosterPanel();
-            view.getBUYFOOD_VIEW().updateFoodCount(model.player.getFoodInventory().rainbowTreat);
+            Food chosenFood = model.player.getFoodInventory().rainbowTreat;
+            if(model.canAfford(chosenFood))
+            {
+                model.buyFood(chosenFood);
+                view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
+                view.getBUYFOOD_VIEW().updateFoodCount(chosenFood);
+            }
+            else
+            {
+                view.getBUYFOOD_VIEW().canAfford = false;
+                view.getBUYFOOD_VIEW().updateText(chosenFood);
+            }
         } else if (source == view.getBUYFOOD_VIEW().getBuyKibble()) {
-            model.buyFood(model.player.getFoodInventory().kibble);
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
-            view.showNotPausedPetFosterPanel();
-            view.getBUYFOOD_VIEW().updateFoodCount(model.player.getFoodInventory().kibble);
+            Food chosenFood = model.player.getFoodInventory().kibble;
+            if(model.canAfford(chosenFood))
+            {
+                model.buyFood(chosenFood);
+                view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
+                view.getBUYFOOD_VIEW().updateFoodCount(chosenFood);
+            }
+            else
+            {
+                view.getBUYFOOD_VIEW().canAfford = false;
+                view.getBUYFOOD_VIEW().updateText(chosenFood);
+            }
         } else if (source == view.getBUYFOOD_VIEW().getBuyCannedFood()) {
-            model.buyFood(model.player.getFoodInventory().cannedFood);
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
-            view.showNotPausedPetFosterPanel();
-            view.getBUYFOOD_VIEW().updateFoodCount(model.player.getFoodInventory().cannedFood);
+            Food chosenFood = model.player.getFoodInventory().cannedFood;
+            if(model.canAfford(chosenFood))
+            {
+                model.buyFood(chosenFood);
+                view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
+                view.getBUYFOOD_VIEW().updateFoodCount(chosenFood);
+            }
+            else
+            {
+                view.getBUYFOOD_VIEW().canAfford = false;
+                view.getBUYFOOD_VIEW().updateText(chosenFood);
+            }
         } else if (source == view.getBUYFOOD_VIEW().getBuyVeggieMix()) {
-            model.buyFood(model.player.getFoodInventory().veggieMix);
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
-            view.showNotPausedPetFosterPanel();
-            view.getBUYFOOD_VIEW().updateFoodCount(model.player.getFoodInventory().veggieMix);
+            Food chosenFood = model.player.getFoodInventory().veggieMix;
+            if(model.canAfford(chosenFood))
+            {
+                model.buyFood(chosenFood);
+                view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
+                view.getBUYFOOD_VIEW().updateFoodCount(chosenFood);
+            }
+            else
+            {
+                view.getBUYFOOD_VIEW().canAfford = false;
+                view.getBUYFOOD_VIEW().updateText(chosenFood);
+            }
         } else if (source == view.getBUYFOOD_VIEW().getBuySeeds()) {
-            model.buyFood(model.player.getFoodInventory().seeds);
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
-            view.showNotPausedPetFosterPanel();
-            view.getBUYFOOD_VIEW().updateFoodCount(model.player.getFoodInventory().seeds);
+            Food chosenFood = model.player.getFoodInventory().seeds;
+            if(model.canAfford(chosenFood))
+            {
+                model.buyFood(chosenFood);
+                view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
+                view.getBUYFOOD_VIEW().updateFoodCount(chosenFood);
+            }
+            else
+            {
+                view.getBUYFOOD_VIEW().canAfford = false;
+                view.getBUYFOOD_VIEW().updateText(chosenFood);
+            }
         } else if (source == view.getBUYFOOD_VIEW().getBuyWater()) {
-            model.buyFood(model.player.getFoodInventory().water);
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
-            view.showNotPausedPetFosterPanel();
-            view.getBUYFOOD_VIEW().updateFoodCount(model.player.getFoodInventory().water);
+            Food chosenFood = model.player.getFoodInventory().water;
+            if(model.canAfford(chosenFood))
+            {
+                model.buyFood(chosenFood);
+                view.getNOT_PAUSED_PET_FOSTER_VIEW().setDabloonsLabel(model.player.getDabloons());
+                view.getBUYFOOD_VIEW().updateFoodCount(chosenFood);
+            }
+            else
+            {
+                view.getBUYFOOD_VIEW().canAfford = false;
+                view.getBUYFOOD_VIEW().updateText(chosenFood);
+            }
         } 
         else if(source == view.getBUYFOOD_VIEW().getGoBackBtn())
         {

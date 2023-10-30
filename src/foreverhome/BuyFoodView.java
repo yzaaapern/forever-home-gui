@@ -22,7 +22,8 @@ import javax.swing.JPanel;
  */
 public class BuyFoodView {
 
-    FoodInventory foodInventory;
+    private FoodInventory foodInventory;
+    public boolean canAfford = false;
     
     public JPanel buyFoodPanel;
     private JPanel foodMenuPanel;
@@ -31,31 +32,24 @@ public class BuyFoodView {
 
     private JLabel foodForAllTitle;
     private JLabel foodForAllDesc;
-//    public int foodForAllCount;
 
     private JLabel rainbowTreatTitle;
     private JLabel rainbowTreatDesc;
-//    public int rainbowTreatCount;
 
     private JLabel kibbleTitle;
     private JLabel kibbleDesc;
-//    public int kibbleCount;
 
     private JLabel cannedFoodTitle;
     private JLabel cannedFoodDesc;
-//    public int cannedFoodCount;
 
     private JLabel veggieMixTitle;
     private JLabel veggieMixDesc;
-//    public int veggieMixCount;
 
     private JLabel seedsTitle;
     private JLabel seedsDesc;
-//    public int seedsCount;
 
     private JLabel waterTitle;
     private JLabel waterDesc;
-//    public int waterCount;
 
     private GameButton buyFoodForAll;
     private GameButton buyRainbowTreat;
@@ -432,8 +426,22 @@ public class BuyFoodView {
         this.waterDesc.setText("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Cost: " + foodInventory.water.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[6].getFoodCount());
     }
     
+    public void updateText(Food food) 
+    {
+        if (canAfford) {
+            this.introLabel.setText(INTRO);
+        } else {
+            this.introLabel.setText("You cannot afford " + food.getFoodName() + "! Insufficient funds. ");
+        }
+        this.foodMenuPanel.revalidate();
+        this.foodMenuPanel.repaint();
+        
+    }
+    
     public void refreshText()
     {
+        canAfford = true;
+        this.introLabel.setText(INTRO);
         this.updateFoodTexts();
         this.foodMenuPanel.revalidate();
         this.foodMenuPanel.repaint();
