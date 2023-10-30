@@ -396,4 +396,42 @@ public class FeedPetView {
         return goBackBtn;
     }
     
+    public void updateFoodCounts(FoodInventory userFoodInventory)
+    {
+        Food[] foods = userFoodInventory.getFoods();
+        this.foodInventory.setFoods(foods);
+        
+        this.refreshText();
+    }
+    
+    public void updateFoodCount(Food userFood)
+    {
+        for(Food f : foodInventory.getFoods())
+        {
+            if(f.getFoodName().equals(userFood.getFoodName()))
+            {
+                f.setFoodCount(userFood.getFoodCount());
+            }
+        }
+        
+        this.refreshText();
+    }
+        
+    public void updateFoodTexts()
+    {
+        this.foodForAllDesc.setText("A basic but yummy food for any foster pet. Hunger points: " + foodInventory.foodForAll.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[0].getFoodCount());
+        this.kibbleDesc.setText("An essential for every dog and cat foster. Hunger points: " + foodInventory.kibble.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[1].getFoodCount());
+        this.cannedFoodDesc.setText("A yummy food that's easy for dogs and cats to digest. Hunger points: " + foodInventory.cannedFood.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[2].getFoodCount());
+        this.veggieMixDesc.setText("An essential for every rat, parrot, and chicken foster. Hunger points: " + foodInventory.veggieMix.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[3].getFoodCount());
+        this.seedsDesc.setText("Seeds are always so so tasty! Hunger points: " + foodInventory.seeds.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[4].getFoodCount());
+        this.rainbowTreatDesc.setText("The tastiest treat of all! Hunger points: " + foodInventory.rainbowTreat.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[5].getFoodCount());
+        this.waterDesc.setText("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[6].getFoodCount());
+    }
+    
+    public void refreshText()
+    {
+        this.updateFoodTexts();
+        this.foodMenuPanel.revalidate();
+        this.foodMenuPanel.repaint();
+    }
 }
