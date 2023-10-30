@@ -23,15 +23,15 @@ public class ForeverHomeView {
     private final StartGameView STARTGAME_VIEW;
     private final SignupAndLoginView LOGIN_VIEW;
     private final FosterView FOSTER_VIEW;
+    private final BuyFoodView BUYFOOD_VIEW;
+    private final FeedPetView FEEDPET_VIEW;
     private final NotPausedPetFosterView NOT_PAUSED_PET_FOSTER_VIEW;
     private final PausedPetFosterView PAUSED_PET_FOSTER_VIEW;
-    private final FoodInventoryView FOOD_INVEN_VIEW;
     private final InteractionView INTERACTION_VIEW;
     private final AdoptionView ADOPTION_VIEW;
 
-    // Frame Size
     private final int WIDTH = 1400;
-    private final int HEIGHT = 1050;
+    private final int HEIGHT = 1040;
 
     /*
         OBJECT CONSTRUCTOR
@@ -50,7 +50,8 @@ public class ForeverHomeView {
         FOSTER_VIEW = new FosterView();
         NOT_PAUSED_PET_FOSTER_VIEW = new NotPausedPetFosterView();
         PAUSED_PET_FOSTER_VIEW = new PausedPetFosterView();
-        FOOD_INVEN_VIEW = new FoodInventoryView();
+        BUYFOOD_VIEW = new BuyFoodView();
+        FEEDPET_VIEW = new FeedPetView();
         INTERACTION_VIEW = new InteractionView();
         ADOPTION_VIEW = new AdoptionView();
 
@@ -60,7 +61,8 @@ public class ForeverHomeView {
         frame.add(FOSTER_VIEW.fosterPanel, "foster");
         frame.add(NOT_PAUSED_PET_FOSTER_VIEW.petFosterPanel, "pet foster");
         frame.add(PAUSED_PET_FOSTER_VIEW.petFosterPanel, "paused pet foster");
-        frame.add(FOOD_INVEN_VIEW.foodInventoryPanel, "food inventory");
+        frame.add(BUYFOOD_VIEW.buyFoodPanel, "buy food");
+        frame.add(FEEDPET_VIEW.foodInventoryPanel, "feed pet");
         frame.add(INTERACTION_VIEW.interactionPanel, "interaction");
         frame.add(ADOPTION_VIEW.adoptionPanel, "adoption");
 
@@ -74,6 +76,7 @@ public class ForeverHomeView {
     Description: Calls the showloadingPanel function
      */
     public void display() {
+        frame.setVisible(true);
         showLoadingPanel();
     }
 
@@ -116,6 +119,18 @@ public class ForeverHomeView {
     public void showPausedPetFosterPanel() {
         CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
         cardLayout.show(frame.getContentPane(), "paused pet foster");
+           
+    }
+    
+    public void showBuyFoodPanel(){
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), "buy food");    
+    }
+    
+    public void showFeedPetPanel(){
+        CardLayout cardLayout = (CardLayout) frame.getContentPane().getLayout();
+        cardLayout.show(frame.getContentPane(), "feed pet");       
+        
     }
 
     public void showFoodInventoryPanel() {
@@ -162,8 +177,14 @@ public class ForeverHomeView {
     public PausedPetFosterView getPAUSED_PET_FOSTER_VIEW(){
         return PAUSED_PET_FOSTER_VIEW;
     }
-    public FoodInventoryView getFOOD_INVEN_VIEW() {
-        return FOOD_INVEN_VIEW;
+
+    public BuyFoodView getBUYFOOD_VIEW() {
+        return BUYFOOD_VIEW;
+    }
+    
+    public FeedPetView getFEEDPET_VIEW()
+    {
+        return FEEDPET_VIEW;
     }
 
     public InteractionView getINTERACTION_VIEW() {
@@ -180,7 +201,8 @@ public class ForeverHomeView {
         FOSTER_VIEW.addActionListener(listener);
         NOT_PAUSED_PET_FOSTER_VIEW.addActionListener(listener);
         PAUSED_PET_FOSTER_VIEW.addActionListener(listener);
-        FOOD_INVEN_VIEW.addActionListener(listener);
+        BUYFOOD_VIEW.addActionListener(listener);
+        FEEDPET_VIEW.addActionListener(listener);
         INTERACTION_VIEW.addActionListener(listener);
         ADOPTION_VIEW.addActionListener(listener);
     }

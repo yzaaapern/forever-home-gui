@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
  */
 public class InteractionView {
 
+    public boolean isInteractionUnlocked = false;
+    
     public JPanel interactionPanel;
     private JPanel interactionMenuPanel;
     private JLabel titleLabel;
@@ -225,7 +227,26 @@ public class InteractionView {
 
         goBackBtn.addActionListener(listener);
     }
-
+    
+    public void refreshText()
+    {
+        this.isInteractionUnlocked = true;
+        this.introLabel.setText(INTRO);
+        this.interactionMenuPanel.revalidate();
+        this.interactionMenuPanel.repaint();
+    }
+    
+    public void updateText(Interaction interaction) 
+    {
+        if (isInteractionUnlocked) {
+            this.introLabel.setText(INTRO);
+        } else {
+            this.introLabel.setText("You cannot " + interaction.getInteractionDesc() + " yet! Your pet has yet to reach Level " + interaction.getLevelUnlocked());
+        }
+        this.interactionMenuPanel.revalidate();
+        this.interactionMenuPanel.repaint();
+    }
+    
     public GameButton getPatBtn() {
         return patBtn;
     }

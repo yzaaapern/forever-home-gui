@@ -17,24 +17,13 @@ import java.io.IOException;
  */
 public class GameFont {
 
-    /*
-        INSTANCE AND CONSTANT VARIABLES
-    */
     private static Font pixelFont;
-    
-    // File Paths
     private static final String PIXEL_BOLD_FILE_PATH = "./resources/font/pixelmix_bold.ttf";
     private static final String PIXEL_FILE_PATH = "./resources/font/pixelmix.ttf";
     
-    /*
-        getPixelFont method
-    Parameters: int fontSize, int fontType
-    Return: Font pixelFont
-    Description: If the input fontType is 0, it sets the pixel font as the default font, whereas if it is any other number, then it returns a bold pixel font
-    */
     public static Font getPixelFont(int fontSize, int fontType) {
         if (fontType == 0) {
-            pixelFont = setPixelFont(PIXEL_FILE_PATH, fontSize); // Sets the pixelFont object according to filePath and fontSize
+            pixelFont = setPixelFont(PIXEL_FILE_PATH, fontSize);
         } else {
             pixelFont = setPixelFont(PIXEL_BOLD_FILE_PATH, fontSize);
 
@@ -43,12 +32,6 @@ public class GameFont {
         return pixelFont.deriveFont((float) fontSize);
     }
 
-    /*
-        setPixelFont method
-    Parameters: String fontFilePath, int fontSize
-    Returns: Font customFont
-    Description: Sets the customFont object to a font that is retrieved from the input fontFilePath and fontSize
-    */
     private static Font setPixelFont(String fontFilePath, int fontSize) {
         Font customFont = null;
         try {

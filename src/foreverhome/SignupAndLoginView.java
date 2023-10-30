@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * @author yzape Name: Yza Pernia Student ID: 21137984
  */
 public final class SignupAndLoginView {
-
+    
     public JPanel signupAndLoginPanel;
     private JLabel signUpAndLoginLabel;
     private JLabel introLabel;
@@ -149,25 +149,26 @@ public final class SignupAndLoginView {
                 g.drawImage(bgImage.getImage(), 0, 0, null);
             }
         };
-
+        
         signUpAndLoginForm = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.setColor(Color.decode("#D17272"));
-                g.fillRect(signupAndLoginPanel.getWidth() / 8, signupAndLoginPanel.getHeight() / 6, 1000, 600);
+                g.fillRect(signupAndLoginPanel.getWidth()/8, signupAndLoginPanel.getHeight() / 6, 1000, 600);
             }
         };
 
         signUpAndLoginForm.setOpaque(false);
         signUpAndLoginForm.setPreferredSize(new Dimension(1000, 600));
     }
-
-    public void addActionListener(ActionListener listener) {
+    
+    public void addActionListener(ActionListener listener)
+    {
         continueBtn.addActionListener(listener);
         goBackBtn.addActionListener(listener);
     }
-
+    
     public void updateText() {
         if (isLogin) {
             title = "WELCOME BACK, PLAYER! PLEASE LOGIN.";
@@ -232,20 +233,24 @@ public final class SignupAndLoginView {
         }
         updateText();
     }
-
-    public GameButton getContinueBtn() {
+    
+    public GameButton getContinueBtn()
+    {
         return continueBtn;
     }
-
-    public GameButton getBackBtn() {
+    
+    public GameButton getBackBtn()
+    {
         return goBackBtn;
     }
-
-    public String getUsername() {
+    
+    public String getUsername()
+    {
         return this.usernameField.getText();
     }
-
-    public String getPassword() {
+    
+    public String getPassword()
+    {
         return this.passwordField.getText();
     }
 }

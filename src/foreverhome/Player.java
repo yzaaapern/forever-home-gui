@@ -30,7 +30,8 @@ public class Player
         this.setFosterPet(null);
         this.hasFosterPet = false;
         this.dabloons = 20;
-        this.foodInventory = new FoodInventory();
+        this.setFoodInventory(new FoodInventory());
+        this.interactionList = new InteractionList();
     }
     
     // Player with a foster pet
@@ -78,6 +79,10 @@ public class Player
         return this.foodInventory;
     }
     
+    public void setFoodInventory(FoodInventory foodInventory){
+        this.foodInventory = foodInventory;
+    }
+    
     public InteractionList getInteractionList()
     {
         return this.interactionList;
@@ -114,6 +119,12 @@ public class Player
             this.setDabloons(dec_dabloons);
         }
         // the user's dabloons should never be negative
+    }
+    
+    public UserData toUserData()
+    {
+        UserData u = new UserData(this);
+        return u;
     }
     
     /* Override toString method

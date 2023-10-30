@@ -58,5 +58,37 @@ public class InteractionList
     {
         return this.interactions;
     }
+    
+    
+    public Interaction getGivePat() {
+        return givePat;
+    }
 
+    public Interaction getPlayWithFoster() {
+        return playWithFoster;
+    }
+
+    public Interaction getGoPotty() {
+        return goPotty;
+    }
+
+    public Interaction getBow() {
+        return bow;
+    }
+
+    public Interaction getShakeHands() {
+        return shakeHands;
+    }
+
+    public Interaction getSpin() {
+        return spin;
+    }
+
+    public Interaction getPlayDead() {
+        return playDead;
+    }
+
+    public Interaction getFetch() {
+        return fetch;
+    }
 }

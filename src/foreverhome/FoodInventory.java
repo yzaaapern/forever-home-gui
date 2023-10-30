@@ -9,14 +9,10 @@ import java.util.Scanner;
 /**
  *
  * @author yzape
- * Name: Yza Pernia
- * Student ID: 21137984
  */
 public class FoodInventory {
     
-    /*
-        INSTANCE AND CONSTANT VARIABLES
-    */
+    // Instance variables & Constants
     public static final int NUM_OF_FOODS = 7;
     
     public Food foodForAll;
@@ -113,6 +109,11 @@ public class FoodInventory {
         return output;
     }
     
-    
+    public FoodInventoryData toFoodInventoryData(Player player)
+    {
+        FoodInventoryData f = new FoodInventoryData(this, player);
+        return f;
+    }
+            
     
 }

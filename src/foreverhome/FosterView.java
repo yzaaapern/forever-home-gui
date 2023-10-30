@@ -45,7 +45,6 @@ public class FosterView {
     private GameButton continueBtn;
     private GameButton cancelBtn;
 
-    // File Paths
     private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
     private final String POPUP_FILE_PATH = "./resources/images/misc/popup_box.png";
 
@@ -64,7 +63,6 @@ public class FosterView {
     private final String CHICKEN_FILE_PATH = "./resources/images/animals/chicken.png";
     private final String CHICKEN_HOVER_FILE_PATH = "./resources/images/animals/chicken_hover.png";
 
-    // Label Texts
     private final String TITLE = "FOSTER MENU";
     private final String INTRO = "Pick an animal you would like to foster!";
 
@@ -129,12 +127,6 @@ public class FosterView {
         fosterPanel.add(petsMenuPanel, BorderLayout.CENTER);
     }
 
-    /*
-        initializeButton method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of FosterView's GameButtons 
-     */
     private void initializeButtons() {
         Font buttonFont = GameFont.getPixelFont(20, 0);
 

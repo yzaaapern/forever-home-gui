@@ -4,14 +4,9 @@ package foreverhome;
 /**
  *
  * @author AnnGa
- * Name: Ann Del Rosario
- * Student ID: 21143100
  */
 public class ForeverHomeDB 
 {
-    /*
-        INSTANCE AND CONSTANT VARIABLES
-    */
     // Constants
     public static final String USER_DATA_TABLE = "user_data";
     public static final String PET_TABLE = "pet";
@@ -106,42 +101,18 @@ public class ForeverHomeDB
         }
     }
     
-    /*
-        getDBOperations method
-    Parameters: None
-    Returns: ForeverHomeOperations dbOperations
-    Description: Returns the private dbOperations object
-    */
     public ForeverHomeDBOperations getDBOperations() {
         return dbOperations;
     }
 
-    /*
-        setDBOperations method
-    Parameters: ForeverHomeDBOperations dbOperations
-    Returns: None
-    Description: Sets the global dbOperations object to the input dbOperations object
-    */
     public void setDBOperations(ForeverHomeDBOperations dbOperations) {
         this.dbOperations = dbOperations;
     }
 
-    /*
-        getDBQueries method
-    Parameters: None
-    Returns: ForeverHomeDBQueries dbQueries
-    Description: Returns the private dbQueries object
-    */
     public ForeverHomeDBQueries getDBQueries() {
         return dbQueries;
     }
 
-    /*
-        setDBQueries method
-    Parameters: ForeverHomeDBQueries dbQueries
-    Returns: None
-    Description: Sets the the global dbQueries object to the input dbQueries object
-    */
     public void setDBQueries(ForeverHomeDBQueries dbQueries) {
         this.dbQueries = dbQueries;
     }

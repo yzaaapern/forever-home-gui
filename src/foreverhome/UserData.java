@@ -30,7 +30,7 @@ public class UserData
         this.userDabloons = player.getDabloons();
         this.userHasPet = player.hasFosterPet;
         
-        FoodInventoryData foodInventoryData = new FoodInventoryData(player.getFoodInventory(), this.getUserName());
+        FoodInventoryData foodInventoryData = new FoodInventoryData(player.getFoodInventory(), player);
     }
     
     // 3-Paramter constructor

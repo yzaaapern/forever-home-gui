@@ -18,17 +18,11 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author yzape 
- * Name: Yza Pernia 
- * Student ID: 21137984
+ * @author yzape
  */
-public class FoodInventoryView {
+public class BuyFoodView {
 
-    /*
-        INSTANCE AND CONSTANT VARIABLES
-     */
-    // GUI Components
-    public JPanel foodInventoryPanel;
+    public JPanel buyFoodPanel;
     private JPanel foodMenuPanel;
     private JLabel titleLabel;
     private JLabel introLabel;
@@ -62,46 +56,23 @@ public class FoodInventoryView {
     private GameButton buySeeds;
     private GameButton buyWater;
 
-    private GameButton feedWithFoodForAll;
-    private GameButton feedWithRainbowTreat;
-    private GameButton feedWithKibble;
-    private GameButton feedWithCannedFood;
-    private GameButton feedWithVeggieMix;
-    private GameButton feedWithSeeds;
-    private GameButton drinkWater;
-
     private GameButton goBackBtn;
 
-    // Determines if the view changes for the Eat Menu
-    public static boolean isFeed = true;
-
-    // File Paths
     private final String BG_FILE_PATH = "./resources/images/backgrounds/foodInventory_bg.png";
     private final String BTN_FILE_PATH = "./resources/images/buttons/mainButton.png";
     private final String BTN_HOVER_FILE_PATH = "./resources/images/buttons/mainButton_hover.png";
+    
+    private final String TITLE = "STORE MENU";
+    private final String INTRO = "Buy more foods for your foster pet!";
 
-    // Label Texts
-    private final String TITLE = "FOOD INVENTORY MENU";
-    private final String INTRO = isFeed ? "Feed your pet something tasty!" : "Buy more foods for your foster pet!";
-
-    /*
-        OBJECT CONSTRUCTOR
-     */
-    public FoodInventoryView() {
-        GridBagConstraints gbc = new GridBagConstraints(); // Used for formating GUI components
+    public BuyFoodView() {
+        GridBagConstraints gbc = new GridBagConstraints();
         initializePanels();
         initializeLabels();
         initializeButtons();
         addComponents(gbc);
     }
 
-    /*
-        addComponents method
-    Parameter: GridBagConstraints gbc
-    Returns: None
-    Description: Adds all initialized components depending if the view is supposed to show the food inventory
-                 or show the foods the fosterPet can eat and formats them according to GridBagConstraints
-     */
     private void addComponents(GridBagConstraints gbc) {
         gbc.insets = new Insets(30, 20, 0, 20);
         gbc.gridwidth = 3;
@@ -112,11 +83,7 @@ public class FoodInventoryView {
         gbc.gridy++;
         foodMenuPanel.add(introLabel, gbc);
 
-        if (isFeed) {
-            isFeedComponents(gbc);
-        } else {
-            isNotFeedComponents(gbc);
-        }
+        buyFoodComponents(gbc);
 
         gbc.insets = new Insets(50, 20, 0, 20);
         gbc.anchor = GridBagConstraints.EAST;
@@ -124,140 +91,10 @@ public class FoodInventoryView {
         gbc.gridy++;
         foodMenuPanel.add(goBackBtn, gbc);
 
-        foodInventoryPanel.add(foodMenuPanel, BorderLayout.CENTER);
+        buyFoodPanel.add(foodMenuPanel, BorderLayout.CENTER);
     }
 
-    /*
-        isFeedComponents method
-    Parameters: GridBagConstraints gbc
-    Returns: None
-    Description: Adds the isFeed components to the FoodInventoryVIew which will be displayed if the isFeed boolean is set to true.
-                 This view will show what foods the animal can eat depending on its instance type.
-     */
-    private void isFeedComponents(GridBagConstraints gbc) {
-        gbc.insets = new Insets(30, 20, 0, 50);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridwidth = 1;
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(foodForAllTitle, gbc);
-
-        gbc.insets = new Insets(10, 20, 10, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(foodForAllDesc, gbc);
-
-        gbc.insets = new Insets(0, 20, 0, 20);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        foodMenuPanel.add(feedWithFoodForAll, gbc);
-
-        gbc.insets = new Insets(20, 20, 0, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(kibbleTitle, gbc);
-
-        gbc.insets = new Insets(10, 20, 10, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(kibbleDesc, gbc);
-
-        gbc.insets = new Insets(0, 20, 0, 20);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 1;
-        gbc.gridy = 5;
-        foodMenuPanel.add(feedWithKibble, gbc);
-
-        gbc.insets = new Insets(20, 20, 0, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(cannedFoodTitle, gbc);
-
-        gbc.insets = new Insets(10, 20, 10, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(cannedFoodDesc, gbc);
-
-        gbc.insets = new Insets(0, 20, 0, 20);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 1;
-        gbc.gridy = 7;
-        foodMenuPanel.add(feedWithCannedFood, gbc);
-
-        gbc.insets = new Insets(20, 20, 0, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(veggieMixTitle, gbc);
-
-        gbc.insets = new Insets(10, 20, 10, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(veggieMixDesc, gbc);
-
-        gbc.insets = new Insets(0, 20, 0, 20);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 1;
-        gbc.gridy = 9;
-        foodMenuPanel.add(feedWithVeggieMix, gbc);
-
-        gbc.insets = new Insets(20, 20, 0, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(seedsTitle, gbc);
-
-        gbc.insets = new Insets(10, 20, 10, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(seedsDesc, gbc);
-
-        gbc.insets = new Insets(0, 20, 0, 20);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 1;
-        gbc.gridy = 11;
-        foodMenuPanel.add(feedWithSeeds, gbc);
-
-        gbc.insets = new Insets(20, 20, 0, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(rainbowTreatTitle, gbc);
-
-        gbc.insets = new Insets(10, 20, 10, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(rainbowTreatDesc, gbc);
-
-        gbc.insets = new Insets(0, 20, 0, 20);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 1;
-        gbc.gridy = 13;
-        foodMenuPanel.add(feedWithRainbowTreat, gbc);
-
-        gbc.insets = new Insets(20, 20, 0, 50);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(waterTitle, gbc);
-
-        gbc.insets = new Insets(10, 20, 10, 20);
-        gbc.gridx = 0;
-        gbc.gridy++;
-        foodMenuPanel.add(waterDesc, gbc);
-
-        gbc.insets = new Insets(0, 20, 0, 20);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.gridx = 1;
-        gbc.gridy = 15;
-        foodMenuPanel.add(drinkWater, gbc);
-    }
-
-    /*
-        isNotFeedComponents method
-    Parameters: GridBagConstraints gbc
-    Returns: None
-    Description: Adds the isNotFeed components to the FoodInventoryVIew which will be displayed if the isFeed boolean is set to false.
-                 This view will show the foods the player can buy.
-     */
-    private void isNotFeedComponents(GridBagConstraints gbc) {
+    private void buyFoodComponents(GridBagConstraints gbc) {
         gbc.insets = new Insets(30, 20, 0, 50);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridwidth = 1;
@@ -373,68 +210,33 @@ public class FoodInventoryView {
         foodMenuPanel.add(buyWater, gbc);
     }
 
-    /*
-        initializeButton method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the FoodInventoryView's buttons 
-     */
     private void initializeButtons() {
         Font buttonFont = GameFont.getPixelFont(13, 0);
-        if (isFeed) {
-            feedWithFoodForAll = new GameButton("Feed with Food For All", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            feedWithFoodForAll.setFont(buttonFont);
+        buyFoodForAll = new GameButton("Buy Food For All", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
+        buyFoodForAll.setFont(buttonFont);
 
-            feedWithRainbowTreat = new GameButton("Give them a Rainbow Treat!", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            feedWithRainbowTreat.setFont(buttonFont);
+        buyRainbowTreat = new GameButton("Buy Rainbow Treat", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
+        buyRainbowTreat.setFont(buttonFont);
 
-            feedWithKibble = new GameButton("Feed with Kibble", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            feedWithKibble.setFont(buttonFont);
+        buyKibble = new GameButton("Buy Kibble", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
+        buyKibble.setFont(buttonFont);
 
-            feedWithCannedFood = new GameButton("Feed with Canned Food", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            feedWithCannedFood.setFont(buttonFont);
+        buyCannedFood = new GameButton("Buy Canned Food", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
+        buyCannedFood.setFont(buttonFont);
 
-            feedWithVeggieMix = new GameButton("Feed with Veggie Mix", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            feedWithVeggieMix.setFont(buttonFont);
+        buyVeggieMix = new GameButton("Buy Veggie Mix", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
+        buyVeggieMix.setFont(buttonFont);
 
-            feedWithSeeds = new GameButton("Feed with Seeds", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            feedWithSeeds.setFont(buttonFont);
+        buySeeds = new GameButton("Buy Seeds", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
+        buySeeds.setFont(buttonFont);
 
-            drinkWater = new GameButton("Give them some Water", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            drinkWater.setFont(buttonFont);
-        } else {
-            buyFoodForAll = new GameButton("Buy Food For All", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            buyFoodForAll.setFont(buttonFont);
-
-            buyRainbowTreat = new GameButton("Buy Rainbow Treat", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            buyRainbowTreat.setFont(buttonFont);
-
-            buyKibble = new GameButton("Buy Kibble", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            buyKibble.setFont(buttonFont);
-
-            buyCannedFood = new GameButton("Buy Canned Food", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            buyCannedFood.setFont(buttonFont);
-
-            buyVeggieMix = new GameButton("Buy Veggie Mix", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            buyVeggieMix.setFont(buttonFont);
-
-            buySeeds = new GameButton("Buy Seeds", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            buySeeds.setFont(buttonFont);
-
-            buyWater = new GameButton("Buy Water", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
-            buyWater.setFont(buttonFont);
-        }
+        buyWater = new GameButton("Buy Water", BTN_FILE_PATH, BTN_HOVER_FILE_PATH);
+        buyWater.setFont(buttonFont);
 
         goBackBtn = new GameButton("Go Back");
         goBackBtn.setFont(buttonFont);
     }
 
-    /*
-        initializeLabels  method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the FoodInventoryView's labels 
-     */
     private void initializeLabels() {
         Font labelFont = GameFont.getPixelFont(30, 1);
 
@@ -518,15 +320,9 @@ public class FoodInventoryView {
         waterDesc.setForeground(Color.white);
 
     }
-    
-    /*
-        initializePanels method
-    Parameters: None
-    Returns: None
-    Description: Initialises all of the AdoptionView's JPanels
-     */
+
     private void initializePanels() {
-        foodInventoryPanel = new JPanel(new BorderLayout()) {
+        buyFoodPanel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -541,7 +337,7 @@ public class FoodInventoryView {
                 super.paintComponent(g);
                 Color transparentBG = new Color(209, 114, 114, 220);
                 g.setColor(transparentBG);
-                g.fillRect(foodInventoryPanel.getWidth() / 8, foodInventoryPanel.getHeight() / 6, 1000, 700);
+                g.fillRect(buyFoodPanel.getWidth() / 8, buyFoodPanel.getHeight() / 6, 1000, 700);
 
             }
         };
@@ -551,26 +347,14 @@ public class FoodInventoryView {
 
     public void addActionListener(ActionListener listener)
     {
-        if(isFeed)
-        {
-            feedWithFoodForAll.addActionListener(listener);
-            feedWithRainbowTreat.addActionListener(listener);
-            feedWithKibble.addActionListener(listener);
-            feedWithCannedFood.addActionListener(listener);
-            feedWithVeggieMix.addActionListener(listener);
-            feedWithSeeds.addActionListener(listener);
-            drinkWater.addActionListener(listener);
-        }
-        else
-        {
-            buyFoodForAll.addActionListener(listener);
-            buyRainbowTreat.addActionListener(listener);
-            buyKibble.addActionListener(listener);
-            buyCannedFood.addActionListener(listener);
-            buyVeggieMix.addActionListener(listener);
-            buySeeds.addActionListener(listener);
-            buyWater.addActionListener(listener);
-        }
+        buyFoodForAll.addActionListener(listener);
+        buyRainbowTreat.addActionListener(listener);
+        buyKibble.addActionListener(listener);
+        buyCannedFood.addActionListener(listener);
+        buyVeggieMix.addActionListener(listener);
+        buySeeds.addActionListener(listener);
+        buyWater.addActionListener(listener);
+        
         goBackBtn.addActionListener(listener);
     }
     
@@ -602,36 +386,8 @@ public class FoodInventoryView {
         return buyWater;
     }
 
-    public GameButton getFeedWithFoodForAll() {
-        return feedWithFoodForAll;
-    }
-
-    public GameButton getFeedWithRainbowTreat() {
-        return feedWithRainbowTreat;
-    }
-
-    public GameButton getFeedWithKibble() {
-        return feedWithKibble;
-    }
-
-    public GameButton getFeedWithCannedFood() {
-        return feedWithCannedFood;
-    }
-
-    public GameButton getFeedWithVeggieMix() {
-        return feedWithVeggieMix;
-    }
-
-    public GameButton getFeedWithSeeds() {
-        return feedWithSeeds;
-    }
-
-    public GameButton getDrinkWater() {
-        return drinkWater;
-    }
-
     public GameButton getGoBackBtn() {
         return goBackBtn;
     }
-
+    
 }

@@ -29,6 +29,21 @@ public class PetData
     
     
     // Constructor
+    
+    public PetData(Animal pet)
+    {
+        this.petID = generateRandomPetID();
+        this.setPetName(pet.getName());
+        this.setPetInstance(pet.checkFosterPet(pet));
+        this.setPetLevel(pet.getLevel());
+        this.setPetLevelXP(pet.getLevelXP());
+        this.setPetHunger(pet.getHunger());
+        this.setPetHygiene(pet.getHygiene());
+        this.setPetHappiness(pet.getHappiness());
+        this.setIsAdopted(false);
+//        this.setUserName(userName);
+    }
+    
     // New pet within the database (doesn't have it's own ID yet)
     public PetData(Animal pet, String userName)
     {

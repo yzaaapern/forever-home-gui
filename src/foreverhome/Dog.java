@@ -7,8 +7,6 @@ package foreverhome;
 /**
  *
  * @author yzape
- * Name: Yza Pernia
- * Student ID: 21137984
  */
 // Dog is an animal
 public class Dog extends Animal{

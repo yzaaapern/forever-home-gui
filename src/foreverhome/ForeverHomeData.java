@@ -6,9 +6,7 @@ package foreverhome;
 
 /**
  *
- * @author AnnGa
- * Name: Ann Del Rosario
- * Student ID: 21143100
+ * @author annga
  */
 public class ForeverHomeData 
 {

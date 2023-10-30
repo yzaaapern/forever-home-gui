@@ -13,9 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author AnnGa
- * Name: Ann Del Rosario
- * Student ID: 21143100
+ * @author annga
  */
 public class ForeverHomeDBQueries 
 {    
@@ -96,6 +94,7 @@ public class ForeverHomeDBQueries
                         int petHunger = rs.getInt("petHunger");
                         int petHygiene = rs.getInt("petHygiene");
                         int petHappiness = rs.getInt("petHappiness");
+                        boolean isAdopted = rs.getBoolean("isAdopted");
                         String userName = rs.getString("userName");
                     }
                     else if(ForeverHomeDB.FOOD_INVENTORY_TABLE.equals(tableName))
@@ -316,12 +315,12 @@ public class ForeverHomeDBQueries
     Return: PetData object
     Description: Returns pet's data for a specified user and petname
     */
-    public PetData getPetByIsAdoptedAndUserName(String userName) {
+    public PetData getPetByIsAdoptedAndUserName(String userName, boolean isAdopted) {
         try {
-            String query = "SELECT * FROM pet WHERE userName=? AND petName=?";
+            String query = "SELECT * FROM pet WHERE userName=? AND isAdopted=?";
             PreparedStatement preparedStatement = this.dbManager.getConnection().prepareStatement(query);
             preparedStatement.setString(1, userName);
-            preparedStatement.setBoolean(2, false);
+            preparedStatement.setBoolean(2, isAdopted);
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -334,7 +333,6 @@ public class ForeverHomeDBQueries
                 int petHunger = rs.getInt("petHunger");
                 int petHygiene = rs.getInt("petHygiene");
                 int petHappiness = rs.getInt("petHappiness");
-                boolean isAdopted = rs.getBoolean("isAdopted");
 
                 // Create and return a PetData object with the retrieved data
                 return new PetData(petID, petName, petInstance, petLevel, petLevelXP, petHunger, petHygiene, petHappiness, isAdopted, userName);
@@ -364,9 +362,7 @@ public class ForeverHomeDBQueries
             if (rs.next()) {
                 String foodInventoryID = rs.getString("foodInventoryID");
                 String foodInventory = rs.getString("foodInventory");
-                String userName = rs.getString("userName");
-
-                return new FoodInventoryData(foodInventoryID, foodInventory, userName);
+                return new FoodInventoryData(foodInventoryID, foodInventory, name);
             }
         } catch (SQLException e) {
             this.handleSQLException(e);

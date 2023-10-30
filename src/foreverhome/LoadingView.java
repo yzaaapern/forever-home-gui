@@ -96,9 +96,9 @@ public class LoadingView {
             }
         };
     }
-    
-    public void updateIsShuttingDown(){
-        if(!isShuttingDown){
+
+    public void updateIsShuttingDown() {
+        if (!isShuttingDown) {
             isShuttingDown = true;
             loadingText = "SHUTTING DOWN...";
         } else {
