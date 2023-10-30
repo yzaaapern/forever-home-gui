@@ -246,11 +246,6 @@ public class ForeverHomeModel extends Observable {
         this.notifyObservers(this.data);
     }
 
-    // PET FOSTER 
-    public void openBackPack() {
-
-    }
-
     /*  feedPet method
     
         Parameters: Food object of chosen food

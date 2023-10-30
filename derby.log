@@ -1,13 +1,20 @@
+Mon Oct 30 20:31:52 NZDT 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Mon Oct 30 19:33:36 NZDT 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-018b-7f49-aa81-00000f77ccd0 
-on database directory C:\Users\annga\OneDrive - AUT University\Documents\ENSE600 Software Construction\ForeverHomeGUI\forever-home-gui\ForeverHomeDatabase with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5c29bfd 
-Loaded from file:/C:/Users/annga/OneDrive%20-%20AUT%20University/Documents/ENSE600%20Software%20Construction/ForeverHomeGUI/forever-home-gui/lib/derby.jar
+Mon Oct 30 20:31:52 NZDT 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-018b-7f7f-0282-000045fe8926 
+on database directory C:\Users\annga\OneDrive - AUT University\Documents\ENSE600 Software Construction\ForeverHomeGUI\forever-home-gui\ForeverHomeDatabase with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2cdf8d8a 
+Loaded from file:/C:/Users/annga/OneDrive%20-%20AUT%20University/Documents/ENSE600%20Software%20Construction/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=11.0.19+9-LTS-224
-user.dir=C:\Users\annga\OneDrive - AUT University\Documents\ENSE600 Software Construction\ForeverHomeGUI\forever-home-gui
+user.dir=C:\Users\annga\OneDrive - AUT University\Documents\ENSE600 Software Construction\db-derby-10.14.2.0-bin\db-derby-10.14.2.0-bin
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
-derby.system.home=null
+derby.system.home=C:\Users\annga\OneDrive - AUT University\Documents\ENSE600 Software Construction\ForeverHomeGUI\forever-home-gui
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Oct 30 20:32:27 NZDT 2023: Shutting down Derby engine
+----------------------------------------------------------------
+Mon Oct 30 20:32:27 NZDT 2023:
+Shutting down instance a816c00e-018b-7f7f-0282-000045fe8926 on database directory C:\Users\annga\OneDrive - AUT University\Documents\ENSE600 Software Construction\ForeverHomeGUI\forever-home-gui\ForeverHomeDatabase with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2cdf8d8a 
+----------------------------------------------------------------

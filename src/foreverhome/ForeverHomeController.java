@@ -168,7 +168,10 @@ public class ForeverHomeController implements ActionListener {
                     view.showFosterPanel();
                 }
             }
-        } // FOSTER VIEW
+        } 
+
+        // FOSTER VIEW
+        
         else if (source == view.getFOSTER_VIEW().getDogBtn()) {
             String chosenAnimalType = "dog";
             this.selectFosterPetAction(chosenAnimalType);
@@ -321,14 +324,16 @@ public class ForeverHomeController implements ActionListener {
             this.feedPetAction(chosenFood);
         } else if (source == view.getFEEDPET_VIEW().getGoBackBtn()) {
             view.showNotPausedPetFosterPanel();
+                        
         } // ADOPTION VIEW
+        
         else if (source == view.getADOPTION_VIEW().getYesBtn()) {
             model.saveGame();
             view.showFosterPanel();
             model.player.fosterPet.setIsAdopted(true);
             model.player.hasFosterPet = false;
             model.player.fosterPet = null;
-        } // ADOPTION VIEW
+        } 
         else if (source == view.getADOPTION_VIEW().getNoBtn()) {
             model.saveGame();
             view.getLOADING_VIEW().updateIsShuttingDown();
