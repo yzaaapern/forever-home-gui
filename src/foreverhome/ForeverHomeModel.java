@@ -15,7 +15,6 @@ public class ForeverHomeModel extends Observable {
     /*
         INSTANCE AND CONSTANT VARIABLES
      */
-    public static volatile boolean startThreads = true;
     public ForeverHomeDB db;
     public ForeverHomeData data;
     public Player player;
@@ -33,47 +32,53 @@ public class ForeverHomeModel extends Observable {
     /*
         METHODS
      */
+    
+    public Player getPlayer(){
+        return this.player;
+    }
+    
+    public Animal getPet() {
+        return this.player.fosterPet;
+    }
+    
+    public ForeverHomeDB getDB()
+    {
+        return this.db;
+    }
+    
     public void setPlayer(String username) {
-        UserData user = this.db.getDBQueries().getUserByUserName(username);
+        UserData user = this.getDB().getDBQueries().getUserByUserName(username);
         Player player = user.toPlayer();
         this.username = username;
         this.player = player;
         this.setFoodInventory();
-
         this.notifyObserversWithData();
     }
 
     public void newUser(String username, String password) {
         Player player = new Player(username);
         player.setPassword(password);
-        UserData u = new UserData(player);
-        FoodInventoryData f = new FoodInventoryData(player.getFoodInventory(), player.getName());
-        
-        this.db.getDBOperations().insertData(ForeverHomeDB.USER_DATA_TABLE, u);
-        this.db.getDBOperations().insertData(ForeverHomeDB.FOOD_INVENTORY_TABLE, f);
+        UserData userData = new UserData(player);
+        FoodInventoryData foodInventoryData = new FoodInventoryData(player.getFoodInventory(), player.getName());
+
+        this.getDB().getDBOperations().insertData(ForeverHomeDB.USER_DATA_TABLE, userData);
+        this.getDB().getDBOperations().insertData(ForeverHomeDB.FOOD_INVENTORY_TABLE, foodInventoryData);
         this.setPlayer(username);
         this.setFoodInventory();
-
         this.notifyObserversWithData();
     }
 
     public void setPet() {
-        // get petdata from the database
-        PetData petData = this.db.getDBQueries().getPetByIsAdoptedAndUserName(player.getName(), false);
-        // instansiate Animal object with the petdata stats
+        PetData petData = this.getDB().getDBQueries().getPetByIsAdoptedAndUserName(player.getName(), false);
         Animal pet = petData.toAnimal();
-        // set the player's foster pet to the pet
-        player.setFosterPet(pet);
-
+        this.getPlayer().setFosterPet(pet);
         this.notifyObserversWithData();
     }
     
-    public Animal getPet(){
-        return this.player.fosterPet;
-    }
+    
 
     public void setFoodInventory() {
-        FoodInventoryData fData = this.db.getDBQueries().getFoodInventoryByUserName(player.getName());
+        FoodInventoryData fData = this.getDB().getDBQueries().getFoodInventoryByUserName(player.getName());
 
         FoodInventory f = fData.toFoodInventory();
         player.setFoodInventory(f);
@@ -82,19 +87,17 @@ public class ForeverHomeModel extends Observable {
     }
 
     public boolean isExistingUser(String username) {
-        UserData user = this.db.getDBQueries().getUserByUserName(username);
+        UserData user = this.getDB().getDBQueries().getUserByUserName(username);
         if (user != null) {
             this.notifyObserversWithData();
             return true;
-
         }
         this.notifyObserversWithData();
         return false;
-
     }
 
     public boolean authenticateUser(String username, String passwordAttempt) {
-        UserData user = this.db.getDBQueries().getUserByUserName(username);
+        UserData user = this.getDB().getDBQueries().getUserByUserName(username);
         if (user.getUserPassword().equals(passwordAttempt)) {
             this.notifyObserversWithData();
             return true;
@@ -127,9 +130,9 @@ public class ForeverHomeModel extends Observable {
             }
 
             // Set the player's fostered pet
-            player.setFosterPet(pet);
-            this.db.getDBOperations().insertData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
-            this.player.hasFosterPet = true;
+            this.getPlayer().setFosterPet(pet);
+            this.getDB().getDBOperations().insertData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
+            this.getPlayer().hasFosterPet = true;
         }
         this.notifyObserversWithData();
     }
@@ -144,23 +147,23 @@ public class ForeverHomeModel extends Observable {
         {
             if (interaction instanceof Play) // if it is a play interaction
             {
-                this.player.getFosterPet().incHappiness(); // increase the happiness
-                this.player.getFosterPet().decHunger(); // decrease the hunger of the pet
-                this.player.getFosterPet().decHygiene(); // derease the hygiene stat of the pet
+                this.getPlayer().getFosterPet().incHappiness(); // increase the happiness
+                this.getPlayer().getFosterPet().decHunger(); // decrease the hunger of the pet
+                this.getPlayer().getFosterPet().decHygiene(); // derease the hygiene stat of the pet
             } else if (interaction instanceof Trick) // if it is a trick interaction
             {
-                this.player.getFosterPet().incHappiness(); // increase the pet's happiness
+                this.getPlayer().getFosterPet().incHappiness(); // increase the pet's happiness
             } else if (interaction instanceof Health) // if it is a health interaction
             {
-                this.player.getFosterPet().incHappiness(); // increase the pet's happiness
-                this.player.getFosterPet().incHygiene(); // increase the pet's hygiene
+                this.getPlayer().getFosterPet().incHappiness(); // increase the pet's happiness
+                this.getPlayer().getFosterPet().incHygiene(); // increase the pet's hygiene
             }
-            this.player.getFosterPet().incLevelXP(); // increase the pet's xp
+            this.getPlayer().getFosterPet().incLevelXP(); // increase the pet's xp
             this.levelUpReward(); // potential level up reward
             this.notifyObserversWithData();
         } else // otherwise the interaction is locked 
         {
-            System.out.println("You cannot do this trick yet! " + this.player.getFosterPet().getName() + " has yet to reach Level " + interaction.getLevelUnlocked() + ".");
+//            System.out.println("You cannot do this trick yet! " + this.player.getFosterPet().getName() + " has yet to reach Level " + interaction.getLevelUnlocked() + ".");
             this.notifyObserversWithData();
         }
     }
@@ -172,7 +175,7 @@ public class ForeverHomeModel extends Observable {
         Description: Checks the the foster pet has a high enough level for the interaction
      */
     public boolean isInteractUnlocked(Interaction interaction) {
-        if (this.player.getFosterPet().getLevel() >= interaction.getLevelUnlocked()) // if the foster pet's level is greater or equal to the level of the interaction, it is unlocked
+        if (this.getPlayer().getFosterPet().getLevel() >= interaction.getLevelUnlocked()) // if the foster pet's level is greater or equal to the level of the interaction, it is unlocked
         {
             this.notifyObserversWithData();
             return true;
@@ -192,7 +195,7 @@ public class ForeverHomeModel extends Observable {
         if(this.canAfford(food)) // if the player can afford the food
         {
             food.incFoodCount(); // increase the amount of that food in their food inventory
-            this.player.decDabloons(food.getFoodCost()); // decrease the player's dabloons by the cost of that food
+            this.getPlayer().decDabloons(food.getFoodCost()); // decrease the player's dabloons by the cost of that food
         } else // otherwise the player cannot afford the food
         {
 //            System.out.println("Insufficient Funds.\n"); // prints this message
@@ -202,7 +205,7 @@ public class ForeverHomeModel extends Observable {
     
     public boolean canAfford(Food food)
     {
-        boolean canAfford = (this.player.getDabloons() >= food.getFoodCost());
+        boolean canAfford = (this.getPlayer().getDabloons() >= food.getFoodCost());
         this.notifyObserversWithData();
         return canAfford;
     }
@@ -214,15 +217,15 @@ public class ForeverHomeModel extends Observable {
         Description: Checks if the pet is ready for a level up, increases level, gives a level up message, and gives player reward dabloons
      */
     public void levelUpReward() {
-        if (this.player.getFosterPet().checkLevelForIncLevel()) // if pet is ready for level up
+        if (this.getPlayer().getFosterPet().checkLevelForIncLevel()) // if pet is ready for level up
         {
-            this.player.getFosterPet().incLevel(); // increase the pet's level
-            if (this.player.getFosterPet().getLevel() < Animal.MAX_LEVEL) // if the foster pet's leveled up level is not yet max
+            this.getPlayer().getFosterPet().incLevel(); // increase the pet's level
+            if (this.getPlayer().getFosterPet().getLevel() < Animal.MAX_LEVEL) // if the foster pet's leveled up level is not yet max
             {
-                this.player.incDabloons(Player.INC_DABLOONS); // give them this amount of dabloons
+                this.getPlayer().incDabloons(Player.INC_DABLOONS); // give them this amount of dabloons
             } else // if the foster pet's leveled up level is max
             {
-                this.player.incDabloons(Player.REWARD_DABLOONS); // give them more this amount of dabloons
+                this.getPlayer().incDabloons(Player.REWARD_DABLOONS); // give them more this amount of dabloons
             }
 
         }
@@ -242,9 +245,9 @@ public class ForeverHomeModel extends Observable {
             {
             } else // if the player has some of that food
             {
-                this.player.getFosterPet().incHunger(food); // pet's hunger increases
+                this.getPlayer().getFosterPet().incHunger(food); // pet's hunger increases
                 food.decFoodCount(); // decrease the food count by 1
-                this.player.getFosterPet().incLevelXP(); // increase the foster pet's level xp 
+                this.getPlayer().getFosterPet().incLevelXP(); // increase the foster pet's level xp 
                 this.levelUpReward(); // potential level up reward
 
             }
@@ -256,7 +259,7 @@ public class ForeverHomeModel extends Observable {
     
     public boolean petFull()
     {
-        boolean petFull = this.player.getFosterPet().getHunger() >= this.player.getFosterPet().getLevelXPBar();
+        boolean petFull = this.getPlayer().getFosterPet().getHunger() >= this.getPlayer().getFosterPet().getLevelXPBar();
         this.notifyObserversWithData();
         
         return petFull;
@@ -264,7 +267,7 @@ public class ForeverHomeModel extends Observable {
     
     public boolean compatibleFood(Food food)
     {
-        if(food.getFoodType() == 0 || this.player.getFosterPet().getAnimalFoodType() == food.getFoodType())
+        if(food.getFoodType() == 0 || this.getPlayer().getFosterPet().getAnimalFoodType() == food.getFoodType())
         {
             this.notifyObserversWithData();
             return true;
@@ -291,8 +294,8 @@ public class ForeverHomeModel extends Observable {
     public void bathePet() {
         if (this.canBathe()) // if the pet is not fully clean
         {
-            this.player.getFosterPet().incHygiene(); // increase their hygiene
-            this.player.getFosterPet().incLevelXP(); // increase the pet's xp
+            this.getPlayer().getFosterPet().incHygiene(); // increase their hygiene
+            this.getPlayer().getFosterPet().incLevelXP(); // increase the pet's xp
             this.levelUpReward(); // potential level up reward
         } else // pet is already clean, bathing has no effect on the pet or user
         {
@@ -303,7 +306,7 @@ public class ForeverHomeModel extends Observable {
     
     public boolean canBathe()
     {
-        boolean canBathe = this.player.getFosterPet().getHygiene() < this.player.getFosterPet().getLevelXPBar();
+        boolean canBathe = this.getPlayer().getFosterPet().getHygiene() < this.getPlayer().getFosterPet().getLevelXPBar();
         this.notifyObserversWithData();
         return canBathe;
     }
@@ -318,18 +321,18 @@ public class ForeverHomeModel extends Observable {
         FoodInventoryData foodInventoryData = null;
         
         
-        if(this.player != null)
+        if(this.getPlayer() != null)
         {
-            player = this.player;
+            player = this.getPlayer();
             userData = player.toUserData();
-            if(this.player.getFosterPet() != null)
+            if(this.getPlayer().getFosterPet() != null)
             {
-                pet = this.player.getFosterPet();
+                pet = this.getPlayer().getFosterPet();
                 petData = pet.toPetData(player.getName());
             }
-            if(this.player.getFoodInventory() != null)
+            if(this.getPlayer().getFoodInventory() != null)
             {
-                foodInventory = this.player.getFoodInventory();
+                foodInventory = this.getPlayer().getFoodInventory();
                 foodInventoryData = foodInventory.toFoodInventoryData(player.getName());
             }
         }
@@ -366,6 +369,4 @@ public class ForeverHomeModel extends Observable {
         this.setChanged();
         this.notifyObservers(this.data);
     }
-
-
 }
