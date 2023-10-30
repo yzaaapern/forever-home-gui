@@ -184,6 +184,7 @@ public class ForeverHomeController implements ActionListener {
                 } else // if the player does not have a fosterpet
                 {
                     view.showFosterPanel();
+                    
                 }
             }
         } else {
@@ -216,6 +217,8 @@ public class ForeverHomeController implements ActionListener {
                     model.newPetFoster(petName);
                     Animal a = model.getPet();
                     view.getNOT_PAUSED_PET_FOSTER_VIEW().setAnimalSprite(a);
+                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                    view.getNOT_PAUSED_PET_FOSTER_VIEW().updateCanBatheText();
                     view.showNotPausedPetFosterPanel();
                 } else {
                     System.out.println("no name");
@@ -233,9 +236,11 @@ public class ForeverHomeController implements ActionListener {
 
     private void handleNotPausedPetFosterView(Object source) {
         if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getBackpackBtn()) {
+            view.getFEEDPET_VIEW().updateFoodCounts(model.player.getFoodInventory());
             view.getNOT_PAUSED_PET_FOSTER_VIEW().updateCanBatheText();
             view.showBuyFoodPanel();
         } else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getFeedBtn()) {
+            view.getFEEDPET_VIEW().updateFoodCounts(model.player.getFoodInventory());
             view.getNOT_PAUSED_PET_FOSTER_VIEW().updateCanBatheText();
             view.showFeedPetPanel();
         } else if (source == view.getNOT_PAUSED_PET_FOSTER_VIEW().getInteractBtn()) {
@@ -383,8 +388,10 @@ public class ForeverHomeController implements ActionListener {
     private void handleFosterMainMenuAction() {
         model.saveGame();
         model.resetGame();
+        view.getNOT_PAUSED_PET_FOSTER_VIEW().removePetSpritePanel();
         view.showStartGamePanel();
         view.getFOSTER_VIEW().updateShowPopUpPanel();
+        
     }
 
     private void handlePauseGameAction() {
@@ -443,7 +450,7 @@ public class ForeverHomeController implements ActionListener {
                     model.feedPet(chosenFood);
                     view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
                     view.showNotPausedPetFosterPanel();
-                    view.getFEEDPET_VIEW().updateFoodCount(model.player.getFoodInventory().foodForAll);
+                    view.getFEEDPET_VIEW().updateFoodCount(chosenFood);
                     view.getNOT_PAUSED_PET_FOSTER_VIEW().checkIsReadyForAdoption();
                     view.getNOT_PAUSED_PET_FOSTER_VIEW().getAnimalSprite().toggleIsIdleAnimation();
                 } else {

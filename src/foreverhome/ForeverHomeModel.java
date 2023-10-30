@@ -330,6 +330,8 @@ public class ForeverHomeModel extends Observable {
     public boolean canBathe()
     {
         boolean canBathe = (this.player.getFosterPet().getHygiene() < this.player.getFosterPet().getLevelXPBar()) ? true : false;
+        this.setChanged();
+        this.notifyObservers(this.data);
         return canBathe;
     }
     

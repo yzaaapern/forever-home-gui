@@ -400,5 +400,14 @@ public class NotPausedPetFosterView {
         this.statBarsPanel.revalidate();
         this.statBarsPanel.repaint();
     }
-            
+          
+    public void removePetSpritePanel() {
+    // Remove the petSpritePanel from the petFosterPanel
+    petFosterPanel.remove(animalSprite);
+
+    // Repaint and revalidate the petFosterPanel to reflect the changes
+    petFosterPanel.revalidate();
+    petFosterPanel.repaint();
+}
+
 }
