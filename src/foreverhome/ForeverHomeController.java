@@ -23,15 +23,14 @@ public class ForeverHomeController implements ActionListener {
     }
 
     public void start() {
-//        view.display();
-//        simulateLoading();
-//        view.showStartGamePanel();
+        view.display();
+        simulateLoading();
         view.showStartGamePanel();
     }
 
     private void simulateLoading() {
         try {
-            Thread.sleep(14000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -415,12 +414,26 @@ public class ForeverHomeController implements ActionListener {
         }
     }
 
-    private void handleExitGameAction() {
+    private void handleExitGameAction() 
+    {
         model.quitGame();
         view.getLOADING_VIEW().updateIsShuttingDown();
         view.showLoadingPanel();
-        System.exit(0);
+
+        Thread waitingThread = new Thread(() -> {
+            if(this.view.getLOADING_VIEW().isShuttingDown) {
+                try {
+                    Thread.sleep(6000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            System.exit(0);
+        });
+
+        waitingThread.start();
     }
+
 
     private void interactWithPetAction(Interaction chosenInteraction) {
         if (model.isInteractUnlocked(chosenInteraction)) {

@@ -46,7 +46,7 @@ public class LoadingView {
         CardLayout cardLayout = (CardLayout) ForeverHomeView.frame.getContentPane().getLayout();
         cardLayout.show(ForeverHomeView.frame.getContentPane(), "loading");
 
-        Timer timer = new Timer(1500, new ActionListener() {
+        Timer timer = new Timer(300, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (loadingTextIndex <= loadingText.length()) {
