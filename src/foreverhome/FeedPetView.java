@@ -24,6 +24,7 @@ public class FeedPetView {
 
     private FoodInventory foodInventory;
     public boolean compatibleFood = false;
+    public boolean sufficientSupply = false;
     
     public JPanel foodInventoryPanel;
     private JPanel foodMenuPanel;
@@ -429,7 +430,7 @@ public class FeedPetView {
         this.waterDesc.setText("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[6].getFoodCount());
     }
     
-    public void updateText(Food food) 
+    public void updateCompatibleFoodText(Food food) 
     {
         if (compatibleFood) {
             this.introLabel.setText(INTRO);
@@ -438,7 +439,17 @@ public class FeedPetView {
         }
         this.foodMenuPanel.revalidate();
         this.foodMenuPanel.repaint();
-        
+    }
+    
+    public void updateSufficientSupplyText(Food food) 
+    {
+        if (sufficientSupply) {
+            this.introLabel.setText(INTRO);
+        } else {
+            this.introLabel.setText("You cannot feed your pet with " + food.getFoodName() + "! Insufficient supply. ");
+        }
+        this.foodMenuPanel.revalidate();
+        this.foodMenuPanel.repaint();
     }
     
     public void refreshText()

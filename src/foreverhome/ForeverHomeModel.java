@@ -313,8 +313,20 @@ public class ForeverHomeModel extends Observable {
             return true;
         }
         return false;
-//        boolean compatibleFood = (this.player.getFosterPet().getAnimalFoodType() == food.getFoodType() || this.player.getFosterPet().getAnimalFoodType() == 0) ? true : false;
-//        return compatibleFood;
+    }
+    
+    public boolean sufficientSupply(Food food)
+    {
+//        boolean sufficientSupply = false;
+//        for(Food userFood : this.player.getFoodInventory().getFoods())
+//        {
+//            if(userFood.getFoodName().equals(food.getFoodName()))
+//            {
+//                userFood.getFoodCount()
+//            }
+//        }
+        boolean sufficientSupply = (food.getFoodCount() > 0) ? true : false;
+        return sufficientSupply;
     }
     
     /*  bathePet method

@@ -426,7 +426,7 @@ public class BuyFoodView {
         this.waterDesc.setText("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Cost: " + foodInventory.water.getFoodCost() + ". Quantity: " + foodInventory.getFoods()[6].getFoodCount());
     }
     
-    public void updateText(Food food) 
+    public void updateCanAffordText(Food food) 
     {
         if (canAfford) {
             this.introLabel.setText(INTRO);
