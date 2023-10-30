@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
  */
 public class NotPausedPetFosterView {
     public boolean canBathe;
+    private int currentLevel = 0;
     
     public JPanel petFosterPanel;
     private JPanel statBarsPanel;
@@ -29,8 +30,9 @@ public class NotPausedPetFosterView {
     private JPanel petSpritePanel;
     private JLabel dabloonsLabel;
     private JLabel cleanWarningLabel;   
+    private JLabel lvlIcon;
     
-    private GameProgressBar levelBar;
+//    private GameProgressBar levelBar;
     private GameProgressBar xpBar;
     private GameProgressBar hungerBar;
     private GameProgressBar hygieneBar;
@@ -50,6 +52,8 @@ public class NotPausedPetFosterView {
     private Animal animal;
     private AnimalSprite animalSprite;
 
+    private final String LEVEL_ICON_FILE_PATH = "./resources/images/statbars/level_icon.png";
+    
     private final String PAUSE_FILE_PATH = "./resources/images/buttons/pause_small.png";
     private final String PAUSE_HOVER_FILE_PATH = "./resources/images/buttons/pause_hover_small.png";
 
@@ -129,8 +133,9 @@ public class NotPausedPetFosterView {
         gbc.weighty = 1.0;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        statBarsPanel.add(levelBar, gbc);
+        statBarsPanel.add(lvlIcon, gbc);
 
+        gbc.insets = new Insets(0, 10, 0, 30);
         gbc.gridx = 0;
         gbc.gridy++;
         statBarsPanel.add(xpBar, gbc);
@@ -143,30 +148,24 @@ public class NotPausedPetFosterView {
         gbc.gridy++;
         statBarsPanel.add(hygieneBar, gbc);
 
-        // Configure the GridBagConstraints for the warning label
-        gbc.insets = new Insets(10, 10, 10, 10);
-//        gbc.anchor = GridBagConstraints.CENTER;
-//        gbc.weightx = 0;
-//        gbc.weighty = 0;
+        gbc.insets = new Insets(10, 20, 10, 10);
         gbc.gridx = 0;
         gbc.gridy = 4;
-        
-        // Add the warning label to the petFosterPanel
         statBarsPanel.add(cleanWarningLabel, gbc);
+        
+        gbc.insets = new Insets(0, 10, 0, 30);
         
         gbc.gridx = 0;
         gbc.gridy++;
         statBarsPanel.add(happinessBar, gbc);
         
-        
-
         gbc.insets = new Insets(0, 10, 0, 0);
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = 0;
         gbc.gridy++;
         statBarsPanel.add(dabloonsLabel, gbc);
 
-        gbc.insets = new Insets(0, 10, 0, 0);
+        gbc.insets = new Insets(0, 0, 0, 0);
         gbc.gridx = 0;
         gbc.gridy++;
         statBarsPanel.add(backpackBtn, gbc);
@@ -219,8 +218,8 @@ public class NotPausedPetFosterView {
     }
 
     private void initializeProgressBars() {
-        levelBar = new GameProgressBar(LEVEL_BAR_FILE_PATH, LEVEL_BAR_COLOR);
-        levelBar.setMaxValue(Level.MAX_LEVEL);
+//        levelBar = new GameProgressBar(LEVEL_BAR_FILE_PATH, LEVEL_BAR_COLOR);
+//        levelBar.setMaxValue(Level.MAX_LEVEL);
         xpBar = new GameProgressBar(XP_BAR_FILE_PATH, XP_BAR_COLOR);
         xpBar.setMaxValue(this.maxXPValue);
         hungerBar = new GameProgressBar(HUNGER_BAR_FILE_PATH, HUNGER_BAR_COLOR);
@@ -232,12 +231,22 @@ public class NotPausedPetFosterView {
     }
 
     private void initializeLabels() {
-        Font labelFont = GameFont.getPixelFont(20, 1);
+        Font labelFont = GameFont.getPixelFont(26, 1);
+        
+        lvlIcon = new JLabel();
+        lvlIcon.setFont(labelFont);
+        lvlIcon.setForeground(Color.WHITE);
+        // Set the level icon image
+        GameImage levelIconImage = new GameImage(LEVEL_ICON_FILE_PATH);
+        lvlIcon.setIcon(levelIconImage.getImageIcon());
+        
+        labelFont = GameFont.getPixelFont(20, 1);
         GameImage labelImage = new GameImage(DABLOONS_FILE_PATH);
         dabloonsLabel = new JLabel("20", labelImage.getImageIcon(), JLabel.LEFT);
         dabloonsLabel.setFont(labelFont);
         dabloonsLabel.setForeground(Color.white);
         
+        labelFont = GameFont.getPixelFont(13, 0);
         cleanWarningLabel = new JLabel("The pet is already clean.");
         cleanWarningLabel.setFont(labelFont);
         cleanWarningLabel.setForeground(Color.WHITE);
@@ -334,7 +343,7 @@ public class NotPausedPetFosterView {
     }
 
     public void setLevelBarValue(int value) {
-        levelBar.setValue(value);
+        lvlIcon.setText(Integer.toString(value));
     }
 
     public void setXPBarValue(int value) {
