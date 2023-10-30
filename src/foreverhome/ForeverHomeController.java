@@ -202,15 +202,15 @@ public class ForeverHomeController implements ActionListener {
                     view.getFOSTER_VIEW().updatePopUpLabel("Please give your " + model.chosenAnimalType + " a name!");
                 }
             }
-        } else if (source == view.getFOSTER_VIEW().getCancelBtn()) { 
-            
+        } else if(source == view.getFOSTER_VIEW().getMainMenuBtn())
+        {
             // USE THIS FOR MAIN MENU BUTTON
-//            model.saveGame();
-//            model.resetGame();
-//            view.showStartGamePanel();
-            
+            model.saveGame();
+            model.resetGame();
+            view.showStartGamePanel();
             view.getFOSTER_VIEW().updateShowPopUpPanel(); 
-            System.out.println(view.getFOSTER_VIEW().showPopUpPanel);
+        } else if (source == view.getFOSTER_VIEW().getCancelBtn()) {             
+            view.getFOSTER_VIEW().updateShowPopUpPanel(); 
         } 
 
         // NOT PAUSED PET FOSTER VIEW

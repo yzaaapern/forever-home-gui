@@ -43,6 +43,7 @@ public class FosterView {
     private GameButton parrotBtn;
     private GameButton chickenBtn;
     private GameButton continueBtn;
+    private GameButton mainMenuBtn;
     private GameButton cancelBtn;
 
     private final String BG_FILE_PATH = "./resources/images/backgrounds/bg3.png";
@@ -158,6 +159,9 @@ public class FosterView {
         buttonFont = GameFont.getPixelFont(15, 0);
         continueBtn = new GameButton("Continue");
         continueBtn.setFont(buttonFont);
+        
+        mainMenuBtn = new GameButton("Main Menu");
+        mainMenuBtn.setFont(buttonFont);
 
         cancelBtn = new GameButton("Cancel");
         cancelBtn.setFont(buttonFont);
@@ -240,6 +244,7 @@ public class FosterView {
         parrotBtn.addActionListener(listener);
         chickenBtn.addActionListener(listener);
         continueBtn.addActionListener(listener);
+        mainMenuBtn.addActionListener(listener);
         cancelBtn.addActionListener(listener);
     }
 
@@ -261,7 +266,7 @@ public class FosterView {
             gbc.insets = new Insets(220, 50, 10, 20);
             gbc.anchor = GridBagConstraints.WEST;
             gbc.fill = GridBagConstraints.NONE;
-            gbc.gridwidth = 5;
+            gbc.gridwidth = 4;
             gbc.weightx = 1.0;
             gbc.weighty = 0;
             gbc.gridx = 0;
@@ -280,10 +285,19 @@ public class FosterView {
             gbc.gridy++;
             popUpPanel.add(cancelBtn, gbc);
 
+            // Add the "Main Menu" button
+            gbc.insets = new Insets(10, 30, 0, 20);
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.gridwidth = 1;
+            gbc.gridx = 0;
+            gbc.gridy++;
+            popUpPanel.add(mainMenuBtn, gbc);
+
+            // Add the "Continue" button below "Main Menu" button
             gbc.insets = new Insets(10, 20, 0, 20);
             gbc.anchor = GridBagConstraints.SOUTHEAST;
             gbc.gridx = 1;
-            gbc.gridy = 6;
+//            gbc.gridy = 6;
             popUpPanel.add(continueBtn, gbc);
         } else {
             petsMenuPanel.remove(popUpPanel);
@@ -336,6 +350,10 @@ public class FosterView {
         return continueBtn;
     }
 
+    public GameButton getMainMenuBtn(){
+        return mainMenuBtn;
+    }
+    
     public GameButton getCancelBtn() {
         return cancelBtn;
     }

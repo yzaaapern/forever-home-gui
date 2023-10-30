@@ -21,7 +21,8 @@ import javax.swing.SwingConstants;
  * @author yzape
  */
 public class NotPausedPetFosterView {
-
+    
+    
     public JPanel petFosterPanel;
     private JPanel statBarsPanel;
     private JPanel buttonsPanel;
