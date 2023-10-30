@@ -334,22 +334,26 @@ public class ForeverHomeModel extends Observable {
     
     public void saveGame()
     {
-        Player player = this.player;
-        Animal pet = this.player.getFosterPet();
-        FoodInventory foodInventory = this.player.getFoodInventory();
+        Player player;
+        Animal pet;
+        FoodInventory foodInventory;
         UserData userData = null;
         PetData petData = null;
         FoodInventoryData foodInventoryData = null;
         
-        if(player != null)
+        
+        if(this.player != null)
         {
+            player = this.player;
             userData = player.toUserData();
-            if(pet != null)
+            if(this.player.getFosterPet() != null)
             {
+                pet = this.player.getFosterPet();
                 petData = pet.toPetData(player.getName());
             }
-            if(foodInventory != null)
+            if(this.player.getFoodInventory() != null)
             {
+                foodInventory = this.player.getFoodInventory();
                 foodInventoryData = foodInventory.toFoodInventoryData(player.getName());
             }
         }
