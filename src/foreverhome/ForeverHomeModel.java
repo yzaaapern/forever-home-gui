@@ -16,12 +16,8 @@ public class ForeverHomeModel extends Observable {
         INSTANCE AND CONSTANT VARIABLES
      */
     public static volatile boolean startThreads = true;
-//    public Database db;
     public ForeverHomeDB db;
     public ForeverHomeData data;
-//    public DecrementStatsRunnable dsr;
-    public Thread petDecrementStatsThread;
-    public InteractionList interactionList;
     public Player player;
     public String username;
     public String chosenAnimalType;
@@ -44,8 +40,7 @@ public class ForeverHomeModel extends Observable {
         this.player = player;
         this.setFoodInventory();
 
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
 
     public void newUser(String username, String password) {
@@ -59,8 +54,7 @@ public class ForeverHomeModel extends Observable {
         this.setPlayer(username);
         this.setFoodInventory();
 
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
 
     public void setPet() {
@@ -71,8 +65,7 @@ public class ForeverHomeModel extends Observable {
         // set the player's foster pet to the pet
         player.setFosterPet(pet);
 
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
     
     public Animal getPet(){
@@ -85,20 +78,17 @@ public class ForeverHomeModel extends Observable {
         FoodInventory f = fData.toFoodInventory();
         player.setFoodInventory(f);
 
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
 
     public boolean isExistingUser(String username) {
         UserData user = this.db.getDBQueries().getUserByUserName(username);
         if (user != null) {
-            this.setChanged();
-            this.notifyObservers(this.data);
+            this.notifyObserversWithData();
             return true;
 
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
         return false;
 
     }
@@ -106,12 +96,10 @@ public class ForeverHomeModel extends Observable {
     public boolean authenticateUser(String username, String passwordAttempt) {
         UserData user = this.db.getDBQueries().getUserByUserName(username);
         if (user.getUserPassword().equals(passwordAttempt)) {
-            this.setChanged();
-            this.notifyObservers(this.data);
+            this.notifyObserversWithData();
             return true;
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
         return false;
     }
 
@@ -143,8 +131,7 @@ public class ForeverHomeModel extends Observable {
             this.db.getDBOperations().insertData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
             this.player.hasFosterPet = true;
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
     /*  interactWithPet method
     
@@ -170,12 +157,11 @@ public class ForeverHomeModel extends Observable {
             }
             this.player.getFosterPet().incLevelXP(); // increase the pet's xp
             this.levelUpReward(); // potential level up reward
-            this.setChanged();
-            this.notifyObservers(this.data);
+            this.notifyObserversWithData();
         } else // otherwise the interaction is locked 
         {
             System.out.println("You cannot do this trick yet! " + this.player.getFosterPet().getName() + " has yet to reach Level " + interaction.getLevelUnlocked() + ".");
-            this.notifyObservers(this.data);
+            this.notifyObserversWithData();
         }
     }
 
@@ -188,12 +174,10 @@ public class ForeverHomeModel extends Observable {
     public boolean isInteractUnlocked(Interaction interaction) {
         if (this.player.getFosterPet().getLevel() >= interaction.getLevelUnlocked()) // if the foster pet's level is greater or equal to the level of the interaction, it is unlocked
         {
-            this.setChanged();
-            this.notifyObservers(this.data);
+            this.notifyObserversWithData();
             return true;
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
         return false;
     }
 
@@ -211,15 +195,15 @@ public class ForeverHomeModel extends Observable {
             this.player.decDabloons(food.getFoodCost()); // decrease the player's dabloons by the cost of that food
         } else // otherwise the player cannot afford the food
         {
-            System.out.println("Insufficient Funds.\n"); // prints this message
+//            System.out.println("Insufficient Funds.\n"); // prints this message
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
     
     public boolean canAfford(Food food)
     {
-        boolean canAfford = (this.player.getDabloons() >= food.getFoodCost()) ? true : false;
+        boolean canAfford = (this.player.getDabloons() >= food.getFoodCost());
+        this.notifyObserversWithData();
         return canAfford;
     }
     
@@ -242,8 +226,7 @@ public class ForeverHomeModel extends Observable {
             }
 
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
 
     /*  feedPet method
@@ -253,33 +236,28 @@ public class ForeverHomeModel extends Observable {
         Description: User may feed pet a chosen food
      */
     public void feedPet(Food food) {
-        if (this.player.getFosterPet().getHunger() < Animal.DEFAULT_STAT) // if the pet is hungry
+        if (!this.petFull()) // if the pet is not full 
         {
             if (food.getFoodCount() <= 0) // if the player has none of that food
             {
-                System.out.println("Insufficient supply.\n");
             } else // if the player has some of that food
             {
                 this.player.getFosterPet().incHunger(food); // pet's hunger increases
                 food.decFoodCount(); // decrease the food count by 1
                 this.player.getFosterPet().incLevelXP(); // increase the foster pet's level xp 
                 this.levelUpReward(); // potential level up reward
-                System.out.println("Pet has been fed");
 
             }
         } else // if the pet already has max hunger stat, it will not eat
         {
-            System.out.println(this.player.getFosterPet().getName() + " is already full!\n");
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
     
     public boolean petFull()
     {
-        boolean petFull = (this.player.getFosterPet().getHunger() >= this.player.getFosterPet().getLevelXPBar()) ? true : false;
-        this.setChanged();
-        this.notifyObservers(this.data);
+        boolean petFull = this.player.getFosterPet().getHunger() >= this.player.getFosterPet().getLevelXPBar();
+        this.notifyObserversWithData();
         
         return petFull;
     }
@@ -288,21 +266,18 @@ public class ForeverHomeModel extends Observable {
     {
         if(food.getFoodType() == 0 || this.player.getFosterPet().getAnimalFoodType() == food.getFoodType())
         {
-            this.setChanged();
-            this.notifyObservers(this.data);
+            this.notifyObserversWithData();
             return true;
         }
         
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
         return false;
     }
     
     public boolean sufficientSupply(Food food)
     {
         boolean sufficientSupply = (food.getFoodCount() > 0) ? true : false;
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
         
         return sufficientSupply;
     }
@@ -314,24 +289,22 @@ public class ForeverHomeModel extends Observable {
         Description: User may bathe their pet to increase pet's hygiene stat
      */
     public void bathePet() {
-        if (this.player.getFosterPet().getHygiene() < Animal.DEFAULT_STAT) // if the pet is not fully clean
+        if (this.canBathe()) // if the pet is not fully clean
         {
             this.player.getFosterPet().incHygiene(); // increase their hygiene
             this.player.getFosterPet().incLevelXP(); // increase the pet's xp
             this.levelUpReward(); // potential level up reward
         } else // pet is already clean, bathing has no effect on the pet or user
         {
-            System.out.println(this.player.getFosterPet().getName() + " is already clean!");
+//            System.out.println(this.player.getFosterPet().getName() + " is already clean!");
         }
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
     
     public boolean canBathe()
     {
-        boolean canBathe = (this.player.getFosterPet().getHygiene() < this.player.getFosterPet().getLevelXPBar()) ? true : false;
-        this.setChanged();
-        this.notifyObservers(this.data);
+        boolean canBathe = this.player.getFosterPet().getHygiene() < this.player.getFosterPet().getLevelXPBar();
+        this.notifyObserversWithData();
         return canBathe;
     }
     
@@ -363,16 +336,14 @@ public class ForeverHomeModel extends Observable {
         
         this.db.getDBOperations().saveData(userData, petData, foodInventoryData);
         
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
 
     public void quitGame() {
 
         this.saveGame();
         this.db.getDBManager().closeConnection();
-        this.setChanged();
-        this.notifyObservers(this.data);
+        this.notifyObserversWithData();
     }
     
     public void resetGame()
@@ -390,5 +361,11 @@ public class ForeverHomeModel extends Observable {
         }
         return true;
     }
+    
+    private void notifyObserversWithData() {
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
+
 
 }
