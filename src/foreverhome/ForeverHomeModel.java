@@ -31,7 +31,7 @@ public class ForeverHomeModel extends Observable {
      */
     public ForeverHomeModel() {
         this.db = new ForeverHomeDB();
-        this.db.dbSetUp();
+//        this.db.dbSetUp();
     }
 
     /*
@@ -330,6 +330,12 @@ public class ForeverHomeModel extends Observable {
         }
         this.setChanged();
         this.notifyObservers(this.data);
+    }
+    
+    public boolean canBathe()
+    {
+        boolean canBathe = (this.player.getFosterPet().getHygiene() < this.player.getFosterPet().getLevelXPBar()) ? true : false;
+        return canBathe;
     }
     
     public void saveGame()

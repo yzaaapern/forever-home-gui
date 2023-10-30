@@ -21,13 +21,15 @@ import javax.swing.SwingConstants;
  * @author yzape
  */
 public class NotPausedPetFosterView {
-
+    public boolean canBathe;
+    
     public JPanel petFosterPanel;
     private JPanel statBarsPanel;
     private JPanel buttonsPanel;
     private JPanel petSpritePanel;
     private JLabel dabloonsLabel;
-
+    private JLabel cleanWarningLabel;   
+    
     private GameProgressBar levelBar;
     private GameProgressBar xpBar;
     private GameProgressBar hungerBar;
@@ -116,6 +118,8 @@ public class NotPausedPetFosterView {
         gbc.gridx++;
         gbc.gridy = 0;
         petFosterPanel.add(buttonsPanel, gbc);
+        
+        
     }
 
     private void addStatBarsComponents(GridBagConstraints gbc) {
@@ -139,9 +143,22 @@ public class NotPausedPetFosterView {
         gbc.gridy++;
         statBarsPanel.add(hygieneBar, gbc);
 
+        // Configure the GridBagConstraints for the warning label
+        gbc.insets = new Insets(10, 10, 10, 10);
+//        gbc.anchor = GridBagConstraints.CENTER;
+//        gbc.weightx = 0;
+//        gbc.weighty = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        
+        // Add the warning label to the petFosterPanel
+        statBarsPanel.add(cleanWarningLabel, gbc);
+        
         gbc.gridx = 0;
         gbc.gridy++;
         statBarsPanel.add(happinessBar, gbc);
+        
+        
 
         gbc.insets = new Insets(0, 10, 0, 0);
         gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -220,6 +237,11 @@ public class NotPausedPetFosterView {
         dabloonsLabel = new JLabel("20", labelImage.getImageIcon(), JLabel.LEFT);
         dabloonsLabel.setFont(labelFont);
         dabloonsLabel.setForeground(Color.white);
+        
+        cleanWarningLabel = new JLabel("The pet is already clean.");
+        cleanWarningLabel.setFont(labelFont);
+        cleanWarningLabel.setForeground(Color.WHITE);
+        cleanWarningLabel.setVisible(false); // Initially, it should be invisible
     }
 
     private void initializePanels() {
@@ -349,6 +371,25 @@ public class NotPausedPetFosterView {
         hygieneBar.setMaxValue(newBarCap);
         this.setDabloonsLabel(dabloons);
         
+    }
+    
+    public void updateCanBatheText() {
+        if (canBathe) {
+            cleanWarningLabel.setVisible(false); // Hide the warning label
+        } else {
+            cleanWarningLabel.setVisible(true); // Show the warning label
+        }
+        this.statBarsPanel.revalidate();
+        this.statBarsPanel.repaint();
+        this.canBathe = true;
+    }
+    
+    public void refreshText()
+    {
+        this.canBathe = true;
+        cleanWarningLabel.setVisible(false); // Hide the warning label
+        this.statBarsPanel.revalidate();
+        this.statBarsPanel.repaint();
     }
             
 }
