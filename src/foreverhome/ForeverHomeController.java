@@ -282,85 +282,29 @@ public class ForeverHomeController implements ActionListener{
         // INTERACTION VIEW
         
         else if (source == view.getINTERACTION_VIEW().getPatBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getGivePat());   
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-            view.showNotPausedPetFosterPanel();
+            Interaction chosenInteraction = model.player.getInteractionList().getGivePat();
+            this.interactWithPetAction(chosenInteraction);
         } else if (source == view.getINTERACTION_VIEW().getPlayBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getPlayWithFoster());
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-            view.showNotPausedPetFosterPanel();
+            Interaction chosenInteraction = model.player.getInteractionList().getPlayWithFoster();
+            this.interactWithPetAction(chosenInteraction);
         } else if (source == view.getINTERACTION_VIEW().getPottyBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getGoPotty());
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-            if(model.isInteractUnlocked(model.player.getInteractionList().getGoPotty()))
-            {
-                view.showNotPausedPetFosterPanel();
-            }
-            else
-            {
-                view.getINTERACTION_VIEW().isInteractionUnlocked = false;
-                view.getINTERACTION_VIEW().updateText(model.player.getInteractionList().getGoPotty());
-            }
+            Interaction chosenInteraction = model.player.getInteractionList().getGoPotty();
+            this.interactWithPetAction(chosenInteraction);
         } else if (source == view.getINTERACTION_VIEW().getBowBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getBow());
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-            if(model.isInteractUnlocked(model.player.getInteractionList().getBow()))
-            {
-                view.showNotPausedPetFosterPanel();
-            }
-            else
-            {
-                view.getINTERACTION_VIEW().isInteractionUnlocked = false;
-                view.getINTERACTION_VIEW().updateText(model.player.getInteractionList().getBow());
-            }
+            Interaction chosenInteraction = model.player.getInteractionList().getBow();
+            this.interactWithPetAction(chosenInteraction);
         } else if (source == view.getINTERACTION_VIEW().getHandshakeBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getShakeHands());
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-            if(model.isInteractUnlocked(model.player.getInteractionList().getShakeHands()))
-            {
-                view.showNotPausedPetFosterPanel();
-            }
-            else
-            {
-                view.getINTERACTION_VIEW().isInteractionUnlocked = false;
-                view.getINTERACTION_VIEW().updateText(model.player.getInteractionList().getShakeHands());
-            }
+            Interaction chosenInteraction = model.player.getInteractionList().getShakeHands();
+            this.interactWithPetAction(chosenInteraction);
         } else if (source == view.getINTERACTION_VIEW().getSpinBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getSpin());
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-            if(model.isInteractUnlocked(model.player.getInteractionList().getSpin()))
-            {
-                view.showNotPausedPetFosterPanel();
-            }
-            else
-            {
-                view.getINTERACTION_VIEW().isInteractionUnlocked = false;
-                view.getINTERACTION_VIEW().updateText(model.player.getInteractionList().getSpin());
-            }
+            Interaction chosenInteraction = model.player.getInteractionList().getSpin();
+            this.interactWithPetAction(chosenInteraction);
         } else if (source == view.getINTERACTION_VIEW().getPlayDeadBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getPlayDead());
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-            if(model.isInteractUnlocked(model.player.getInteractionList().getPlayDead()))
-            {
-                view.showNotPausedPetFosterPanel();
-            }
-            else
-            {
-                view.getINTERACTION_VIEW().isInteractionUnlocked = false;
-                view.getINTERACTION_VIEW().updateText(model.player.getInteractionList().getPlayDead());
-            }
+            Interaction chosenInteraction = model.player.getInteractionList().getPlayDead();
+            this.interactWithPetAction(chosenInteraction);
         } else if (source == view.getINTERACTION_VIEW().getFetchBtn()) {
-            model.interactWithPet(model.player.getInteractionList().getFetch());
-            view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
-            if(model.isInteractUnlocked(model.player.getInteractionList().getFetch()))
-            {
-                view.showNotPausedPetFosterPanel();
-            }
-            else
-            {
-                view.getINTERACTION_VIEW().isInteractionUnlocked = false;
-                view.getINTERACTION_VIEW().updateText(model.player.getInteractionList().getFetch());
-            }
+            Interaction chosenInteraction = model.player.getInteractionList().getFetch();
+            this.interactWithPetAction(chosenInteraction);
         } else if (source == view.getINTERACTION_VIEW().getGoBackBtn()) {
             view.showNotPausedPetFosterPanel();
         } 
@@ -430,6 +374,21 @@ public class ForeverHomeController implements ActionListener{
             view.showStartGamePanel();
         } 
 
+    }
+    
+    private void interactWithPetAction(Interaction chosenInteraction)
+    {
+        if(model.isInteractUnlocked(chosenInteraction))
+            {
+                model.interactWithPet(chosenInteraction);
+                view.getNOT_PAUSED_PET_FOSTER_VIEW().updateBarValue(model.player.fosterPet.getLevel(), model.player.fosterPet.getLevelXP(), model.player.fosterPet.getHappiness(), model.player.fosterPet.getHunger(), model.player.fosterPet.getHygiene(), model.player.getDabloons(), model.player.getFosterPet().getLevelXPBar());
+                view.showNotPausedPetFosterPanel();
+            }
+            else
+            {
+                view.getINTERACTION_VIEW().isInteractionUnlocked = false;
+                view.getINTERACTION_VIEW().updateText(model.player.getInteractionList().getGoPotty());
+            }
     }
     
     private void buyFoodAction(Food chosenFood)
