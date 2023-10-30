@@ -12,20 +12,22 @@ import java.util.Objects;
  */
 public class Player 
 {
-    // Instance variables & Constants 
-    public static final int INC_DABLOONS = 10; // when the player levels their pet they get 10 dabloons
-    public static final int REWARD_DABLOONS = 100; // when the player's pet reaches max level they get 100 dabloons
+    // Constants
+    public static final int INC_DABLOONS = 10; // When the player levels their pet, they get 10 dabloons
+    public static final int REWARD_DABLOONS = 100; // When the player's pet reaches max level, they get 100 dabloons
+
+    // Instance variables
     private String name;
     private String password;
     public Animal fosterPet;
     public boolean isPlaying;
     public boolean hasFosterPet;
     private int dabloons;
-    private FoodInventory foodInventory; // each player has their own food inventory
-    private InteractionList interactionList; // each player has their own interaction lists
+    private FoodInventory foodInventory; // Each player has their own food inventory
+    private InteractionList interactionList; // Each player has their own interaction lists
     
-    // Constructor
-    public Player(String name){
+    // Constructors
+    public Player(String name) {
         this.setName(name);
         this.setFosterPet(null);
         this.hasFosterPet = false;
@@ -34,7 +36,6 @@ public class Player
         this.interactionList = new InteractionList();
     }
     
-    // Player with a foster pet
     public Player(String name, Animal fosterPet) {
         this(name); // Call the default constructor
         this.setFosterPet(fosterPet);
@@ -143,31 +144,6 @@ public class Player
                "\nDabloons: $" + this.getDabloons() + 
                "\n" + displayPet +
                "\n" + this.foodInventory.toString();
-    }
-    
-    
-    /*  fileUserAndPetToString method
-    
-        Parameters: None
-        Return: String
-        Description: Returns user and pet string for file writing
-    */
-    
-    public String fileUserAndPetToString(){
-        String displayPet = (this.hasFosterPet ==  true) ? this.fosterPet.fileToString() : "NoPet";
-        return this.name + ":" + this.dabloons 
-             + "|" + displayPet;
-    }
-    
-    /*  fileUserAndFoodInventoryToString
-    
-        Parameters: None
-        Return: String
-        Description: Returns user and their food inventory string for file writing 
-    */
-    public String fileUserAndFoodInventoryToString()
-    {
-        return this.getName() + "|" + this.getFoodInventory().fileFoodInventoryToString();
     }
 
     @Override

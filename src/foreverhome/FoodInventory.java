@@ -97,23 +97,7 @@ public class FoodInventory {
         Parameters: None
         Return: String
         Description: Returns a formatted food inventory string for file writing.
-    */
-    
-    public String fileFoodInventoryToString()
-    {
-        String output = "";
-        for(Food f : foods)
-        {
-            output += f.getFoodName() + ":" + f.getFoodCount() + ",";
-        }
-        // Remove the trailing comma
-        if (output.endsWith(",")) 
-        {
-            output = output.substring(0, output.length() - 1);
-        }
-        return output;
-    }
-    
+    */    
     
 //    public FoodInventoryData toFoodInventoryData(Player player)
 //    {

@@ -182,11 +182,6 @@ public abstract class Animal implements Level {
                 + "\n-Happiness: " + this.happiness + "/" + this.statBar
                 + "\n---------------------\n");
     }
-
-    public String fileToString() {
-        return this.name + ":" + this.checkFosterPet(this) + ":" + this.happiness + ":" + this.hunger + ":" + this.hygiene + ":" + this.levelXP + ":" + this.levelXPBar + ":" + this.level;
-    }
-
     /*
         METHODS
      */
