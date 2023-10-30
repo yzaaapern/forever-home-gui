@@ -31,7 +31,7 @@ public class LoadingView {
     private int loadingTextIndex;
     private final String imageFilePath = "./resources/images/backgrounds/bg.png";
     private final String gameTitle = "FOREVER HOME";
-    public final String loadingText = isShuttingDown ? "SHUTTING DOWN..." : "LOADING...";
+    public String loadingText = "LOADING...";
 
     public LoadingView() {
         GridBagConstraints gbc = new GridBagConstraints();
@@ -95,5 +95,15 @@ public class LoadingView {
                 g.drawImage(bgImage.getImage(), 0, 0, null);
             }
         };
+    }
+
+    public void updateIsShuttingDown() {
+        if (!isShuttingDown) {
+            isShuttingDown = true;
+            loadingText = "SHUTTING DOWN...";
+        } else {
+            isShuttingDown = false;
+            loadingText = "LOADING...";
+        }
     }
 }

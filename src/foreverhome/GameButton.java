@@ -22,6 +22,7 @@ public class GameButton extends JButton {
     private GameImage hoverImage;
     private String text;
     private boolean isHovered = false;
+    private boolean isChanged = false;
 
     public GameButton(String text) {
         super.setText(text);
@@ -41,6 +42,13 @@ public class GameButton extends JButton {
         initializeButton();
     }
 
+    public void updateNormalAndHoverImages(String normalImageFilePath, String hoverImageFilePath){
+        normalImage = new GameImage(normalImageFilePath);
+        hoverImage = new GameImage(hoverImageFilePath);   
+        isChanged = true;
+        updateButtonState();
+    }
+    
     private void initializeButton() {
         if (!isFilePathNull()) {
             this.setIcon(normalImage.getImageIcon());
@@ -49,7 +57,14 @@ public class GameButton extends JButton {
         this.setFocusPainted(false);
         this.setContentAreaFilled(false);
         this.setForeground(Color.white);
+        
+        updateButtonState();
+    }
 
+    private void updateButtonState(){
+        if(isChanged){
+            this.setIcon(normalImage.getImageIcon());
+        }
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -73,7 +88,7 @@ public class GameButton extends JButton {
             }
         });
     }
-
+    
     private boolean isFilePathNull() {
         return (hoverImage == null || normalImage == null);
     }

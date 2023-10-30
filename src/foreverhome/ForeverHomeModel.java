@@ -6,9 +6,7 @@ package foreverhome;
 
 /**
  *
- * @author yzape
- * Name: Yza Pernia 
- * Student ID: 21137984
+ * @author yzape Name: Yza Pernia Student ID: 21137984
  */
 import java.util.Observable;
 
@@ -31,30 +29,26 @@ public class ForeverHomeModel extends Observable {
     /*
         OBJECT CONSTRUCTOR
      */
-    public ForeverHomeModel() 
-    {
+    public ForeverHomeModel() {
         this.db = new ForeverHomeDB();
         this.db.dbSetUp();
     }
-    
+
     /*
         METHODS
-    */
-    
-    public void setPlayer(String username)
-    {
+     */
+    public void setPlayer(String username) {
         UserData user = this.db.getDBQueries().getUserByUserName(username);
         Player player = user.toPlayer();
         this.username = username;
         this.player = player;
         this.setFoodInventory();
-        
+
         this.setChanged();
         this.notifyObservers(this.data);
     }
-    
-    public void newUser(String username, String password)
-    {
+
+    public void newUser(String username, String password) {
         Player player = new Player(username);
         player.setPassword(password);
         UserData u = new UserData(player);
@@ -64,57 +58,54 @@ public class ForeverHomeModel extends Observable {
         this.db.getDBOperations().insertData(ForeverHomeDB.FOOD_INVENTORY_TABLE, f);
         this.setPlayer(username);
         this.setFoodInventory();
-        
+
         this.setChanged();
         this.notifyObservers(this.data);
     }
-    
-    public void setPet()
-    {
+
+    public void setPet() {
         // get petdata from the database
         PetData petData = this.db.getDBQueries().getPetByIsAdoptedAndUserName(player.getName(), false);
         // instansiate Animal object with the petdata stats
         Animal pet = petData.toAnimal();
         // set the player's foster pet to the pet
         player.setFosterPet(pet);
-        
+
         this.setChanged();
         this.notifyObservers(this.data);
     }
     
-    public void setFoodInventory()
-    {
+    public Animal getPet(){
+        return this.player.fosterPet;
+    }
+
+    public void setFoodInventory() {
         FoodInventoryData fData = this.db.getDBQueries().getFoodInventoryByUserName(player.getName());
-        
+
         FoodInventory f = fData.toFoodInventory();
         player.setFoodInventory(f);
-        
+
         this.setChanged();
         this.notifyObservers(this.data);
     }
-    
-    public boolean isExistingUser(String username)
-    {
+
+    public boolean isExistingUser(String username) {
         UserData user = this.db.getDBQueries().getUserByUserName(username);
-        if(user != null)
-        {
+        if (user != null) {
             this.setChanged();
             this.notifyObservers(this.data);
             return true;
-            
+
         }
         this.setChanged();
         this.notifyObservers(this.data);
         return false;
-        
-        
+
     }
-    
-    public boolean authenticateUser(String username, String passwordAttempt)
-    {
+
+    public boolean authenticateUser(String username, String passwordAttempt) {
         UserData user = this.db.getDBQueries().getUserByUserName(username);
-         if(user.getUserPassword().equals(passwordAttempt))
-        {
+        if (user.getUserPassword().equals(passwordAttempt)) {
             this.setChanged();
             this.notifyObservers(this.data);
             return true;
@@ -123,19 +114,14 @@ public class ForeverHomeModel extends Observable {
         this.notifyObservers(this.data);
         return false;
     }
-    
+
     // FOSTER
-    
-    public void newPetFoster(String petName) 
-    {
+    public void newPetFoster(String petName) {
         Animal pet;
 
-        if(chosenAnimalType == null)
-        {
-            
-        }
-        else
-        {
+        if (chosenAnimalType == null) {
+
+        } else {
             // Determine the type of pet based on the chosen animal type
             if (this.chosenAnimalType.equalsIgnoreCase("dog")) {
                 pet = new Dog(petName);
@@ -151,36 +137,33 @@ public class ForeverHomeModel extends Observable {
                 System.out.println("null");
                 return;
             }
-            
+
             // Set the player's fostered pet
             player.setFosterPet(pet);
             this.db.getDBOperations().insertData(ForeverHomeDB.PET_TABLE, pet.toPetData(player.getName()));
             this.player.hasFosterPet = true;
         }
-            this.setChanged();
-            this.notifyObservers(this.data);
+        this.setChanged();
+        this.notifyObservers(this.data);
     }
     /*  interactWithPet method
     
         Parameters: Interaction object for chosen interaction   
         Return: None
         Description: User may interact with their pet as often as they like
-    */
-    public void interactWithPet(Interaction interaction)
-    {
-        if(this.isInteractUnlocked(interaction)) // if the interaction is unlocked by the pet 
+     */
+    public void interactWithPet(Interaction interaction) {
+        if (this.isInteractUnlocked(interaction)) // if the interaction is unlocked by the pet 
         {
-            if(interaction instanceof Play) // if it is a play interaction
+            if (interaction instanceof Play) // if it is a play interaction
             {
                 this.player.getFosterPet().incHappiness(); // increase the happiness
                 this.player.getFosterPet().decHunger(); // decrease the hunger of the pet
                 this.player.getFosterPet().decHygiene(); // derease the hygiene stat of the pet
-            }
-            else if(interaction instanceof Trick) // if it is a trick interaction
+            } else if (interaction instanceof Trick) // if it is a trick interaction
             {
                 this.player.getFosterPet().incHappiness(); // increase the pet's happiness
-            }
-            else if(interaction instanceof Health) // if it is a health interaction
+            } else if (interaction instanceof Health) // if it is a health interaction
             {
                 this.player.getFosterPet().incHappiness(); // increase the pet's happiness
                 this.player.getFosterPet().incHygiene(); // increase the pet's hygiene
@@ -189,23 +172,21 @@ public class ForeverHomeModel extends Observable {
             this.levelUpReward(); // potential level up reward
             this.setChanged();
             this.notifyObservers(this.data);
-        }
-        else // otherwise the interaction is locked 
+        } else // otherwise the interaction is locked 
         {
             System.out.println("You cannot do this trick yet! " + this.player.getFosterPet().getName() + " has yet to reach Level " + interaction.getLevelUnlocked() + ".");
             this.notifyObservers(this.data);
         }
     }
-    
+
     /* isInteractUnlocked method
     
         Parameters: Interaction object of chosen interaction
         Return: boolean, true if it is unlocked, false if it is locked
         Description: Checks the the foster pet has a high enough level for the interaction
-    */
-    public boolean isInteractUnlocked(Interaction interaction)
-    {
-        if(this.player.getFosterPet().getLevel() >= interaction.getLevelUnlocked()) // if the foster pet's level is greater or equal to the level of the interaction, it is unlocked
+     */
+    public boolean isInteractUnlocked(Interaction interaction) {
+        if (this.player.getFosterPet().getLevel() >= interaction.getLevelUnlocked()) // if the foster pet's level is greater or equal to the level of the interaction, it is unlocked
         {
             this.setChanged();
             this.notifyObservers(this.data);
@@ -215,7 +196,7 @@ public class ForeverHomeModel extends Observable {
         this.notifyObservers(this.data);
         return false;
     }
-    
+
     /*  buyFood method
     
         Parameters: Food object for chosen food
@@ -228,8 +209,7 @@ public class ForeverHomeModel extends Observable {
         {
             food.incFoodCount(); // increase the amount of that food in their food inventory
             this.player.decDabloons(food.getFoodCost()); // decrease the player's dabloons by the cost of that food
-        }
-        else // otherwise the player cannot afford the food
+        } else // otherwise the player cannot afford the food
         {
             System.out.println("Insufficient Funds.\n"); // prints this message
         }
@@ -248,47 +228,42 @@ public class ForeverHomeModel extends Observable {
         Parameters: None
         Return: None
         Description: Checks if the pet is ready for a level up, increases level, gives a level up message, and gives player reward dabloons
-    */
-    public void levelUpReward()
-    {
-        if(this.player.getFosterPet().checkLevelForIncLevel()) // if pet is ready for level up
+     */
+    public void levelUpReward() {
+        if (this.player.getFosterPet().checkLevelForIncLevel()) // if pet is ready for level up
         {
             this.player.getFosterPet().incLevel(); // increase the pet's level
-            if(this.player.getFosterPet().getLevel() < Animal.MAX_LEVEL) // if the foster pet's leveled up level is not yet max
+            if (this.player.getFosterPet().getLevel() < Animal.MAX_LEVEL) // if the foster pet's leveled up level is not yet max
             {
                 this.player.incDabloons(Player.INC_DABLOONS); // give them this amount of dabloons
-            }
-            else // if the foster pet's leveled up level is max
+            } else // if the foster pet's leveled up level is max
             {
                 this.player.incDabloons(Player.REWARD_DABLOONS); // give them more this amount of dabloons
             }
-            
+
         }
         this.setChanged();
         this.notifyObservers(this.data);
     }
 
     // PET FOSTER 
-    public void openBackPack()
-    {
-        
+    public void openBackPack() {
+
     }
-    
+
     /*  feedPet method
     
         Parameters: Food object of chosen food
         Return: None
         Description: User may feed pet a chosen food
-    */
-    public void feedPet(Food food)
-    {
-        if(this.player.getFosterPet().getHunger() < Animal.DEFAULT_STAT) // if the pet is hungry
+     */
+    public void feedPet(Food food) {
+        if (this.player.getFosterPet().getHunger() < Animal.DEFAULT_STAT) // if the pet is hungry
         {
-            if(food.getFoodCount() <= 0) // if the player has none of that food
+            if (food.getFoodCount() <= 0) // if the player has none of that food
             {
-                System.out.println("Insufficient supply.\n"); 
-            }
-            else // if the player has some of that food
+                System.out.println("Insufficient supply.\n");
+            } else // if the player has some of that food
             {
                 this.player.getFosterPet().incHunger(food); // pet's hunger increases
                 food.decFoodCount(); // decrease the food count by 1
@@ -297,8 +272,7 @@ public class ForeverHomeModel extends Observable {
                 System.out.println("Pet has been fed");
 
             }
-        }
-        else // if the pet already has max hunger stat, it will not eat
+        } else // if the pet already has max hunger stat, it will not eat
         {
             System.out.println(this.player.getFosterPet().getName() + " is already full!\n");
         }
@@ -343,16 +317,14 @@ public class ForeverHomeModel extends Observable {
         Parameters: None
         Return: None
         Description: User may bathe their pet to increase pet's hygiene stat
-    */
-    public void bathePet()
-    {
-        if(this.player.getFosterPet().getHygiene() < Animal.DEFAULT_STAT) // if the pet is not fully clean
+     */
+    public void bathePet() {
+        if (this.player.getFosterPet().getHygiene() < Animal.DEFAULT_STAT) // if the pet is not fully clean
         {
             this.player.getFosterPet().incHygiene(); // increase their hygiene
             this.player.getFosterPet().incLevelXP(); // increase the pet's xp
             this.levelUpReward(); // potential level up reward
-        }
-        else // pet is already clean, bathing has no effect on the pet or user
+        } else // pet is already clean, bathing has no effect on the pet or user
         {
             System.out.println(this.player.getFosterPet().getName() + " is already clean!");
         }
@@ -387,10 +359,9 @@ public class ForeverHomeModel extends Observable {
         this.setChanged();
         this.notifyObservers(this.data);
     }
-    
-    public void quitGame()
-    {
-        
+
+    public void quitGame() {
+
         this.saveGame();
         this.db.getDBManager().closeConnection();
         this.setChanged();
@@ -412,5 +383,5 @@ public class ForeverHomeModel extends Observable {
         }
         return true;
     }
-    
+
 }

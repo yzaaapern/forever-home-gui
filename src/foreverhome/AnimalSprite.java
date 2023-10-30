@@ -121,22 +121,22 @@ public class AnimalSprite extends JComponent {
         g.drawImage(currentImage, 0, 0, this);
     }
 
-    public static void main(String[] args) {
-        Animal a = new Chicken("malaya");
-        AnimalSprite as = new AnimalSprite(a);
-
-        JFrame frame = new JFrame("Test");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
-        frame.getContentPane().setBackground(Color.black);
-
-        frame.add(as);
-
-        JButton button = new JButton("Click Me");
-        button.addActionListener(e -> {
-            as.toggleIsIdleAnimation();
-        });
-        frame.add(button, BorderLayout.SOUTH);
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        Animal a = new Chicken("malaya");
+//        AnimalSprite as = new AnimalSprite(a);
+//
+//        JFrame frame = new JFrame("Test");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(400, 400);
+//        frame.getContentPane().setBackground(Color.black);
+//
+//        frame.add(as);
+//
+//        JButton button = new JButton("Click Me");
+//        button.addActionListener(e -> {
+//            as.toggleIsIdleAnimation();
+//        });
+//        frame.add(button, BorderLayout.SOUTH);
+//        frame.setVisible(true);
+//    }
 }

@@ -4,7 +4,6 @@
  */
 package foreverhome;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -27,9 +26,7 @@ public class NotPausedPetFosterView {
     private JPanel statBarsPanel;
     private JPanel buttonsPanel;
     private JPanel petSpritePanel;
-    private JPanel popupPanel;
     private JLabel dabloonsLabel;
-    private JLabel popupLabel;
 
     private GameProgressBar levelBar;
     private GameProgressBar xpBar;
@@ -47,12 +44,15 @@ public class NotPausedPetFosterView {
     private GameButton interactBtn;
     private GameButton batheBtn;
     private GameButton pauseBtn;
-    private GameButton yesBtn;
-    private GameButton noBtn;
 
-    private final String POPUP = "Your foster pet is now ready for adoption! Would you like to help them find their forever home?";
+    private Animal animal;
+    private AnimalSprite animalSprite;
+
     private final String PAUSE_FILE_PATH = "./resources/images/buttons/pause_small.png";
     private final String PAUSE_HOVER_FILE_PATH = "./resources/images/buttons/pause_hover_small.png";
+
+    private final String PAUSE_NOTIF_FILE_PATH = "./resources/images/buttons/pause_small2.png";
+    private final String PAUSE_NOTIF_HOVER_FILE_PATH = "./resources/images/buttons/pause_hover_small2.png";
 
     private final String BG_FILE_PATH = "./resources/images/backgrounds/petFoster_bg.png";
     private final String POPUP_FILE_PATH = "./resources/images/misc/popup_box.png";
@@ -74,8 +74,6 @@ public class NotPausedPetFosterView {
     private final String LEVEL_BAR_FILE_PATH = "./resources/images/statbars/level_bar.png";
     private final String LEVEL_BAR_COLOR = "#ADC1EC";
 
-    private final String LEVEL_NOTIF_FILE_PATH = "./resources/images/misc/levelup_notif.png";
-
     private final String BACKPACK_FILE_PATH = "./resources/images/buttons/backpack.png";
     private final String BACKPACK_HOVER_FILE_PATH = "./resources/images/buttons/backpack_hover.png";
 
@@ -88,46 +86,43 @@ public class NotPausedPetFosterView {
     private final String INTERACT_FILE_PATH = "./resources/images/buttons/interact_icon.png";
     private final String INTERACT_HOVER_FILE_PATH = "./resources/images/buttons/interact_icon_hover.png";
 
+    public static boolean isReadyForAdoption = false;
+
+    private GridBagConstraints gbc = new GridBagConstraints();
+
     public NotPausedPetFosterView() {
-        GridBagConstraints gbc = new GridBagConstraints();
         initializePanels();
         initializeLabels();
         initializeProgressBars();
         initializeButtons();
-        addComponents(gbc);
+        addComponents();
     }
 
-    private void addComponents(GridBagConstraints gbc) {
+    private void addComponents() {
         addStatBarsComponents(gbc);
 
         gbc.insets = new Insets(0, 10, 0, 0);
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = 0;
         gbc.gridy = 0;
         petFosterPanel.add(statBarsPanel, gbc);
 
         addButtonsComponents(gbc);
 
-        gbc.insets = new Insets(10, 25, 10, 10);
+        gbc.insets = new Insets(0, 150, 30, 10);
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.gridwidth = 2;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.gridx = 0;
-        gbc.gridy++;
-        petFosterPanel.add(buttonsPanel, gbc);
-
-        gbc.insets = new Insets(0, 700, 450, 0);
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridx++;
         gbc.gridy = 0;
-        petFosterPanel.add(pauseBtn, gbc);
+        petFosterPanel.add(buttonsPanel, gbc);
     }
 
     private void addStatBarsComponents(GridBagConstraints gbc) {
-        gbc.insets = new Insets(0, 0, 0, 0);
+        gbc.insets = new Insets(0, 0, 0, 30);
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
         gbc.gridx = 0;
         gbc.gridy = 0;
         statBarsPanel.add(levelBar, gbc);
@@ -154,21 +149,32 @@ public class NotPausedPetFosterView {
         gbc.gridy++;
         statBarsPanel.add(dabloonsLabel, gbc);
 
-        gbc.insets = new Insets(0, 0, 0, 0);
+        gbc.insets = new Insets(0, 10, 0, 0);
         gbc.gridx = 0;
         gbc.gridy++;
         statBarsPanel.add(backpackBtn, gbc);
     }
 
     private void addButtonsComponents(GridBagConstraints gbc) {
-        gbc.insets = new Insets(0, 0, 0, 40);
+        gbc.insets = new Insets(15, 200, 200, 0);
+//        gbc.anchor = GridBagConstraints.NORTHEAST;
         gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        buttonsPanel.add(pauseBtn, gbc);
+
+        gbc.insets = new Insets(0, 60, 10, 0);
+        gbc.gridy++;
         buttonsPanel.add(batheBtn, gbc);
 
-        gbc.gridx++;
+//        gbc.gridx++;
+        gbc.gridy++;
         buttonsPanel.add(feedBtn, gbc);
 
-        gbc.gridx++;
+//        gbc.gridx = 1;
+        gbc.gridy++;
+        gbc.insets = new Insets(5, 90, 0, 0);
         buttonsPanel.add(interactBtn, gbc);
     }
 
@@ -176,32 +182,23 @@ public class NotPausedPetFosterView {
         Font buttonFont = GameFont.getPixelFont(15, 1);
 
         feedBtn = new GameButton("Feed", FEED_FILE_PATH, FEED_HOVER_FILE_PATH);
-        feedBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
-        feedBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        feedBtn.setVerticalTextPosition(SwingConstants.CENTER);
+        feedBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
         feedBtn.setFont(buttonFont);
 
         batheBtn = new GameButton("Bathe", BATHE_FILE_PATH, BATHE_HOVER_FILE_PATH);
-        batheBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
-        batheBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        batheBtn.setVerticalTextPosition(SwingConstants.CENTER);
+        batheBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
         batheBtn.setFont(buttonFont);
 
         interactBtn = new GameButton("Interact", INTERACT_FILE_PATH, INTERACT_HOVER_FILE_PATH);
-        interactBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
-        interactBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+        interactBtn.setVerticalTextPosition(SwingConstants.CENTER);
+        interactBtn.setHorizontalTextPosition(SwingConstants.RIGHT);
         interactBtn.setFont(buttonFont);
 
         backpackBtn = new GameButton(BACKPACK_FILE_PATH, BACKPACK_HOVER_FILE_PATH);
 
-        buttonFont = GameFont.getPixelFont(15, 0);
-        yesBtn = new GameButton("Yes");
-        yesBtn.setFont(buttonFont);
-
-        noBtn = new GameButton("No");
-        noBtn.setFont(buttonFont);
-
-        buttonFont = GameFont.getPixelFont(20, 1);
         pauseBtn = new GameButton(PAUSE_FILE_PATH, PAUSE_HOVER_FILE_PATH);
-        pauseBtn.setFont(buttonFont);
     }
 
     private void initializeProgressBars() {
@@ -223,11 +220,6 @@ public class NotPausedPetFosterView {
         dabloonsLabel = new JLabel("20", labelImage.getImageIcon(), JLabel.LEFT);
         dabloonsLabel.setFont(labelFont);
         dabloonsLabel.setForeground(Color.white);
-
-        labelFont = GameFont.getPixelFont(15, 0);
-        popupLabel = new JLabel(POPUP);
-        popupLabel.setFont(labelFont);
-        popupLabel.setForeground(Color.white);
     }
 
     private void initializePanels() {
@@ -242,26 +234,15 @@ public class NotPausedPetFosterView {
 
         buttonsPanel = new JPanel(new GridBagLayout());
         buttonsPanel.setOpaque(false);
-        buttonsPanel.setPreferredSize(new Dimension(400, 115));
+        buttonsPanel.setPreferredSize(new Dimension(100, 350));
 
         statBarsPanel = new JPanel(new GridBagLayout());
         statBarsPanel.setOpaque(false);
-        statBarsPanel.setPreferredSize(new Dimension(490, 350));
+        statBarsPanel.setPreferredSize(new Dimension(450, 400));
 
         petSpritePanel = new JPanel(new GridBagLayout());
         petSpritePanel.setOpaque(false);
         petSpritePanel.setPreferredSize(new Dimension(280, 280));
-
-        popupPanel = new JPanel(new GridBagLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                GameImage bgImage = new GameImage(POPUP_FILE_PATH);
-                int yCoordinate = getHeight() - bgImage.getImage().getHeight(this);
-                g.drawImage(bgImage.getImage(), 0, yCoordinate, bgImage.getImage().getWidth(this), bgImage.getImage().getHeight(this), this);
-            }
-        };
-        popupPanel.setOpaque(false);
     }
 
     public void addActionListener(ActionListener listener) {
@@ -270,8 +251,44 @@ public class NotPausedPetFosterView {
         interactBtn.addActionListener(listener);
         batheBtn.addActionListener(listener);
         pauseBtn.addActionListener(listener);
-        yesBtn.addActionListener(listener);
-        noBtn.addActionListener(listener);
+    }
+
+    public void setAnimalSprite(Animal animal) {
+        this.animal = animal;
+        this.animalSprite = new AnimalSprite(animal);
+        gbc.insets = new Insets(0, 550, 0, 0);
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.gridx = 0;
+        gbc.gridy++;
+        petFosterPanel.add(animalSprite, gbc);
+    }
+
+    public void updatePauseButton() {
+        String pauseFilePath = isReadyForAdoption ? PAUSE_NOTIF_FILE_PATH : PAUSE_FILE_PATH;
+        String pauseHoverFilePath = isReadyForAdoption ? PAUSE_NOTIF_HOVER_FILE_PATH : PAUSE_HOVER_FILE_PATH;
+
+        pauseBtn.updateNormalAndHoverImages(pauseFilePath, pauseHoverFilePath);
+        petFosterPanel.revalidate();
+        petFosterPanel.repaint();
+    }
+
+    public void checkIsReadyForAdoption() {
+        if (this.animal.getLevel() == Level.MAX_LEVEL) {
+            if (!isReadyForAdoption) {
+                isReadyForAdoption = true;
+                updatePauseButton();
+            } else {
+                isReadyForAdoption = false;
+            }
+        }
+    }
+
+    public AnimalSprite getAnimalSprite() {
+        return this.animalSprite;
     }
 
     public GameButton getBackpackBtn() {
@@ -294,12 +311,29 @@ public class NotPausedPetFosterView {
         return pauseBtn;
     }
 
-    public GameButton getYesBtn() {
-        return yesBtn;
+    public void setLevelBarValue(int value) {
+        levelBar.setValue(value);
     }
 
-    public GameButton getNoBtn() {
-        return noBtn;
+    public void setXPBarValue(int value) {
+        xpBar.setValue(value);
+    }
+
+    public void setHungerBarValue(int value) {
+        hungerBar.setValue(value);
+    }
+
+    public void setHygieneBarValue(int value) {
+        hygieneBar.setValue(value);
+    }
+
+    public void setHappinessBarValue(int value) {
+        happinessBar.setValue(value);
+    }
+
+    public void setDabloonsLabel(int dabloons) {
+        String dabloonsString = Integer.toString(dabloons);
+        dabloonsLabel.setText(dabloonsString);
     }
     
     public void updateBarValue(int level, int xp, int happiness, int hunger, int hygiene, int dabloons, int newBarCap)
@@ -317,33 +351,4 @@ public class NotPausedPetFosterView {
         
     }
             
-    
-    public void setLevelBarValue(int value) {
-        levelBar.setValue(value);
-        this.levelBar.repaint();
-    }
-
-    public void setXPBarValue(int value) {
-        xpBar.setValue(value);
-        this.xpBar.repaint();
-    }
-
-    public void setHappinessBarValue(int value) {
-        happinessBar.setValue(value);
-        this.happinessBar.repaint();
-    }
-    
-    public void setHungerBarValue(int value) {
-        hungerBar.setValue(value);
-        this.hungerBar.repaint();
-    }
-
-    public void setHygieneBarValue(int value) {
-        hygieneBar.setValue(value);
-        this.hygieneBar.repaint();
-    }
-    
-    public void setDabloonsLabel(int value) {
-    dabloonsLabel.setText(Integer.toString(value));
-    }   
 }
