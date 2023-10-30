@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 public class FeedPetView {
 
     private FoodInventory foodInventory;
+    public boolean compatibleFood = false;
     
     public JPanel foodInventoryPanel;
     private JPanel foodMenuPanel;
@@ -428,8 +429,22 @@ public class FeedPetView {
         this.waterDesc.setText("Can't let your foster pet go thirsty now! Hunger points: " + foodInventory.water.getFoodValue() + ". Quantity: " + foodInventory.getFoods()[6].getFoodCount());
     }
     
+    public void updateText(Food food) 
+    {
+        if (compatibleFood) {
+            this.introLabel.setText(INTRO);
+        } else {
+            this.introLabel.setText("You cannot feed your pet with " + food.getFoodName() + "! Incompatible food. ");
+        }
+        this.foodMenuPanel.revalidate();
+        this.foodMenuPanel.repaint();
+        
+    }
+    
     public void refreshText()
     {
+        compatibleFood = true;
+        this.introLabel.setText(INTRO);
         this.updateFoodTexts();
         this.foodMenuPanel.revalidate();
         this.foodMenuPanel.repaint();

@@ -306,6 +306,17 @@ public class ForeverHomeModel extends Observable {
         this.notifyObservers(this.data);
     }
     
+    public boolean compatibleFood(Food food)
+    {
+        if(food.getFoodType() == 0 || this.player.getFosterPet().getAnimalFoodType() == food.getFoodType())
+        {
+            return true;
+        }
+        return false;
+//        boolean compatibleFood = (this.player.getFosterPet().getAnimalFoodType() == food.getFoodType() || this.player.getFosterPet().getAnimalFoodType() == 0) ? true : false;
+//        return compatibleFood;
+    }
+    
     /*  bathePet method
     
         Parameters: None
